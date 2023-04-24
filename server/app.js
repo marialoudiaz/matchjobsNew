@@ -9,8 +9,10 @@ const express = require('express'),
   app.use(express.json())
   app.use(require('cors')())
 
+  console.log(process.env.MONGO)
   async function connecting(){
 try {
+ 
   await mongoose.connect(process.env.MONGO)
   console.log('Connected to the database')
 } catch (error) {

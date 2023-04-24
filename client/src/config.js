@@ -1,3 +1,2 @@
-const URL = `http://localhost:5555`;
-
-export { URL };
+const URL = 'http://localhost:5555'
+export {URL}
