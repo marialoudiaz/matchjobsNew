@@ -21,22 +21,19 @@ const Profile = ()=>{
         if(type === 'recruiter'){
             allMySheets = await axios.get(`${URL}/recruiter/getAllMyJobOffers/${id}`)
             // console.log(allMySheets);
-        }
-        else{
+        }else{
             allMySheets = await axios.get(`${URL}/applicant/getAllMyJobApplications/${id}`)
         }
         setMySheets(allMySheets.data.data) 
         } catch (error) {
-            console.log(error);
+         console.log(error);
         }
     }
    
-
-   
+   // permet de s'update en fonction de ce qui est fetch derriere
     useEffect(()=>{
         handleSheets();
     })
-
 
     return(<>
     {/* // greyish sheet for new app/offer that can be edit */}

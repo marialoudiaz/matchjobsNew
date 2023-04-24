@@ -10,22 +10,53 @@ const Navbar = ({isLoggedIn, user}) => {
     {isLoggedIn === true
     && 
     <>
-    <NavLink 
-    to={`/${user.userType}/profile/${user._id}`}  >
-    icon profile
-    </NavLink>
+
     <NavLink 
     to={`/${user.userType}/main`}  >
-    logo
+    Logo
     </NavLink>
+
+    <NavLink 
+    to={`/${user.userType}/profile/${user._id}`}  >
+    icon profile<p>profile</p>
+    </NavLink>
+
+    <NavLink 
+    to={`/${user.userType}/main`}  >
+    discover icon <p>Discover</p>
+    </NavLink>
+
     <NavLink 
     to={`/${user.userType}/matches`}  >
-    matches sign
+    match icon <p>Matches</p>
+    </NavLink>
+
+    <NavLink 
+    to={`/${user.userType}/admin`}  >
+    <p>Admin</p>
+    </NavLink>
+
+    <NavLink 
+    to={`/${user.userType}/login`}  >
+    <p>Login</p>
+    </NavLink>
+
+    <NavLink 
+    to={`/${user.userType}/register`}  >
+    <p>Register</p>
+    </NavLink>
+
+    <NavLink 
+    to={`/${user.userType}/matches`}  >
+    logout icon<p>Logout</p>
     </NavLink>
 
     </>
-    
     }
+
+
+
+
 
 
     {!isLoggedIn

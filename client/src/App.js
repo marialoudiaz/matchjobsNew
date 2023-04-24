@@ -110,6 +110,13 @@ function App() {
     path="/login"
     element ={ isLoggedIn ? <Navigate to='/' /> : <Login login={login} /> } 
     />
+
+    <Route
+    path="/welcome"
+    element =  {<Welcome /> }
+    />
+
+
     <Route
     path="/register"
     element ={ isLoggedIn ? <Navigate to='/' /> : <Register  /> } 

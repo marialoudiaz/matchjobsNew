@@ -40,6 +40,8 @@ const register = async (req, res) => {
   }
 };
 
+
+
 const login = async (req, res) => {
   const { userName, password } = req.body;
   
@@ -79,6 +81,8 @@ const verify_token = (req, res) => {
       : res.json({ ok: true, succ });
   });
 };
+
+
 
 
 const findRecruiter = async (req,res) =>{
