@@ -1,10 +1,110 @@
 import React, { useState,useEffect } from "react";
-import Register from './Register';
-import {useParams, NavLink} from 'react-router-dom'
 import axios from "axios";
 import { URL } from "../config";
+import {useParams, NavLink, useNavigate} from 'react-router-dom'
+import * as jose from 'jose'
 
 
+const Login = (props) => {
+
+  // enregistre infos dans le formulaire
+  const [form, setFormValues] = useState({
+    username: "",
+    password: "",
+  });
+
+  const navigate = useNavigate()
+  const [message, setMessage ] = useState('')
+  const [userType, setUserType] = useState();
+
+  // definir le type d'user
+  const getUser = (e,type)=>{
+    if(button === type) {
+    setUserType("")
+    } else {
+    setUserType(type)
+    } }
+
+
+  // sauvegarder dans form les valeurs username et password
+  const handleChange = (e) => {
+    setFormValues({ ...form, [e.target.name]: e.target.value });
+  };
+
+    // gère ce qui est passé dans le formulaire 
+    const handleSubmit = async (e) => {
+    // evite disparaitre au re-render
+    e.preventDefault();
+    try {
+      const response = await axios.post(`${URL}/users/login`, {
+        // prend valeurs dans state component 'form'
+        username: form.username.toLowerCase(),
+        password: form.password,
+      });
+      // retourne le message de la DB
+      setMessage(response.data.message);
+      
+      // si l'user existe
+      if (response.data.ok) {
+        // After login  : extract the username passed from the server inside the token 
+        let decodedToken = jose.decodeJwt(response.data.token)
+        // and now we now which user is logged in in the client so we can manipulate it as we want, like fetching data for it or we can pass the user role -- admin or not -- and act accordingly, etc...
+        console.log("Email extracted from the JWT token after login: ", decodedToken.username)
+        setTimeout(() => {
+          props.login(response.data.token);
+          navigate("/profile");
+        }, 2000);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  };
+
+
+  // based on type log on right profile
+// en fonction valeur de form aller a telles routess
+  return (
+    <>
+    <h1>Welcome back !</h1>
+    <h3>Please enter your information to login in</h3>
+    
+    <form
+    onSubmit={handleSubmit}
+    onChange={handleChange}
+    className='form_container'
+    >
+        <label>Username</label>
+        <input name='userName'/>
+        <label>Password</label>
+        <input name='password'/>
+        <label>I am a</label>
+        <button disabled={button === "recruiter" ? true : false} name = 'user' value = 'recruiter' type = 'radio' onClick = {(e)=>getUser(e,"recruiter")}>Recruiter</button>
+        <button disabled={button === "applicant" ? true : false} name = 'user' value = 'applicant' type = 'radio' onClick = {(e)=>getUser(e,"applicant")}>Applicant</button>
+        <button  disabled={button === "admin" ? true : false}name = 'user' value = 'admin' type = 'radio' onClick = {(e)=>getUser(e,"admin")}>Admin</button>
+
+        <div className="message">
+        <h4>{message}</h4>
+        </div>
+
+        <button>login</button>
+    </form>
+    </>
+   
+ );
+
+export default Login
+
+
+
+    {/* <button  name='user' value = 'recruiter' type = 'radio' onClick = {(e)=>getUser(e,"recruiter")}>Recruiter</button>
+    <button  name='user' value = 'applicant' type = 'radio' onClick = {(e)=>getUser(e,"applicant")}>Applicant</button>
+    <button  name='user' value = 'admin' type = 'radio' onClick = {(e)=>getUser(e,"admin")}>Admin</button>
+    
+    <button onClick = {login}>login</button>
+    </div> */}
+
+{/* 
 // passe la fonction pour le token
 function Login({loginFun}) {
   const [input, setInput] = useState({userName:'',password:''})
@@ -77,31 +177,4 @@ function Login({loginFun}) {
             break;
   
     }
-  }
-
-  return (
-    
-    <>
-    <div>
-    <h1>Welcome back !</h1>
-    <h3>Please enter your information to login in</h3>
-    
-    <h1>username</h1>
-    <input name = 'userName' onChange = {getInput}/>
-    <h1>password</h1>
-    <input name = 'password' onChange = {getInput}/>
-    
-    <p>I am a </p>  
-    <button  name = 'user' value = 'recruiter' type = 'radio' onClick = {(e)=>getUser(e,"recruiter")}>Recruiter</button>
-    <button  name = 'user' value = 'applicant' type = 'radio' onClick = {(e)=>getUser(e,"applicant")}>Applicant</button>
-    <button  name = 'user' value = 'admin' type = 'radio' onClick = {(e)=>getUser(e,"admin")}>Admin</button>
-    <p>{msg}</p>
-    
-    <button onClick = {login}>login</button>
-    </div>
-    </>
-
-  )
-}
-export default Login
-
+  } */}

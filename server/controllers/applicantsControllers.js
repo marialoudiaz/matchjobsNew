@@ -257,6 +257,16 @@ let {id} = req.params;
   }
 }
 
+const getUserName = async(req,res)=>{
+  let {id} = req.params;
+  try {
+    const getUserName = await Applicant.find({userName}) // FIND ALL
+    res.send({ok:true, data: getUserName})
+  } catch (error) {
+    res.send(error)
+  }
+}
+
 
 // // //likeJobOffer
 const likeOffer = async(req,res)=>{
@@ -317,4 +327,5 @@ module.exports = {
   register,
   verify_token,
   getJobApplication,
+  getUserName,
 }

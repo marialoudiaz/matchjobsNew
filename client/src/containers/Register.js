@@ -9,18 +9,22 @@ function Register() {
   const [input, setInput] = useState({userName:'',password:''})
   const [userType, setUserType] = useState("")
   const [msg, setMsg]= useState('');
+  const [button,setButton] = useState("");
 
   // set input to name and password
   const getInput = (e)=>{
     setInput({...input, [e.target.name]: e.target.value})
   }
 
+  // get the type from button
   const onOptionChange = e =>{
     setUserType(e.target.value)
   }
 
+
+
+
   const register = async()=>{
-    
     // check type
     const temp = Object.entries(button).filter(c=>c[1]=== true)
     switch(temp[0][0]){
