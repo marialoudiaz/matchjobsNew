@@ -11,8 +11,8 @@ const jwt_secret = process.env.JWT_SECRET;
 const register = async (req, res) => {
   // this salt can be truly random with one of available npm packages
   const salt = '321dsa'
-  const { userName, password, password2 } = req.body;
-  if (!userName || !password || !password2){
+  const { email, password, password2 } = req.body;
+  if (!email || !password || !password2){
     return res.json({ ok: false, message: "All fields required" });
   }
   if (password !== password2){
@@ -22,7 +22,7 @@ const register = async (req, res) => {
   //   return res.json({ ok: false, message: "Invalid email" });
   // }
   try {
-    const user = await Admins.findOne({ userName });
+    const user = await Admins.findOne({ email });
     if (user) return res.json({ ok: false, message: "Admin exists!" });
     const hash = await argon2.hash(password,salt);
     // not salted, salt is appending a random string to a password to strengthen the hash 
@@ -31,7 +31,7 @@ const register = async (req, res) => {
     console.log("hash ==>", hash);
     console.log("hash2 ==>", hash2);
     const newUser = {
-      userName,
+      email,
       password: hash,
     };
     await Admins.create(newUser);
@@ -43,22 +43,22 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  const { userName, password } = req.body;
-  if (!userName || !password){
+  const { email, password } = req.body;
+  if (!email || !password){
     return res.json({ ok: false, message: "All fields are required" });
   }
   // if (!validator.isEmail(email)){
   //   return res.json({ ok: false, message: "Invalid email provided" });
   // }
   try {
-    const user = await Admins.findOne({ userName });
+    const user = await Admins.findOne({ email });
     if (!user) return res.json({ ok: false, message: "Invalid admin provided" });
     const match = await argon2.verify(user.password, password);
     if (match) {
       // once user is verified and confirmed we send back the token to keep in localStorage in the client and in this token we can add some data -- payload -- to retrieve from the token in the client and see, for example, which user is logged in exactly. The payload would be the first argument in .sign() method. In the following example we are sending an object with key userEmail and the value of email coming from the "user" found in line 47
-      const token = jwt.sign({userName:user.userName, userType: 'admin', _id:user._id}, jwt_secret, { expiresIn: "1h" }); //{expiresIn:'365d'}
+      const token = jwt.sign({email:user.email, userType: 'admin', _id:user._id}, jwt_secret, { expiresIn: "1h" }); //{expiresIn:'365d'}
       // after we send the payload to the client you can see how to get it in the client's Login component inside handleSubmit function
-      res.json({ ok: true, message: "welcome back", token, userName });
+      res.json({ ok: true, message: "welcome back", token, email });
     } else return res.json({ ok: false, message: "Invalid data provided" });
   } catch (error) {
     res.json({ ok: false, error });
@@ -76,16 +76,16 @@ const verify_token = (req, res) => {
 
 const findAdmin= async(req, res)=>{
   // the data we get from the login
-  const {userName, password} = req.body
+  const {email, password} = req.body
   try {
     // true if find username
-    const findUserName = await Admins.findOne({userName})
-    console.log(findUserName._id)
-    if (findUserName){
+    const findEmail = await Admins.findOne({email})
+    console.log(findEmail._id)
+    if (findEmail){
     // CHECK IF PASSWORD MATCHES
     const findPassword = await Admins.findOne({password})
     console.log(findPassword._id)
-      if (findUserName._id.toString()=== findPassword._id.toString()){
+      if (findEmail._id.toString()=== findPassword._id.toString()){
         res.send({ok:true, data:'admin found successfully'})
       } else{
         res.send({ok:false,data:'username and password do not match'})
@@ -100,12 +100,12 @@ const findAdmin= async(req, res)=>{
 }
 
 const addAdmin = async(req,res)=>{
-  const {userName, password} = req.body; 
+  const {email, password} = req.body; 
   try {
-    const findAdmin = await Admins.findOne({userName, password})
+    const findAdmin = await Admins.findOne({email, password})
     if (!findAdmin){
 
-      const createNew = await Admins.create({userName, password})
+      const createNew = await Admins.create({email, password})
       if(createNew){
         res.send({ok:true,data:'user added successfully'})
       }
@@ -120,6 +120,7 @@ const addAdmin = async(req,res)=>{
   }
 }
 
+//// USE TO DISPLAY OFFERS/APP IN MAIN (FRONT END)
 const getAllRecruiters = async (req,res) =>{
   try {
     const allRecruiters = await Recruiter.find({})
@@ -138,12 +139,13 @@ const getAllApplicants = async (req,res) =>{
   }
 }
 
+
 const deleteApplicant = async (req,res)=>{
-  const {userName} = req.body;
+  const {email} = req.body;
   try {
-    // find the username
-    const findUsername = await Applicants.findOneAndDelete({userName})
-      if (findUsername){
+    // find the email
+    const findEmail = await Applicants.findOneAndDelete({email})
+      if (findEmail){
         // await Applicants.deleteOne({userName})
         res.send ({ok:true,data:'applicant deleted successfully'})
       }
@@ -156,12 +158,12 @@ const deleteApplicant = async (req,res)=>{
 }
 
 const deleteRecruiter = async (req,res)=>{
-  const {userName} = req.body;
+  const {email} = req.body;
   try {
-    // find the username
-    const findUsername = await Recruiter.findOneAndDelete({userName})
-      if (findUsername){
-        // await Recruiter.deleteOne({userName})
+    // find the email
+    const findEmail = await Recruiter.findOneAndDelete({email})
+      if (findEmail){
+        // await Recruiter.deleteOne({email})
         res.send ({ok:true,data:'recruiter deleted successfully'})
       }else{
         res.send({ok:false,data:'failed to find the recruiter'})
@@ -172,7 +174,7 @@ const deleteRecruiter = async (req,res)=>{
 }
 
 const deleteOffer = async(req, res)=>{
-const { offerId} = req.body;
+const {offerId} = req.body;
   try {
     const findOffer = await JobOffer.findOneAndDelete({_id:offerId})
     if (findOffer){
@@ -186,9 +188,9 @@ const { offerId} = req.body;
   }
 }
 const deleteApplication = async(req, res)=>{
-  const {userName, jobApplication, jobTitle} = req.body;
+  const {email, jobApplication, jobTitle} = req.body;
     try {
-      const findApplication = await JobApplication.findOneAndDelete({userName, jobApplication})
+      const findApplication = await JobApplication.findOneAndDelete({email, jobApplication})
       if (findApplication){
         // await JobApplication.deleteOne({userName, jobApplication})
         res.send ({ok:true,data:` ${jobTitle} deleted successfully`})
@@ -199,6 +201,7 @@ const deleteApplication = async(req, res)=>{
       
     }
   }
+  ////////
 
 module.exports = {
   findAdmin,

@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import {URL} from "../config"
 
 function Register() {
+  let navigate = useNavigate();
 
   const [userEmail, setUserEmail]=useState(null)
   const [userPass, setUserPass]=useState(null)
@@ -41,10 +43,15 @@ const userInfosChange = e=>{
 
   }
 
+  // condition
+  // if axios request is successfull go to profile page of id
   
   return (
     <>
 <form onSubmit={handleSubmit}>
+  <h1> Create a new account</h1>
+  <h2>already a member? </h2>
+  <p onClick={() => navigate("/login")}>Login</p>
   <label>email</label>
   <input name='email' type='email' onChange={userInfosChange}></input>
   <label>password</label>
@@ -57,10 +64,7 @@ const userInfosChange = e=>{
           <label htmlFor='recruiter'>Recruiter</label>
           <input type='radio' name='user' value = 'applicant' onClick = {usertypeChange} />
           <label htmlFor='applicant'>Applicant</label>
-
-
   <button >create account</button>
-
 </form>
     </>
   )
