@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, Navigate } from "react-router-dom";
 import axios from 'axios';
 import {URL} from "../config"
+import App from '../App.css'
 
 function Login() {
   let navigate = useNavigate();
@@ -24,11 +25,16 @@ const userInfosChange = e=>{
 
 // Récupérer les infos du formulaire pour login
 const handleSubmit = e => {
+  // let {type,id,userid} = useParams();
+
   e.preventDefault();
+
   if (userType ==='applicant'){
     let url = `${URL}/applicant/login`;
     axios.post(url, {email: userEmail, password:userPass})
     .then((res)=>{ console.log(res)
+      //go to specific profile page
+      //  return <Navigate replace to={`/profile/${id}`} />;
         // let { name } = res.data;
         // this.setState({name})
     }).catch((error)=>{debugger})
@@ -36,6 +42,8 @@ const handleSubmit = e => {
     let url = `${URL}/recruiter/login`;
     axios.post(url, {email: userEmail, password:userPass})
     .then((res)=>{ console.log(res)
+      //go to specific profile page
+      // return <Navigate replace to={`/profile/${id}`} />;
     }).catch((error)=>{debugger})}
   }
 
@@ -45,21 +53,28 @@ const handleSubmit = e => {
 
   return (
     <>
-    <form onSubmit={handleSubmit}>
+    <form className='form' onSubmit={handleSubmit}>
+      <>
     <h1>Welcome back !</h1>
-    <p>I want to</p><p onClick={() => navigate("/register")}>register</p>
-      <h2>Please enter your personal informations</h2>
-  <label>email</label>
-  <input name='email' type='email' onChange={userInfosChange}></input>
-  <label>password</label>
-  <input name='password' type='password' onChange={userInfosChange}></input>
-  
-  <label>I am a</label>
-          <input type='radio' name='user' value = 'recruiter' onClick = {usertypeChange} />
-          <label htmlFor='recruiter'>Recruiter</label>
-          <input type='radio' name='user' value = 'applicant' onClick = {usertypeChange} />
-          <label htmlFor='applicant'>Applicant</label>
-  <button >login</button>
+      <h3>Please enter your personal informations</h3>
+      </>
+      <><h3>I want to</h3> <h3 onClick={() => navigate("/register")}>register</h3></>
+      
+      <div className='input-container'>
+        <label>email</label>
+        <input className='inputs' name='email' type='email' onChange={userInfosChange}></input>
+        <label>password</label>
+        <input className='inputs' name='password' type='password' onChange={userInfosChange}></input>
+        
+        <div className='radiobtn-container'>
+                <label>I am a</label>
+                <input className='inputs' type='radio' name='user' value = 'recruiter' onClick = {usertypeChange} />
+                <label htmlFor='recruiter'>Recruiter</label>
+                <input className='inputs' type='radio' name='user' value = 'applicant' onClick = {usertypeChange} />
+                <label htmlFor='applicant'>Applicant</label>
+        </div>
+      </div>
+  <button className='btn' >login</button>
 </form>
     </>
   )

@@ -1,3 +1,4 @@
+import App from '../App.css'
 import React from 'react'
 import { useNavigate } from "react-router-dom";
 function Welcome() {

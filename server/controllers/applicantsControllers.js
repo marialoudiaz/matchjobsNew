@@ -9,6 +9,7 @@ const jwt = require("jsonwebtoken");
 const jwt_secret = process.env.JWT_SECRET;
 
 const register = async (req, res) => {
+  debugger
   // this salt can be truly random with one of available npm packages
   const salt = '321dsa'
   const { email, password, password2 } = req.body;
@@ -21,8 +22,9 @@ const register = async (req, res) => {
   // if (!validator.isEmail(email)){
   //   return res.json({ ok: false, message: "Invalid email" });
   // }
+  console.log(email)
   try {
-    const user = await Applicant.findOne({ email });
+    const user = await Applicant.findOne({email});
     if (user) return res.json({ ok: false, message: "User exists!" });
     const hash = await argon2.hash(password,salt);
     // not salted, salt is appending a random string to a password to strengthen the hash 

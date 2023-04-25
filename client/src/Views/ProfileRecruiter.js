@@ -6,7 +6,12 @@ import {URL} from "../config"
 
 function ProfileRecruiter() {
   return (
-    <div>ProfileRecruiter</div>
+    <>
+    
+    
+    
+    
+    </>
   )
 }
 

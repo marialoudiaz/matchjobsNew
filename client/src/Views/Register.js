@@ -2,6 +2,7 @@ import React, { useState} from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import {URL} from "../config"
+import App from '../App.css'
 
 function Register() {
   let navigate = useNavigate();
@@ -30,41 +31,48 @@ const userInfosChange = e=>{
   
   const handleSubmit = e => {
     e.preventDefault();
-    let url = `${URL}/applicant/register`;
-    axios.post(url, {email: userEmail, password:userPass, password2: userPass2})
-    .then((res)=>{
-      console.log(res)
-      
+    if (userType==='applicant'){
+      let url = `${URL}/applicant/register`;
+      axios.post(url, {email: userEmail, password:userPass, password2: userPass2})
+      .then((res)=>{
+        // return <Navigate replace to={`/profile/${id}`} />;
+        console.log(res)
         // let { name } = res.data;
         // this.setState({name})
-    }).catch((error)=>{
-        debugger
-    })
-
-  }
+      }).catch((error)=>{
+          debugger
+      })
+    }else{
+      let url = `${URL}/recuiter/register`;
+      axios.post(url, {email: userEmail, password:userPass, password2: userPass2})
+      .then((res)=>{
+        // return <Navigate replace to={`/profile/${id}`} />;
+        console.log(res)
+      }).catch((error)=>{debugger})
+    }}
 
   // condition
   // if axios request is successfull go to profile page of id
   
   return (
     <>
-<form onSubmit={handleSubmit}>
+<form className='form' onSubmit={handleSubmit}>
   <h1> Create a new account</h1>
   <h2>already a member? </h2>
   <p onClick={() => navigate("/login")}>Login</p>
   <label>email</label>
-  <input name='email' type='email' onChange={userInfosChange}></input>
+  <input className='inputs' name='email' type='email' onChange={userInfosChange}></input>
   <label>password</label>
-  <input name='password' type='password' onChange={userInfosChange}></input>
+  <input className='inputs' name='password' type='password' onChange={userInfosChange}></input>
   <label>password 2</label>
-  <input name='password2' type='password' onChange={userInfosChange}></input>
+  <input className='inputs' name='password2' type='password' onChange={userInfosChange}></input>
 
   <label>please select the type of user you are </label>
-          <input type='radio' name='user' value = 'recruiter' onClick = {usertypeChange} />
+          <input className='inputs' type='radio' name='user' value = 'recruiter' onClick = {usertypeChange} />
           <label htmlFor='recruiter'>Recruiter</label>
-          <input type='radio' name='user' value = 'applicant' onClick = {usertypeChange} />
+          <input className='inputs' type='radio' name='user' value = 'applicant' onClick = {usertypeChange} />
           <label htmlFor='applicant'>Applicant</label>
-  <button >create account</button>
+  <button className='btn' >create account</button>
 </form>
     </>
   )

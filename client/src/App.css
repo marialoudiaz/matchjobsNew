@@ -1,38 +1,50 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Raleway:wght@300&family=Roboto:wght@500&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+
+form{
+background: #FFFFFF;
+background: linear-gradient(90deg, #FFFFFF, #3D7CFF);
+font-family: Montserrat;
+display: flex;
+flex-wrap: wrap;
+flex-direction: column;
+gap: .2em;
+padding: 2%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.input-container{
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+}
+.inputs{
+  background-color: grey;
+  border-radius: 30px;
+  border-style: none;
 }
 
-.App-link {
-  color: #61dafb;
+ .btn {
+   background-color: lightgrey;
+    margin: 1em;
+    padding: 1em 2em;
+    border: 0;
+    border-radius: 30px;
+    text-align: center;
+    font-family: 'Montserrat';
+    font-size: 1em;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.radiobtn-container{
+  display: flex;
+ flex-wrap: wrap;
+ gap: 1em;
+ font-size: 17px;
+ font-family: Montserrat;
 }

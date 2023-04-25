@@ -17,8 +17,8 @@ function App() {
     <Route path="/" element={<Welcome />} />
     <Route path="/login" element={<Login />} />
     <Route path="/register" element={<Register />} />
-    <Route path="/profile" element={<ProfileApplicant />} />
-    <Route path="/profile" element={<ProfileRecruiter />} />
+    <Route path="/profile/:id" element={<ProfileApplicant />} />
+    <Route path="/profile/:id" element={<ProfileRecruiter />} />
     </Routes>
 </Router>
 
