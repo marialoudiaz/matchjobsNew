@@ -1,11 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Raleway:wght@300&family=Roboto:wght@500&display=swap');
 
 *{
-  margin: 0;
-  padding: 0;
+    box-sizing : border-box;
+    margin:0;
+    padding: 0;
 }
 
-
+img{
+  width : 100%;
+ }
 
 form{
 background: #FFFFFF;
@@ -33,7 +36,7 @@ padding: 2%;
  .btn {
    background-color: lightgrey;
     margin: 1em;
-    padding: 1em 2em;
+    padding: .5em 1em;
     border: 0;
     border-radius: 30px;
     text-align: center;
@@ -47,4 +50,24 @@ padding: 2%;
  gap: 1em;
  font-size: 17px;
  font-family: Montserrat;
+}
+
+.WP-Container{
+  background: #FFFFFF;
+background: linear-gradient(90deg, #FFFFFF, #3D7CFF);
+font-family: Montserrat;
+display: flex;
+flex-wrap: wrap;
+flex-direction: column;
+align-items: center;
+gap: 1em;
+padding: 2%;
+}
+
+.WP-text{
+  text-align: center;
+}
+
+.WP-btn{
+  flex-wrap: wrap;
 }
