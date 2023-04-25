@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import {URL} from "../config"
 import App from '../App.css'
+import * as jose from 'jose'
 
 function Register() {
   let navigate = useNavigate();
@@ -11,6 +12,7 @@ function Register() {
   const [userPass, setUserPass]=useState(null)
   const [userPass2, setUserPass2]=useState(null)
   const [userType, setUserType]=useState(null)
+  const [msg, setMsg]=useState(null)
   console.log(userEmail,userPass,userPass2, userType)
 
 const userInfosChange = e=>{
@@ -26,17 +28,17 @@ const userInfosChange = e=>{
     setUserType(e.target.value)
   }
 
-  
 
-  
   const handleSubmit = e => {
+    debugger
     e.preventDefault();
     if (userType==='applicant'){
       let url = `${URL}/applicant/register`;
       axios.post(url, {email: userEmail, password:userPass, password2: userPass2})
       .then((res)=>{
-        // return <Navigate replace to={`/profile/${id}`} />;
-        console.log(res)
+        //return <Navigate replace to={`/applicant/${id}`} />;
+        console.log(res.data.message)
+        setMsg(res.data.message)
         // let { name } = res.data;
         // this.setState({name})
       }).catch((error)=>{
@@ -46,34 +48,38 @@ const userInfosChange = e=>{
       let url = `${URL}/recuiter/register`;
       axios.post(url, {email: userEmail, password:userPass, password2: userPass2})
       .then((res)=>{
-        // return <Navigate replace to={`/profile/${id}`} />;
+        //  navigate({`/recruiter/${id}`}) />;
         console.log(res)
+        setMsg(res.data.message)
       }).catch((error)=>{debugger})
     }}
 
   // condition
   // if axios request is successfull go to profile page of id
   
+
   return (
     <>
-<form className='form' onSubmit={handleSubmit}>
-  <h1> Create a new account</h1>
-  <h2>already a member? </h2>
-  <p onClick={() => navigate("/login")}>Login</p>
-  <label>email</label>
-  <input className='inputs' name='email' type='email' onChange={userInfosChange}></input>
-  <label>password</label>
-  <input className='inputs' name='password' type='password' onChange={userInfosChange}></input>
-  <label>password 2</label>
-  <input className='inputs' name='password2' type='password' onChange={userInfosChange}></input>
+  <form className='form' onSubmit={handleSubmit}>
+    <h1> Create a new account</h1>
+    <h4 className='links' onClick={() => navigate("/login")}>already a member? Login </h4>
+    <label>email</label>
+    <input className='inputs' name='email' type='email' onChange={userInfosChange}></input>
+    <label>password</label>
+    <input className='inputs' name='password' type='password' onChange={userInfosChange}></input>
+    <label>password 2</label>
+    <input className='inputs' name='password2' type='password' onChange={userInfosChange}></input>
 
-  <label>please select the type of user you are </label>
-          <input className='inputs' type='radio' name='user' value = 'recruiter' onClick = {usertypeChange} />
-          <label htmlFor='recruiter'>Recruiter</label>
-          <input className='inputs' type='radio' name='user' value = 'applicant' onClick = {usertypeChange} />
-          <label htmlFor='applicant'>Applicant</label>
-  <button className='btn' >create account</button>
-</form>
+    <label>please select the type of user you are </label>
+    <div className='radiobtn-container'>
+            <input className='radio' type='radio' name='user' value = 'recruiter' onClick = {usertypeChange} />
+            <label htmlFor='recruiter'>Recruiter</label>
+            <input className='radio' type='radio' name='user' value = 'applicant' onClick = {usertypeChange} />
+            <label htmlFor='applicant'>Applicant</label>
+    </div>
+    <button className='btn' >create account</button>
+    <p className={msg !== null ? 'msg' : 'none'} >{msg}</p>
+  </form>
     </>
   )
 }

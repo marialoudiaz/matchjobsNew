@@ -21,10 +21,7 @@ function ProfileApplicant() {
     <div></div>
     <div className='create-app'></div>
     </div>
-
-
-
-    </>
+</>
   )
 }
 

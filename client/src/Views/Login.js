@@ -3,8 +3,9 @@ import { useNavigate, useParams, Navigate } from "react-router-dom";
 import axios from 'axios';
 import {URL} from "../config"
 import App from '../App.css'
+import * as jose from 'jose'
 
-function Login() {
+function Login(props) {
   let navigate = useNavigate();
 
   // State components - Login Informations
@@ -24,28 +25,61 @@ const userInfosChange = e=>{
   }
 
 // Récupérer les infos du formulaire pour login
-const handleSubmit = e => {
+const handleSubmit = async(e) => {
   // let {type,id,userid} = useParams();
-
   e.preventDefault();
 
-  if (userType ==='applicant'){
-    let url = `${URL}/applicant/login`;
-    axios.post(url, {email: userEmail, password:userPass})
-    .then((res)=>{ console.log(res)
-      //go to specific profile page
-      //  return <Navigate replace to={`/profile/${id}`} />;
-        // let { name } = res.data;
-        // this.setState({name})
-    }).catch((error)=>{debugger})
-  }else{
-    let url = `${URL}/recruiter/login`;
-    axios.post(url, {email: userEmail, password:userPass})
-    .then((res)=>{ console.log(res)
-      //go to specific profile page
-      // return <Navigate replace to={`/profile/${id}`} />;
-    }).catch((error)=>{debugger})}
-  }
+  try{
+    // call login controller for applicant
+    // login for applicant
+    if (userType==='applicant'){
+      const response = await axios.post(`${URL}/applicant/login`,{email: userEmail, password:userPass})
+        if (response.data.ok){
+          let decodedToken = jose.decodeJwt(response.data.token)
+          localStorage.setItem('token', response.data.token)
+          setTimeout(()=>{
+            props.login(response.data.token)
+            navigate(`/applicant/${decodedToken.id}`)
+          })
+        } else {
+          // IF RESPONSE FALSY
+        }
+        // login for recruiter
+    } else {
+      const response = await axios.post(`${URL}/recruiter/login`,{email: userEmail, password:userPass})
+        if (response.data.ok){
+          let decodedToken = jose.decodeJwt(response.data.token)
+          localStorage.setItem('token', response.data.token)
+          setTimeout(()=>{
+            props.login(response.data.token)
+            navigate(`/recruiter/${decodedToken.id}`)
+          })
+    }else{
+// IF RESPONSE FALSY
+    }}
+  } catch (error) {
+}
+}
+
+  // if (userType ==='applicant'){
+  //   // call login controller for applicant
+  //   let url = `${URL}/applicant/login`;
+  //   axios.post(url, {email: userEmail, password:userPass})
+  //   .then((res)=>{ console.log(res)
+  //     //go to specific profile page
+  //     //  return <Navigate replace to={`/profile/${id}`} />;
+  //       // let { name } = res.data;
+  //       // this.setState({name})
+  //   }).catch((error)=>{debugger})
+  // }else{
+  //   // call login controller for recruiter
+  //   let url = `${URL}/recruiter/login`;
+  //   axios.post(url, {email: userEmail, password:userPass})
+  //   .then((res)=>{ console.log(res)
+  //     //go to specific profile page
+  //     // return <Navigate replace to={`/profile/${id}`} />;
+  //   }).catch((error)=>{debugger})}
+  // }
 
 // si user existe
 // go to profile page
@@ -53,12 +87,15 @@ const handleSubmit = e => {
 
   return (
     <>
+    
     <form className='form' onSubmit={handleSubmit}>
-      <>
+
+      <div>
     <h1>Welcome back !</h1>
       <h3>Please enter your personal informations</h3>
-      </>
-      <><h3>I want to</h3> <h3 onClick={() => navigate("/register")}>register</h3></>
+      <h4 className='links' onClick={() => navigate("/register")}>I want to register</h4>
+      </div>
+   
       
       <div className='input-container'>
         <label>email</label>
@@ -68,17 +105,17 @@ const handleSubmit = e => {
         
         <div className='radiobtn-container'>
                 <label>I am a</label>
-                <input className='inputs' type='radio' name='user' value = 'recruiter' onClick = {usertypeChange} />
+                <input type='radio' name='user' value = 'recruiter' onClick = {usertypeChange} />
                 <label htmlFor='recruiter'>Recruiter</label>
-                <input className='inputs' type='radio' name='user' value = 'applicant' onClick = {usertypeChange} />
+                <input type='radio' name='user' value = 'applicant' onClick = {usertypeChange} />
                 <label htmlFor='applicant'>Applicant</label>
         </div>
       </div>
   <button className='btn' >login</button>
 </form>
+
     </>
   )
-}
-
+  }
 export default Login
 
