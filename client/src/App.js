@@ -57,7 +57,7 @@ const logout =()=>{
   return (
     <div className="App">
     <Router>
-      <Navbar isLoggedIn={isLoggedIn}/>
+      <Navbar isLoggedIn={isLoggedIn} userType={decoded.userType} userID={decoded._id}/>
     {/* We need to use the Routes wrapper */}
       <Routes>
     {/* For every URL we can render a separate component */}
@@ -66,6 +66,7 @@ const logout =()=>{
         <Route path="/register" element={<Register login={login} />} />
         <Route path="/applicant/:id" element={<ProfileApplicant />} />
         <Route path="/recruiter/:id" element={<ProfileRecruiter />} />
+    
         </Routes>
     </Router>
     </div>

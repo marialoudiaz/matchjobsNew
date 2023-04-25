@@ -5,8 +5,15 @@ import {URL} from "../config"
 
 
 function ProfileApplicant() {
+
+  // the application to be displayed
+  const [myApp, setmyApp]=useState(null)
+
+
   return (
     <>
+
+    {/* // if mySheets == null */}
     <div className='InitalPage'>
       {/* <h1>Hello {email}</h1> */}
       <h3>you don't have any application created yet</h3>
