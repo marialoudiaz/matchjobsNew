@@ -7,11 +7,13 @@ import * as jose from 'jose'
 
 function Login(props) {
   let navigate = useNavigate();
+  const {type, id, userId} = useParams();
 
   // State components - Login Informations
   const [userEmail, setUserEmail]=useState(null)
   const [userPass, setUserPass]=useState(null)
   const [userType, setUserType]=useState(null)
+  const [msg, setMsg]=useState('');
 
  // Set values of input to what has been inputed
 const userInfosChange = e=>{ 
@@ -33,57 +35,39 @@ const handleSubmit = async(e) => {
     // call login controller for applicant
     // login for applicant
     if (userType==='applicant'){
+      //j'envoie une requete post au server
+      debugger
       const response = await axios.post(`${URL}/applicant/login`,{email: userEmail, password:userPass})
-        if (response.data.ok){
+      // si l'user exist je decode le token, prend l'email et le met dans localStorage  
+      if (response.data.ok){
           let decodedToken = jose.decodeJwt(response.data.token)
-          localStorage.setItem('token', response.data.token)
           setTimeout(()=>{
             props.login(response.data.token)
-            navigate(`/applicant/${decodedToken.id}`)
+            navigate(`/applicant/${decodedToken._id}`)
           })
         } else {
           // IF RESPONSE FALSY
+          setMsg(response.data.message)
         }
         // login for recruiter
     } else {
+      //j'envoie une requete post au server
       const response = await axios.post(`${URL}/recruiter/login`,{email: userEmail, password:userPass})
-        if (response.data.ok){
+      // si la reponse est truthy 
+      if (response.data.ok){
           let decodedToken = jose.decodeJwt(response.data.token)
           localStorage.setItem('token', response.data.token)
           setTimeout(()=>{
             props.login(response.data.token)
-            navigate(`/recruiter/${decodedToken.id}`)
+            navigate(`/recruiter/${decodedToken._id}`)
           })
     }else{
-// IF RESPONSE FALSY
+    // IF RESPONSE FALSY
+    setMsg(response.data.message)
     }}
   } catch (error) {
 }
 }
-
-  // if (userType ==='applicant'){
-  //   // call login controller for applicant
-  //   let url = `${URL}/applicant/login`;
-  //   axios.post(url, {email: userEmail, password:userPass})
-  //   .then((res)=>{ console.log(res)
-  //     //go to specific profile page
-  //     //  return <Navigate replace to={`/profile/${id}`} />;
-  //       // let { name } = res.data;
-  //       // this.setState({name})
-  //   }).catch((error)=>{debugger})
-  // }else{
-  //   // call login controller for recruiter
-  //   let url = `${URL}/recruiter/login`;
-  //   axios.post(url, {email: userEmail, password:userPass})
-  //   .then((res)=>{ console.log(res)
-  //     //go to specific profile page
-  //     // return <Navigate replace to={`/profile/${id}`} />;
-  //   }).catch((error)=>{debugger})}
-  // }
-
-// si user existe
-// go to profile page
-
 
   return (
     <>
@@ -112,6 +96,7 @@ const handleSubmit = async(e) => {
         </div>
       </div>
   <button className='btn' >login</button>
+  <p>{msg}</p>
 </form>
 
     </>

@@ -5,7 +5,7 @@ import {URL} from "../config"
 import App from '../App.css'
 import * as jose from 'jose'
 
-function Register() {
+function Register(props) {
   let navigate = useNavigate();
 
   const [userEmail, setUserEmail]=useState(null)
@@ -38,19 +38,37 @@ const userInfosChange = e=>{
       .then((res)=>{
         //return <Navigate replace to={`/applicant/${id}`} />;
         console.log(res.data.message)
+        if (res.data.ok){
+          let decodedToken = jose.decodeJwt(res.data.token)
+          localStorage.setItem('token', res.data.token)
+          setTimeout(()=>{
+            props.login(res.data.token)
+            navigate(`/applicant/${decodedToken._id}`)
+          })
+        }else{
         setMsg(res.data.message)
+        }
+        
         // let { name } = res.data;
         // this.setState({name})
       }).catch((error)=>{
           debugger
       })
     }else{
-      let url = `${URL}/recuiter/register`;
+      let url = `${URL}/recruiter/register`;
       axios.post(url, {email: userEmail, password:userPass, password2: userPass2})
       .then((res)=>{
         //  navigate({`/recruiter/${id}`}) />;
-        console.log(res)
-        setMsg(res.data.message)
+          if (res.data.ok){
+            let decodedToken = jose.decodeJwt(res.data.token)
+            localStorage.setItem('token', res.data.token)
+            setTimeout(()=>{
+              props.login(res.data.token)
+              navigate(`/recruiter/${decodedToken._id}`)
+            })
+          }else{
+          setMsg(res.data.message)
+          }
       }).catch((error)=>{debugger})
     }}
 

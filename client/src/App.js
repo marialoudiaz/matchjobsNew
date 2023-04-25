@@ -1,11 +1,14 @@
 import './App.css';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Navbar from "./Components/Navbar"
 import Welcome from "./Views/Welcome"
 import Login from "./Views/Login"
 import Register from "./Views/Register"
 import ProfileApplicant from './Views/ProfileApplicant';
 import ProfileRecruiter from './Views/ProfileRecruiter';
 import * as jose from 'jose'
+import axios from 'axios';
 
 function App() {
   // get the token from local storage
@@ -23,6 +26,7 @@ useEffect(
           setIsLoggedIn(false)
         }else{
           axios.defaults.headers.common['Authorization']=token;
+          let decoded = jose.decodeJwt(token) // decoding the information form the token {userName,userType}
           const response = await axios.post((`${URL}/${decoded.userType}/verify_token`));
           return response.data.ok ? login(token) : logout();
         }
@@ -58,8 +62,8 @@ const logout =()=>{
       <Routes>
     {/* For every URL we can render a separate component */}
         <Route path="/" element={<Welcome />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login login={login} />} />
+        <Route path="/register" element={<Register login={login} />} />
         <Route path="/applicant/:id" element={<ProfileApplicant />} />
         <Route path="/recruiter/:id" element={<ProfileRecruiter />} />
         </Routes>
