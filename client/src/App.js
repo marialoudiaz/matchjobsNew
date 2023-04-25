@@ -57,7 +57,7 @@ const logout =()=>{
   return (
     <div className="App">
     <Router>
-      <Navbar isLoggedIn={isLoggedIn} userType={decoded.userType} userID={decoded._id}/>
+      <Navbar isLoggedIn={isLoggedIn} userType={token.userType} userID={token._id}/>
     {/* We need to use the Routes wrapper */}
       <Routes>
     {/* For every URL we can render a separate component */}

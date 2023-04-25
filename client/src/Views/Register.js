@@ -29,52 +29,46 @@ const userInfosChange = e=>{
   }
 
 
-  const handleSubmit = e => {
+  const handleSubmit = async (e) => {
     debugger
     e.preventDefault();
-    if (userType==='applicant'){
-      let url = `${URL}/applicant/register`;
-      axios.post(url, {email: userEmail, password:userPass, password2: userPass2})
-      .then((res)=>{
-        //return <Navigate replace to={`/applicant/${id}`} />;
-        console.log(res.data.message)
-        if (res.data.ok){
-          let decodedToken = jose.decodeJwt(res.data.token)
-          localStorage.setItem('token', res.data.token)
+    
+    try {
+      if(userType==='applicant'){
+      const response = await axios.post(`${URL}/applicant/register`, {email: userEmail, password:userPass, password2: userPass2});
+      setMsg(response.data.message);
+    
+          if (response.data.ok) {
+          let decodedToken = jose.decodeJwt(response.data.token)
+          console.log("Email extracted from the JWT token after login: ", decodedToken.userEmail)
+          localStorage.setItem('token', response.data.token)
           setTimeout(()=>{
-            props.login(res.data.token)
-            navigate(`/applicant/${decodedToken._id}`)
-          })
-        }else{
-        setMsg(res.data.message)
+          props.login(response.data.token)
+          navigate(`/applicant/${decodedToken._id}`)
+          }, 2000);
+          }else {
+          setMsg(response.data.message)
+         }
+      } else {
+      const response = await axios.post(`${URL}/recruiter/register`, {email: userEmail, password:userPass, password2: userPass2});
+      setMsg(response.data.message);
+    
+          if (response.data.ok) {
+          let decodedToken = jose.decodeJwt(response.data.token)
+          console.log("Email extracted from the JWT token after login: ", decodedToken.userEmail)
+          localStorage.setItem('token', response.data.token)
+          setTimeout(()=>{
+          props.login(response.data.token)
+          navigate(`/recruiter/${decodedToken._id}`)
+          }, 2000);
+        }else {
+        setMsg(response.data.message)
         }
-        
-        // let { name } = res.data;
-        // this.setState({name})
-      }).catch((error)=>{
-          debugger
-      })
-    }else{
-      let url = `${URL}/recruiter/register`;
-      axios.post(url, {email: userEmail, password:userPass, password2: userPass2})
-      .then((res)=>{
-        //  navigate({`/recruiter/${id}`}) />;
-          if (res.data.ok){
-            let decodedToken = jose.decodeJwt(res.data.token)
-            localStorage.setItem('token', res.data.token)
-            setTimeout(()=>{
-              props.login(res.data.token)
-              navigate(`/recruiter/${decodedToken._id}`)
-            })
-          }else{
-          setMsg(res.data.message)
-          }
-      }).catch((error)=>{debugger})
-    }}
-
-  // condition
-  // if axios request is successfull go to profile page of id
-  
+      }
+  } catch (error) {
+    console.log(error);
+  }
+};
 
   return (
     <>

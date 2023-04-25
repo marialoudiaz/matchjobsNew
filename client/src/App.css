@@ -118,6 +118,10 @@ padding: 2%;
   font-weight: 500;
 }
 
+p {
+  color: #3c4043;
+}
+
 .none{
   display: none;
 }

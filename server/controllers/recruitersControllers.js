@@ -6,7 +6,7 @@ const argon2 = require("argon2"); //https://github.com/ranisalt/node-argon2/wiki
 const jwt = require("jsonwebtoken");
 const jwt_secret = process.env.JWT_SECRET;
 
-const register = async (req, res) => {
+const register = async (req, res, next) => {
   // this salt can be truly random with one of available npm packages
   const salt = '321dsa'
   const { email, password, password2 } = req.body;
@@ -33,7 +33,8 @@ const register = async (req, res) => {
       password: hash,
     };
     await Recruiter.create(newUser);
-    res.json({ ok: true, message: "Successfully registered" });
+    next()
+    // res.json({ ok: true, message: "Successfully registered" });
   } catch (error) {
     console.log(error)
     res.json({ ok: false, error });
