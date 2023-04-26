@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import Navbar from "./Components/Navbar"
 import Welcome from "./Views/Welcome"
 import Login from "./Views/Login"
@@ -16,6 +16,12 @@ const [token, setToken]= useState(JSON.parse(localStorage.getItem('token')));
 
 // verifier si connecté ou non
 const [isLoggedIn, setIsLoggedIn]= useState(null);
+
+// update l'état de l'user
+const [user,SetUser] = useState({});
+
+
+
 
 // at every render verifier le token
 useEffect(
@@ -44,6 +50,9 @@ useEffect(
 const login =(token)=>{
   localStorage.setItem("token",JSON.stringify(token));
   setIsLoggedIn(true);
+  let decoded = jose.decodeJwt(token)
+  SetUser(decoded)// set l'user et type user avec le token pour le passer dans la navbar
+  console.log(decoded)
 };
 
 // fonction pour logout
@@ -57,15 +66,20 @@ const logout =()=>{
   return (
     <div className="App">
     <Router>
-      <Navbar isLoggedIn={isLoggedIn} userType={token.userType} userID={token._id}/>
-    {/* We need to use the Routes wrapper */}
+      <Navbar logout={logout} isLoggedIn={isLoggedIn} userType={user.userType} userID={user._id}/>
       <Routes>
     {/* For every URL we can render a separate component */}
         <Route path="/" element={<Welcome />} />
         <Route path="/login" element={<Login login={login} />} />
-        <Route path="/register" element={<Register login={login} />} />
-        <Route path="/applicant/:id" element={<ProfileApplicant />} />
-        <Route path="/recruiter/:id" element={<ProfileRecruiter />} />
+        <Route path="/register" element={<Register login={login} />} /> 
+
+
+        <Route path={`/applicant/${user._id}`} 
+        element={isLoggedIn && user.userType==='applicant' ? <ProfileApplicant user={user.userEmail}/> : <Navigate to={'/'}/> } />  
+        
+        {/* // passer a la fonction login le type d'user et l'id */}
+        <Route path={`/recruiter/${user._id}`} 
+       element={isLoggedIn && user.userType==='recruiter' ? <ProfileRecruiter user={user.userEmail}/> : <Navigate to={'/'}/>} />  
     
         </Routes>
     </Router>

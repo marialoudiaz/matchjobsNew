@@ -3,63 +3,48 @@ import { NavLink, useNavigate } from "react-router-dom";
 import {URL} from '../config'
 
 // Je passe comme props la fonction qui permet de savoir si je suis logged in (avec le token)
-function Navbar({isLoggedIn, userType, userID}) {
+function Navbar({logout, isLoggedIn, userType, userID}) {
 
 // // Ne pas faire apparaitre la navbar sur welcome/login/register
 
 let navigate = useNavigate();
 
+
 return (
      <div className="navbar">
 
-     {isLoggedIn===true &&
-      <>
+      {isLoggedIn===true &&
       <NavLink
-       to="/Discover"
+      to={`/${userType}/${userID}`} > 
+      Profile 
+      </NavLink>
+      }
+
+     {isLoggedIn===true &&
+      <NavLink
+       to={`/Discover/${userID}`}
       >
       matchjobs
      </NavLink>
-     </>
     }
-
-{/* /// AFFICHER LE PROFIL (conditional) */}
-      {isLoggedIn && userType==='applicant' 
-      &&
-      <NavLink 
-      to={`/applicant/${userID}`} > 
-      Profile 
-      </NavLink>
-      }
-
-      {isLoggedIn && userType==='recruiter' 
-      &&
-      <NavLink
-      to={`/recruiter/${userID}`} > 
-      Profile 
-      </NavLink>
-      }
      
      {isLoggedIn===true
      &&
      <NavLink 
-     to={'/Matches'}
+     to={`/Matches/${userID}`}
      >Matches
      </NavLink>
     }
 
     {isLoggedIn===true
     &&
-    <NavLink 
-    to={'/'}
+    <span 
+    onClick={logout}
     > Logout
-    </NavLink>
+    </span>
     }
     
-    {/* // when token expires */}
-    {isLoggedIn===false
-    &&
-     navigate('/')
-    }
+ 
 
   </div>
   
