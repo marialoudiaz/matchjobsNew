@@ -74,11 +74,11 @@ const logout =()=>{
         <Route path="/register" element={<Register login={login} />} /> 
 
 
-        <Route path={`/applicant/${user._id}`} 
+        <Route path={`/applicant/:id`} 
         element={isLoggedIn && user.userType==='applicant' ? <ProfileApplicant user={user.userEmail}/> : <Navigate to={'/'}/> } />  
         
         {/* // passer a la fonction login le type d'user et l'id */}
-        <Route path={`/recruiter/${user._id}`} 
+        <Route path={`/recruiter/:id`} 
        element={isLoggedIn && user.userType==='recruiter' ? <ProfileRecruiter user={user.userEmail}/> : <Navigate to={'/'}/>} />  
     
         </Routes>

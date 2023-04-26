@@ -25,6 +25,19 @@ img{
   color: #3D7CFF;
 }
 
+.navbar{
+  display: flex;
+  flex-wrap: wrap;
+  font-family: 'Montserrat';
+  font-size: 20px;
+}
+
+.navbar-right{
+  margin-left: 35%;
+  text-align: end;
+}
+
+
 form{
 background: #FFFFFF;
 background: linear-gradient(90deg, #FFFFFF, #3D7CFF);
@@ -206,6 +219,3 @@ padding: 2%;
   font-size: 20px;
 }
 
-.blur-card{
-
-}

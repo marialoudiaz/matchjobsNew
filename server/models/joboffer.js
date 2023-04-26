@@ -14,6 +14,7 @@ const jobOfferSchema = new mongoose.Schema({
     softSkills:[{type:String,required:true,unique:false}],
     hardSkills:[{type:String,required:true,unique:false}],
     jobFields:[{type:String,required:true,unique:false}],
+    languagesSpoken:[{type:String,unique:false}],
     likedBy:[{
         applicant_id: {
             type:mongoose.Schema.Types.ObjectId,

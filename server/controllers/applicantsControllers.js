@@ -168,11 +168,11 @@ const updateApplicant = async (req,res)=>{
 
 // //addApplication,
 const addApplication = async (req,res) =>{
-  const {jobTitle, remote,onSite, flexible,minPrice,maxPrice,location,bio,softSkills,hardSkills, jobFields,uploadedFiles, email } = req.body; 
+  const {jobTitle, remote,onSite, flexible,minPrice,maxPrice,location,bio,softSkills,hardSkills, jobFields,languagesSpoken, uploadedFiles, email } = req.body; 
   try {
    const applicant = await Applicant.findOne({email})
    if(applicant){
-      const newApplication = await JobApplication.create({jobTitle, remote,onSite, flexible,minPrice,maxPrice,location,bio,softSkills,hardSkills, jobFields,uploadedFiles,likedBy :[], applicantsId: applicant._id })
+      const newApplication = await JobApplication.create({jobTitle, remote,onSite, flexible,minPrice,maxPrice,location,bio,softSkills,hardSkills, jobFields,languagesSpoken, uploadedFiles,likedBy :[], applicantsId: applicant._id })
       console.log(newApplication)
       res.send({ok:true,data:'new job application created successfully'})
    }else{
@@ -238,7 +238,7 @@ const getJobApplication = async(req,res)=>{
 
 // // getAllMyJobApplications
 const getAllMyJobApplications = async(req,res)=>{
-
+console.log("test")
 // look for records in JobApplications collection with specific applicantsId reference
 // pass to the controller a current applicant_id
 let {id} = req.params;
@@ -248,6 +248,7 @@ let {id} = req.params;
     // empty array with objects of all the job offers that belongs to this recruiter
     // var arrJobApplications =[]
     const allJobApplications = await JobApplication.find({applicantsId: id}) // FIND ALL
+    console.log("getalljobs",allJobApplications)
     res.send({ok:true, data: allJobApplications})
   //     for (var ele of allJobApplications){
   //     if (ele._id.toString() == applicantId.toString()){ // take the job offers of a specific id(user)
