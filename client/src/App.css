@@ -111,6 +111,7 @@ padding: 2%;
 
 .msg{
   background-color: aliceblue;
+  color: #3c4043;
   border-radius: 60px;
   padding: 1em;
   width: 30%;
@@ -118,9 +119,7 @@ padding: 2%;
   font-weight: 500;
 }
 
-p {
-  color: #3c4043;
-}
+
 
 .none{
   display: none;

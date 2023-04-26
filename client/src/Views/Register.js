@@ -50,6 +50,7 @@ const userInfosChange = e=>{
           setMsg(response.data.message)
          }
       } else {
+        debugger
       const response = await axios.post(`${URL}/recruiter/register`, {email: userEmail, password:userPass, password2: userPass2});
       setMsg(response.data.message);
     
