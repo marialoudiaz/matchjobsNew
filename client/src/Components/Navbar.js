@@ -40,10 +40,9 @@ return (
 
      {isLoggedIn===true &&
       <NavLink
-       to={`/Discover/${userID}`}
+       to={`/${userType}/${userID}/discover`}
        style= {linkStyles.defaultLink}
       >
-     
       matchjobs
      </NavLink>
     }

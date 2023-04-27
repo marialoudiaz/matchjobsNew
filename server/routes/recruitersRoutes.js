@@ -27,6 +27,10 @@ router.post('/likeApplicant',controller.likeApplicant)
 // //unlikeApplicant
 router.post('/unlikeApplicant',controller.unlikeApplicant)
 
+// getAllApplications
+router.get('/getAllApplications',controller.getAllApplications)
+
+
 
 
 module.exports = router;

@@ -43,34 +43,41 @@ console.log(myApp)
 <div className='InitalPage'>
     {/* <h1>Hello {email}</h1> */}
     
-    <div className='card'>
-      <div className='top-card'></div>
-      <div className='inside-card'><p onClick= {<Navigate to={'/applicant/${user._id}/view'}/>}>Create a new offer</p></div>
-    </div>
+    
     {!myApp ? 
-    <> <h3>you don't have any application created yet</h3><p>all your app will be displayed here</p></>
+    <> <div className='card'>
+    <div className='top-card'></div>
+    <div className='inside-card'><p onClick= {<Navigate to={'/applicant/${user._id}/view'}/>}>Create a new offer</p></div>
+  </div>
+  <h3>you don't have any application created yet</h3><p>all your app will be displayed here</p></>
     :
 
 // Version avec les offres affichées
       
       <div className='classicPage'>
           {/* <h1>Hello {userName},</h1> */}
-          <h3>select, modify or create your new job application</h3>
+          <h3>Your job application</h3>
           {/* // applications created */}
           <div className='jobApplication'>
           {myApp.map(c =>( 
         <>
         {/* <Link to = {`/${type}/view/${c._id}`}> */}
-        <h1>{c.jobTitle}</h1>
+        <p>{c.jobTitle}</p>
+
+        <p>Job field : {c.jobFields}</p>
+        {c.remote ? <p>remote</p> : <p></p> }
+        {c.onSite ? <p>onSite</p> : <p></p> }
+        {c.flexible ? <p>Flexible</p> : <p></p> }
+       
         <p>{c.location}</p>
-        <h2>Skills</h2>
-        <p>{c.jobFields}</p>
-        <h3>Soft</h3>
+        <h4>Skills</h4>
+        <h4>Soft</h4>
         <p>{c.softSkills}</p>
-        <h3>Hard</h3>
+        <h4>Hard</h4>
         <p>{c.hardSkills}</p>
 {/*         
         <button  onClick= {() => navigate(`/applicant/edit/${id}`)}>edit</button>
+         <button  onClick= {() => navigate(`/applicant/view/${id}`)}>edit</button>
         <button onClick = {()=> c.active = !c.active}>activate</button> */}
         {/* </Link> */}
         </>
@@ -85,3 +92,8 @@ console.log(myApp)
 }
 
 export default ProfileApplicant
+
+
+// button view => render view
+// button edit => render edit
+// button delete => call controller delete

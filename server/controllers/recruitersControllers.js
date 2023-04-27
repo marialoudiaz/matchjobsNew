@@ -1,7 +1,8 @@
 const  JobApplication = require('../models/jobapplication')
 const JobOffer = require('../models/joboffer')
-const  Recruiter = require('../models/recruiter')
 
+const  Applicant = require('../models/applicants')
+const  Recruiter = require('../models/recruiter')
 const argon2 = require("argon2"); //https://github.com/ranisalt/node-argon2/wiki/Options
 const jwt = require("jsonwebtoken");
 const jwt_secret = process.env.JWT_SECRET;
@@ -156,16 +157,27 @@ const updateRecruiter = async (req,res)=>{
         res.send(error)
     }
 }
+
+
+// //addApplication,
 const addJobOffer = async (req,res) =>{
-    const {companyName,  jobTitle, remote, onSite, flexible, minPrice, maxPrice,location, jobDescription, softSkills, hardSkills,jobFields,userid} = req.body; 
-    try {
-        const newOffer = await JobOffer.create({companyName,jobTitle,remote,onSite,flexible,minPrice,maxPrice,location,jobDescription,softSkills,hardSkills,jobFields, likedBy :[], userid})
-        console.log(newOffer)
-        res.send({ok:true,data:'new job offer created successfully'})
-    } catch (error) {
-      res.send(error)
-    }
+  const {companyName,  jobTitle, remote, onSite, flexible, minPrice, maxPrice,location, jobDescription, softSkills, hardSkills,jobFields,languagesSpoken, recruitersId, email } = req.body; 
+  try {
+   const recruiter = await Recruiter.findOne({email})
+   if(recruiter){
+      const newOffer = await JobOffer.create({companyName,jobTitle,remote,onSite,flexible,minPrice,maxPrice,location,jobDescription,softSkills,hardSkills,jobFields, languagesSpoken,likedBy :[], recruitersId: recruiter._id, email})
+      console.log(newOffer)
+      res.send({ok:true,data:'new job offer created successfully'})
+   }else{
+      res.send({ok:false,data:'could not find the current user'})
+   } 
+  } catch (error) {
+    res.send(error)
+  }
+
 }
+
+
 const deleteJobOffer = async (req,res)=>{
     const {offersId} = req.body;
     try {
@@ -180,9 +192,11 @@ const deleteJobOffer = async (req,res)=>{
         res.send(error)   
   }
 }
-// //updateJobOffer
-// router.post('updateJobOffer',controller.updateJobOffer)
-const updateJobOffer = async (req,res)=>{
+
+
+ // //updateJobOffer
+ // router.post('updateJobOffer',controller.updateJobOffer)
+ const updateJobOffer = async (req,res)=>{
   
   const {jobOffer, oldJobOffer} = req.body;
   console.log('here')
@@ -229,11 +243,12 @@ const getJobOffer = async(req,res)=>{
 const getAllMyJobOffer = async(req,res)=>{
   // id = recruiters' id
   let {id} = req.params;
+  console.log(id)
   
   try {
     // empty array with objects of all the job offers that belongs to this recruiter
     // var arrJobOffer =[]
-    const allJobOffers = await JobOffer.find({recruiterId: id}) // FIND ALL
+    const allJobOffers = await JobOffer.find({recruitersId: id}) // FIND ALL
     res.send({ok:true, data: allJobOffers})
   //     for (var ele of allJobOffers){
   //     if (ele._id.toString() == recruiterId.toString()){ // take the job offers of a specific id(user)
@@ -276,6 +291,17 @@ const unlikeApplicant = async(req,res)=>{
     res.send(error)
   }}
 
+
+  // getAllJobApplications in the main
+  const getAllApplications = async (req,res)=>{
+  try {
+    const allJobApplications = await JobApplication.find({})
+    res.send({ok:true, data: allJobApplications})
+  } catch (error) {
+    res.send(error)
+  }}
+
+
 module.exports = {
     findRecruiter,
     addRecruiter,
@@ -291,4 +317,5 @@ module.exports = {
     register,
     verify_token,
     getJobOffer,
+    getAllApplications,
   }

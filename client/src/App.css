@@ -54,6 +54,54 @@ padding: 2em;
 
 }
 
+.topTitle{
+  font-family: Raleway;
+  margin: .7em;
+}
+
+.jobApplication{
+  background-color:#FBFAF9;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  padding: 2em;
+  margin: .5em 1.5em;
+  border-radius: 20px;
+  width: 70%;
+}
+
+.jobApplication p{
+  font-family: Montserrat;
+  font-size: 15px;
+  margin: .3em;
+  color: #999797;
+}
+
+.jobApplication h4{
+  font-family: Montserrat;
+  font-size: 16px;
+  color: #515050;
+
+}
+
+.jobApplication h3{
+  font-family: Montserrat;
+  font-size: 18px;
+  color: #2c2b2b;
+}
+
+
+.chip{
+  display: inline;
+  color: #b4b4b4;
+  border-radius: 5px;
+  background-color: #e9e6e6;
+  border: 1px solid #cfcdcd;
+  padding: .2em .5em;
+  font-size: 12px;
+  font-family: Montserrat;
+  margin: .3em;
+}
+
+
 
 .input-container{
   display: flex;

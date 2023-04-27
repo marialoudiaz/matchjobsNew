@@ -7,6 +7,8 @@ import Login from "./Views/Login"
 import Register from "./Views/Register"
 import ProfileApplicant from './Views/ProfileApplicant';
 import ProfileRecruiter from './Views/ProfileRecruiter';
+import DiscoverApplicant from './Views/DiscoverApplicant';
+import DiscoverRecruiter from './Views/DiscoverRecruiter';
 import * as jose from 'jose'
 import axios from 'axios';
 
@@ -80,7 +82,16 @@ const logout =()=>{
         {/* // passer a la fonction login le type d'user et l'id */}
         <Route path={`/recruiter/:id`} 
        element={isLoggedIn && user.userType==='recruiter' ? <ProfileRecruiter user={user.userEmail}/> : <Navigate to={'/'}/>} />  
+
+        <Route path={`/applicant/:id/discover`} 
+        element={isLoggedIn && user.userType==='applicant' ? <DiscoverApplicant user={user.userEmail}/> : <Navigate to={'/'}/> } />  
+        
+        {/* // passer a la fonction login le type d'user et l'id */}
+        <Route path={`/recruiter/:id/discover`} 
+       element={isLoggedIn && user.userType==='recruiter' ? <DiscoverRecruiter user={user.userEmail}/> : <Navigate to={'/'}/>} />  
     
+
+
         </Routes>
     </Router>
     </div>
