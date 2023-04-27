@@ -30,4 +30,6 @@ router.post('/likeOffer',controller.likeOffer)
 // //unlikeJobOffer
 router.post('/unlikeOffer',controller.unlikeOffer)
 
+router.get('/getAllOffers',controller.getAllOffers)
+
 module.exports = router;

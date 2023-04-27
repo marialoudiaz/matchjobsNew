@@ -219,13 +219,15 @@ const updateJobApplication = async (req,res)=>{
 const getJobApplication = async(req,res)=>{
   // this id = id of one job application
   let {id} = req.params;
+  console.log(id)
     try {
-      const jobApp = await JobApplication.findOne({_id: id})
-      if (jobApp){
-        res.send({ok: true, data: {jobApp}})
-      }else{
-        res.send ({ok: false, data: "Job application doesn't exist"})
-      }
+      const jobApp = await JobApplication.findOne({applicantsId: id}) // search something in DB by the name of '_id'
+      // console.log("jobApp",jobApp)
+      // if (jobApp){
+        res.send({ok: true, data: jobApp})
+      // }else{
+      //   res.send ({ok: false, data: "Job application doesn't exist"})
+      // }
      
     } catch (error) {
       res.send(error)
@@ -310,6 +312,15 @@ const unlikeOffer = async(req,res)=>{
   }
 }
 
+  // getAllJobApplications in the main
+  const getAllOffers = async (req,res)=>{
+    try {
+      const allJobOffers = await JobOffer.find({})
+      res.send({ok:true, data: allJobOffers})
+    } catch (error) {
+      res.send(error)
+    }}
+  
 
 
 
@@ -332,4 +343,5 @@ module.exports = {
   verify_token,
   getJobApplication,
   getEmail,
+  getAllOffers,
 }

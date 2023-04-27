@@ -4,28 +4,28 @@ import axios from 'axios';
 import {URL} from "../config"
 
 
-function ProfileApplicant(user) {
 
-  let navigate = useNavigate();
+function ProfileRecruiter(user) {
 
   // passer l'id
   const params = useParams()
   console.log("id from params",params.id)
   let id = params.id
+  // l'id a l'id de l'user
 
   // the application to be displayed
-  const [myApp, setmyApp]=useState(null)
-console.log(myApp)
+  const [myOffer, setmyOffer]=useState(null)
+
 
   // handleApp
      // const id = user._id;
-     const handleApp = async ()=>{
+     const handleOffer = async ()=>{
       debugger
       try {
-          let allMyApp
-          allMyApp = await axios.get(`${URL}/applicant/getAllMyJobApplications/${id}`)
-          console.log(allMyApp);
-          setmyApp(allMyApp.data.data) 
+          let allMyOffer
+          allMyOffer = await axios.get(`${URL}/recruiter/getAllMyJobOffers/${id}`)
+          console.log(allMyOffer);
+          setmyOffer(allMyOffer.data.data) 
       } catch (error) {
           console.log(error);
       }
@@ -34,7 +34,7 @@ console.log(myApp)
 
   // render the applications every render
     useEffect(()=>{
-      handleApp();
+      handleOffer();
     },[])
 
 
@@ -46,10 +46,10 @@ console.log(myApp)
     {/* <h1>Hello {email}</h1> */}
     
     
-    {!myApp ? 
+    {!myOffer ? 
     <> <div className='card'>
     <div className='top-card'></div>
-    <div className='inside-card'><p onClick= {<Navigate to={'/applicant/${user._id}/view'}/>}>Create a new offer</p></div>
+    {/* <div className='inside-card'><p onClick= {<Navigate to={'/recruiter/${user._id}/view'}/>}>Create a new offer</p></div> */}
   </div>
   <h3>you don't have any application created yet</h3><p>all your app will be displayed here</p></>
     :
@@ -57,29 +57,46 @@ console.log(myApp)
 // Version avec les offres affichées
       
       <div className='classicPage'>
-          {/* <h1>Hello {userName},</h1> */}
-          <h3>Your job application</h3>
+          
+
           {/* // applications created */}
+          <div className='topTitle'>
+          {myOffer.map(c =>( <h2>Hello {c.companyName},</h2> ))}
+          <h2>Welcome back</h2>
+          </div>
+          
           <div className='jobApplication'>
-          {myApp.map(c =>( 
+          {myOffer.map(c =>( 
         <>
         {/* <Link to = {`/${type}/view/${c._id}`}> */}
-        <p>{c.jobTitle}</p>
-
-        <p>Job field : {c.jobFields}</p>
-        {c.remote ? <p>remote</p> : <p></p> }
+        <h3 >{c.companyName}</h3>
+        <h4 >{c.jobTitle}</h4>
+      
+        <p >{c.jobFields}</p>
+       
+        {c.remote ?  <div className='chip'>remote</div> : <div></div> }
         {c.onSite ? <p>onSite</p> : <p></p> }
         {c.flexible ? <p>Flexible</p> : <p></p> }
        
-        <p>{c.location}</p>
+
+        <p className='location'>{c.location}</p>
+       
+        <h4 className='jobDescription'>Job Description</h4>
+        <p>{c.jobDescription}</p>
+
+       
         <h4>Skills</h4>
         <h4>Soft</h4>
         <p>{c.softSkills}</p>
         <h4>Hard</h4>
         <p>{c.hardSkills}</p>
-     
-        <button className='chip' onClick= {() => navigate(`/applicant/edit/${id}`)}>edit</button>
-         <button  className='chip' onClick= {() => navigate(`/applicant/view/${id}`)}>view</button>
+        <h4>Languages</h4>
+        <p>{c.languagesSpoken}</p>
+{/*         
+        <button  onClick= {() => navigate(`/applicant/edit/${id}`)}>edit</button>
+         <button  onClick= {() => navigate(`/applicant/view/${id}`)}>edit</button>
+        <button onClick = {()=> c.active = !c.active}>activate</button> */}
+        {/* </Link> */}
         </>
     ))}
     
@@ -91,7 +108,7 @@ console.log(myApp)
   )
 }
 
-export default ProfileApplicant
+export default ProfileRecruiter
 
 
 // button view => render view

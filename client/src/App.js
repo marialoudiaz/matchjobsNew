@@ -9,8 +9,12 @@ import ProfileApplicant from './Views/ProfileApplicant';
 import ProfileRecruiter from './Views/ProfileRecruiter';
 import DiscoverApplicant from './Views/DiscoverApplicant';
 import DiscoverRecruiter from './Views/DiscoverRecruiter';
+import ViewApplicant from './Views/ViewApplicant';
+import ViewRecruiter from './Views/ViewRecruiter'
 import * as jose from 'jose'
 import axios from 'axios';
+import {URL} from "./config"
+
 
 function App() {
   // get the token from local storage
@@ -89,6 +93,13 @@ const logout =()=>{
         {/* // passer a la fonction login le type d'user et l'id */}
         <Route path={`/recruiter/:id/discover`} 
        element={isLoggedIn && user.userType==='recruiter' ? <DiscoverRecruiter user={user.userEmail}/> : <Navigate to={'/'}/>} />  
+    
+       <Route path={`/applicant/:id/view`} 
+        element={isLoggedIn && user.userType==='applicant' ? <ViewApplicant user={user}/> : <Navigate to={'/'}/> } />  
+        
+        {/* // passer a la fonction login le type d'user et l'id */}
+        <Route path={`/recruiter/:id/view`} 
+       element={isLoggedIn && user.userType==='recruiter' ? <ViewRecruiter user={user}/> : <Navigate to={'/'}/>} />  
     
 
 

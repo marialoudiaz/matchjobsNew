@@ -6,7 +6,8 @@ import {URL} from "../config"
 
 function DiscoverRecruiter() {
 
-const [myApp, setmyApp]=useState()
+const [myApp, setmyApp]=useState([])
+// stocker data.data (donc l'objet entier avec toutes les clefs)
 
 
 // display the applications
@@ -30,18 +31,28 @@ useEffect(()=>{
 
   return (
     <>
-    <div>
-      {myApp.map(application, i=>(
-        <div key={i} className='jobApplication'>{application}</div>
-      
+    <div className='allCards'>
+      {myApp.map((application, i)=>(
+        <>
+        <div className='jobApplication'>
+        <p key={i} >{application.companyName}</p>
+        <p key={i} >{application.jobTitle}</p>
+        <div className='bigChip'>
+        <button className='chip'>View</button>
+        <button className='chip'>Like</button>
+        </div>
+        <p key={i} className='location'>{application.location}</p>
+        {application.remote ?  <div className='chip'>remote</div> : <div></div> }
+        {application.onSite ? <div className='chip'>onSite</div> : <p></p> }
+        {application.flexible ? <div className='chip'>Flexible</div> : <p></p> }
+        <p>{application.softSkills}</p><p>{application.hardSkills}</p>
+      </div>
+    </>   
       ))}
-      
-      
-    </div> 
+   </div> 
     </>
   )
 }
-
 export default DiscoverRecruiter
 // get all job application
 // button to render view 

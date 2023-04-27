@@ -10,7 +10,7 @@ const linkStyles = {
   defaultLink: {
     textDecoration: "none",
     color: "black",
-    margin: "1rem",
+    margin: "1rem ",
     padding: "3rem",
     position: "relative",
     fontFamily: 'Montserrat',

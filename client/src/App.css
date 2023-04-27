@@ -54,6 +54,11 @@ padding: 2em;
 
 }
 
+.allCards{
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .topTitle{
   font-family: Raleway;
   margin: .7em;
@@ -63,9 +68,9 @@ padding: 2em;
   background-color:#FBFAF9;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
   padding: 2em;
-  margin: .5em 1.5em;
+  margin: 3em 1.5em;
   border-radius: 20px;
-  width: 70%;
+  width: 35%;
 }
 
 .jobApplication p{
@@ -88,6 +93,17 @@ padding: 2em;
   color: #2c2b2b;
 }
 
+
+.bigChip{
+  display: inline;
+  border-radius: 5px;
+  background-color: #f6f2f2;
+  border: 1px solid #cfcdcd;
+  padding: .2em 0.02em;
+  font-size: 12px;
+  font-family: Montserrat;
+  margin: .3em;
+}
 
 .chip{
   display: inline;

@@ -91,12 +91,10 @@ function ProfileRecruiter(user) {
         <h4>Hard</h4>
         <p>{c.hardSkills}</p>
         <h4>Languages</h4>
-        <p>{c.languagesSpoken}</p>
-{/*         
-        <button  onClick= {() => navigate(`/applicant/edit/${id}`)}>edit</button>
-         <button  onClick= {() => navigate(`/applicant/view/${id}`)}>edit</button>
-        <button onClick = {()=> c.active = !c.active}>activate</button> */}
-        {/* </Link> */}
+        <p>{c.languagesSpoken}</p>         
+        {/* <button  onClick= {() => navigate(`/applicant/edit/${id}`)}>edit</button> */}
+         <button  onClick= {() => Navigate(`/applicant/view/${id}`)}>view</button>
+
         </>
     ))}
     
