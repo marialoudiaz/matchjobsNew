@@ -56,6 +56,7 @@ useEffect(
 
 // fonction pour login
 const login =(token)=>{
+  
   localStorage.setItem("token",JSON.stringify(token));
   setIsLoggedIn(true);
   let decoded = jose.decodeJwt(token)
@@ -83,25 +84,25 @@ const logout =()=>{
 
 
         <Route path={`/applicant/:id`} 
-        element={isLoggedIn && user.userType==='applicant' ? <ProfileApplicant user={user.userEmail}/> : <Navigate to={'/'}/> } />  
+        element={isLoggedIn && user.userType==='applicant' ? <ProfileApplicant user={user.email}/> : <Navigate to={'/'}/> } />  
         
         {/* // passer a la fonction login le type d'user et l'id */}
         <Route path={`/recruiter/:id`} 
-       element={isLoggedIn && user.userType==='recruiter' ? <ProfileRecruiter user={user.userEmail}/> : <Navigate to={'/'}/>} />  
+       element={isLoggedIn && user.userType==='recruiter' ? <ProfileRecruiter user={user.email}/> : <Navigate to={'/'}/>} />  
 
         <Route path={`/applicant/:id/discover`} 
-        element={isLoggedIn && user.userType==='applicant' ? <DiscoverApplicant user={user.userEmail}/> : <Navigate to={'/'}/> } />  
+        element={isLoggedIn && user.userType==='applicant' ? <DiscoverApplicant user={user.email} userID={user._id}/> : <Navigate to={'/'}/> } />  
         
         {/* // passer a la fonction login le type d'user et l'id */}
         <Route path={`/recruiter/:id/discover`} 
-       element={isLoggedIn && user.userType==='recruiter' ? <DiscoverRecruiter user={user.userEmail}/> : <Navigate to={'/'}/>} />  
+       element={isLoggedIn && user.userType==='recruiter' ? <DiscoverRecruiter user={user.email} userID={user._id}/> : <Navigate to={'/'}/>} />  
     
        <Route path={`/applicant/:id/view`} 
-        element={isLoggedIn && user.userType==='applicant' ? <ViewApplicant user={user}/> : <Navigate to={'/'}/> } />  
+        element={isLoggedIn && user.userType==='applicant' ? <ViewApplicant user={user._id}/> : <Navigate to={'/'}/> } />  
         
         {/* // passer a la fonction login le type d'user et l'id */}
         <Route path={`/recruiter/:id/view`} 
-       element={isLoggedIn && user.userType==='recruiter' ? <ViewRecruiter user={user}/> : <Navigate to={'/'}/>} />  
+       element={isLoggedIn && user.userType==='recruiter' ? <ViewRecruiter user={user._id}/> : <Navigate to={'/'}/>} />  
     
         <Route path={`/applicant/:id/edit`} 
         element={isLoggedIn && user.userType==='applicant' ? <EditApplicant user={user}/> : <Navigate to={'/'}/> } />  

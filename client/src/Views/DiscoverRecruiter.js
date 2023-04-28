@@ -4,8 +4,13 @@ import axios from 'axios';
 import {URL} from "../config"
 
 
-function DiscoverRecruiter() {
+function DiscoverRecruiter(user, userID) {
 
+const params = useParams()
+console.log("id from params",params.id)
+let id = params.id
+
+let navigate = useNavigate();
 const [myApp, setmyApp]=useState([])
 // stocker data.data (donc l'objet entier avec toutes les clefs)
 
@@ -38,7 +43,8 @@ useEffect(()=>{
         <p key={i} >{application.companyName}</p>
         <p key={i} >{application.jobTitle}</p>
         <div className='bigChip'>
-        <button className='chip'>View</button>
+        <button className='chip' onClick= {()=>navigate(`/recruiter/${id}/view`)}>View</button>
+
         <button className='chip'>Like</button>
         </div>
         <p key={i} className='location'>{application.location}</p>

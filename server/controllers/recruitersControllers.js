@@ -263,6 +263,7 @@ const getJobApplication = async(req,res)=>{
 // //getAllMyJobOffer
 const getAllMyJobOffer = async(req,res)=>{
   // id = recruiters' id
+  debugger
   let {id} = req.params;
   console.log(id)
   debugger
@@ -341,4 +342,5 @@ module.exports = {
     verify_token,
     getJobOffer,
     getAllApplications,
+    getJobApplication,
   }

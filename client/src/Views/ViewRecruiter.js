@@ -4,19 +4,20 @@ import axios from 'axios';
 import {URL} from "../config"
 
 
-function ViewRecruiter({user}) {
+function ViewRecruiter(user) {
 
 // passer l'id
 const params = useParams()
 console.log("id from params",params.id)
 
 //id of jobapplication
+// id du recruiter
 let id =params.id
 
 // the state component in full size
 const [myView, setmyView]=useState(null)
 // stocker data.data (donc l'objet entier avec toutes les clefs)
-
+// = un objet donc pas beosin de map
 
 
 // display the application
@@ -27,7 +28,7 @@ const [myView, setmyView]=useState(null)
      const handleApp = async ()=>{
       debugger
       try {
-          let singleJob = await axios.get(`${URL}/recruiter/getJobOffer/${id}`)
+          let singleJob = await axios.get(`${URL}/recruiter/getJobOffer/${id}`) // 
           console.log(singleJob);
           singleJob.data.ok && setmyView(singleJob.data.data) // {}
       } catch (error) {

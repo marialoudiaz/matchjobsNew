@@ -49,7 +49,7 @@ console.log(myApp)
     {!myApp ? 
     <> <div className='card'>
     <div className='top-card'></div>
-    <div className='inside-card'><p onClick= {<Navigate to={'/applicant/${user._id}/view'}/>}>Create a new offer</p></div>
+    <div className='inside-card'><p onClick= {<Navigate to={`/applicant/${user._id}/view`}/>}>Create a new offer</p></div>
   </div>
   <h3>you don't have any application created yet</h3><p>all your app will be displayed here</p></>
     :
