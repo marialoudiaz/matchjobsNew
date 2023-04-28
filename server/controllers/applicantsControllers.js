@@ -249,7 +249,7 @@ let {id} = req.params;
   try {
     // empty array with objects of all the job offers that belongs to this recruiter
     // var arrJobApplications =[]
-    const allJobApplications = await JobApplication.find({applicantsId: id}) // FIND ALL
+    const allJobApplications = await JobApplication.findOne({applicantsId: id}) // FIND ALL
     console.log("getalljobs",allJobApplications)
     res.send({ok:true, data: allJobApplications})
   //     for (var ele of allJobApplications){

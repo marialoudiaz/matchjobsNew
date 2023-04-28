@@ -4,7 +4,7 @@ import axios from 'axios';
 import {URL} from "../config"
 
 
-function ViewRecruiter({user}) {
+function ViewApplicant({user}) {
 
 // passer l'id
 const params = useParams()
@@ -27,7 +27,7 @@ const [myView, setmyView]=useState(null)
      const handleApp = async ()=>{
       debugger
       try {
-          let singleJob = await axios.get(`${URL}/recruiter/getJobOffer/${id}`)
+          let singleJob = await axios.get(`${URL}/applicant/getJobApplication/${id}`)
           console.log(singleJob);
           singleJob.data.ok && setmyView(singleJob.data.data) // {}
       } catch (error) {
@@ -47,8 +47,7 @@ useEffect(()=>{
     <>
 
       {myView && <div className='jobApplication'>
-       <p>{myView.companyName}</p>
-       <p>{myView.jobTitle}</p>
+        <p>{myView.jobTitle}</p>
         <div className='bigChip'>
         <button className='chip'>Like</button>
         </div>
@@ -77,7 +76,7 @@ useEffect(()=>{
   )
 }
 
-export default ViewRecruiter
+export default ViewApplicant
 // get all job application
 // button to render view 
 // button like (add to likedBy array)

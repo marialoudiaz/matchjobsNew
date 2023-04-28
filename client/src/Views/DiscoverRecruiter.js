@@ -54,6 +54,6 @@ useEffect(()=>{
   )
 }
 export default DiscoverRecruiter
-// get all job application
-// button to render view 
-// button like (add to likedBy array)
+
+// like button
+// add id of user to likedBy of offer

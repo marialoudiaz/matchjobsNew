@@ -161,11 +161,11 @@ const updateRecruiter = async (req,res)=>{
 
 // //addApplication,
 const addJobOffer = async (req,res) =>{
-  const {companyName,  jobTitle, remote, onSite, flexible, minPrice, maxPrice,location, jobDescription, softSkills, hardSkills,jobFields,languagesSpoken, recruitersId, email } = req.body; 
+  const {companyName,  jobTitle, remote, onSite, flexible, minPrice, maxPrice,location, jobDescription, softSkills, hardSkills,jobFields,languagesSpoken, email } = req.body; 
   try {
    const recruiter = await Recruiter.findOne({email})
    if(recruiter){
-      const newOffer = await JobOffer.create({companyName,jobTitle,remote,onSite,flexible,minPrice,maxPrice,location,jobDescription,softSkills,hardSkills,jobFields, languagesSpoken,likedBy :[], recruitersId: recruiter._id, email})
+      const newOffer = await JobOffer.create({companyName,jobTitle,remote,onSite,flexible,minPrice,maxPrice,location,jobDescription,softSkills,hardSkills,jobFields, languagesSpoken,likedBy :[], recruitersId: recruiter._id})
       console.log(newOffer)
       res.send({ok:true,data:'new job offer created successfully'})
    }else{
@@ -225,9 +225,9 @@ const getJobOffer = async(req,res)=>{
   // this id = id of one job offer
   let {id} = req.params;
     try {
-      const jobOffer = await JobOffer.findOne({_id: id})
+      const jobOffer = await JobOffer.findOne({recruitersId: id})
       if (jobOffer){
-        res.send({ok: true, data: {jobOffer}})
+        res.send({ok: true, data: jobOffer})
       }else{
         res.send ({ok: false, data: "Job offer doesn't exist"})
       }
@@ -238,17 +238,40 @@ const getJobOffer = async(req,res)=>{
 }
 
 
+const getJobApplication = async(req,res)=>{
+  // this id = id of one job application
+  let {id} = req.params;
+  console.log(id)
+    try {
+      const jobApp = await JobApplication.findOne({applicantsId: id}) // search something in DB by the name of '_id'
+      // console.log("jobApp",jobApp)
+      // if (jobApp){
+        res.send({ok: true, data: jobApp})
+      // }else{
+      //   res.send ({ok: false, data: "Job application doesn't exist"})
+      // }
+     
+    } catch (error) {
+      res.send(error)
+    }
+}
+
+
+
+
 
 // //getAllMyJobOffer
 const getAllMyJobOffer = async(req,res)=>{
   // id = recruiters' id
   let {id} = req.params;
   console.log(id)
+  debugger
   
   try {
     // empty array with objects of all the job offers that belongs to this recruiter
     // var arrJobOffer =[]
-    const allJobOffers = await JobOffer.find({recruitersId: id}) // FIND ALL
+    const allJobOffers = await JobOffer.findOne({recruitersId: id}) // FIND ALL
+    console.log("allJobOffers",allJobOffers)
     res.send({ok:true, data: allJobOffers})
   //     for (var ele of allJobOffers){
   //     if (ele._id.toString() == recruiterId.toString()){ // take the job offers of a specific id(user)

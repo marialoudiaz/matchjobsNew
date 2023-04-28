@@ -22,6 +22,8 @@ const userInfosChange = e=>{
   }else{
     setUserPass(e.target.value) }
   }
+
+  
   const usertypeChange = e => {
     setUserType(e.target.value)
   }
