@@ -1,8 +1,8 @@
-const express = require('express'),
-  app= express(),
-  mongoose = require('mongoose');
+const express = require('express');
+const app= express();
+const mongoose = require('mongoose');
   // check schemas or give error
-  mongoose.set('debug', true)
+  mongoose.set('debug', true);
   require('dotenv').config();
   
   app.use(express.urlencoded({extended:true}))

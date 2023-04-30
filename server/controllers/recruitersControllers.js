@@ -180,6 +180,7 @@ const addJobOffer = async (req,res) =>{
 
 const deleteJobOffer = async (req,res)=>{
     const {offersId} = req.body;
+    debugger
     try {
         const findOffer = await JobOffer.findOneAndDelete({_id:offersId})
         if (findOffer){

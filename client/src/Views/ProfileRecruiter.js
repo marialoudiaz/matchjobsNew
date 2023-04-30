@@ -7,14 +7,20 @@ import {URL} from "../config"
 function ProfileRecruiter(props) {
 
   let navigate = useNavigate();
-
-  // passer l'id
+  // 1 - passer l'id de l'user
   const params = useParams()
-  console.log("id from params",params.id)
-  let id = params.id
-console.log("props", props)
-  // the props I pass
+  console.log("id user",params.id) //object id de l'user ( et non l'offre)
+  let userId = params.id
+  
+  // console.log("props", props)
+
+  // 2 - the props I pass - Email of user
   console.log("user Email", props.user)
+
+
+  // 3 - L'id de l'offre
+  const [offersId, setoffersId]= useState('')
+
 
   // l'ID a l'id de l'user
   const [msg, setMsg]= useState('')
@@ -27,9 +33,9 @@ console.log("props", props)
     companyName: "",
     jobTitle:"",
     jobFields:"",
-    remote:"",
-    onSite:"",
-    flexible:"",
+    remote: false,
+    onSite: false,
+    flexible: false,
     minPrice: "",
     maxPrice: "",
     location: "",
@@ -39,6 +45,14 @@ console.log("props", props)
     jobFields: "",
     languagesSpoken: [], 
 }) 
+
+
+// variable temporaires input
+let temporarySoft = '';
+let temporaryHard='';
+let temporaryLanguage='';
+
+
 
 //handleChange du form- pour les inputs
 const handleChange = async (event)=>{
@@ -65,18 +79,69 @@ const handleSubmit = async(e)=>{
   }}
 
 
+
+  const handleChangeSkills = (event)=>{
+    switch (event.target.name){
+      case 'temporarySoft':
+        temporarySoft =  event.target.value
+        break;
+      case 'temporaryHard' :
+        temporaryHard = event.target.value
+        break;
+      case 'temporaryLanguage':
+        temporaryLanguage = event.target.value
+        break;  
+    }
+  }
+// handleSkills - ajouter les skills a l'array
+const handlesoftSkills = ()=>{
+myNewOffer.softSkills.push(temporarySoft)
+temporarySoft = '';
+}
+const handlehardSkills = ()=>{
+  myNewOffer.hardSkills.push(temporaryHard)
+  temporaryHard = '';
+}
+
+const handlelanguages = ()=>{
+  myNewOffer.languagesSpoken.push(temporaryLanguage)
+  temporaryLanguage = '';
+}
+
+
 // handleApp
     // const id = user._id;
      const handleOffer = async ()=>{
+
+      debugger
+      console.log(userId)
       try {
-          let allMyOffer = await axios.get(`${URL}/recruiter/getAllMyJobOffers/${id}`)
-          setmyOffer([allMyOffer.data.data]) 
+          let allMyOffer = await axios.get(`${URL}/recruiter/getAllMyJobOffers/${userId}`)
+          console.log(allMyOffer)
+          if (allMyOffer.data.data.ok){
+            setmyOffer([allMyOffer.data.data]) 
+          console.log('setmyOffer', myOffer)
+          console.log('setoffersId', myOffer[0]._id)
+          setoffersId (myOffer[0]._id) // id de l'offre
+          }else{
+            console.log('hihi')
+          }         
       } catch (error) {
           console.log(error);
     }
   }
 
 
+  // fonction pour supprimer
+const deleteOffer = async()=>{
+  console.log('id for the controller',offersId)
+  try {
+    await axios.post(`${URL}/recruiter/deleteJobOffer`, {offersId})
+    // setmyOffer([deleteOffer.data.data]) 
+} catch (error) {
+    console.log(error);
+}
+}
 
  // render the applications every render
     useEffect(()=>{
@@ -96,12 +161,12 @@ const handleSubmit = async(e)=>{
       
       ? 
       <> <div className='card'>
-        <div className='top-card'></div>
+        <div className='top-card'>
         {/* <div className='inside-card'><p onClick= {<Navigate to={'/recruiter/${user._id}/view'}/>}>Create a new offer</p></div> */}
        
        {/* // le formulaire avec toutes les inputs a envoyer dans DB */}
 
-        <form onSubmit= {handleSubmit} onChange={handleChange}>
+        <form onChange={handleChange}>
  
         <label>Company Name</label>
         <input name='companyName' value={myNewOffer.companyName}/>
@@ -124,19 +189,24 @@ const handleSubmit = async(e)=>{
         <label>Location</label>
         <input name='location'  value={myNewOffer.location} />
         <label>Job Description</label>
-        <input name='jobDescription'   value={myNewOffer.jobDescription} />
+        <input name='jobDescription' value={myNewOffer.jobDescription} />
 
         <label>Soft Skills</label>
-        <input name='softSkills' value={myNewOffer.softSkills} />
+        <input onChange= {handleChangeSkills} name='temporarySoft' value={temporarySoft} />
+        <button onClick={handlesoftSkills} className='btn'>Add Skill</button>
 
         <label>Hard Skills</label>
-        <input name='hardSkills' value={myNewOffer.hardSkills} />
+        <input onChange= {handleChangeSkills} name='temporaryHard' value={temporaryHard} />
+        <button onClick={handlehardSkills} className='btn'>Add Skill</button>
 
         <label>Languages</label>
-        <input name='languagesSpoken' value={myNewOffer.languagesSpoken}/>
-        <button className='btn'>Create offer</button>
+        <input onChange= {handleChangeSkills} name='temporaryLanguage' value={temporaryLanguage}/>
+        <button onClick={handlelanguages} className='btn'>Add Languages</button>
+        
+        <button onClick={handleSubmit} className='btn'>Create offer</button>
         <p>{msg}</p>
         </form>
+     </div>
      </div>
 
       <h3>you don't have any application created yet</h3><p>all your app will be displayed here</p></>
@@ -177,7 +247,9 @@ const handleSubmit = async(e)=>{
         <h4>Languages</h4>
         <p>{c.languagesSpoken}</p>         
         {/* <button  onClick= {() => navigate(`/applicant/edit/${id}`)}>edit</button> */}
-         <button onClick= {()=>navigate(`/recruiter/${id}/view`)}>view</button>
+         <button onClick= {()=>navigate(`/recruiter/${userId}/view`)}>view</button>
+         <button onClick={deleteOffer}>delete</button>
+         
         </>
       ))}
       </div> 
