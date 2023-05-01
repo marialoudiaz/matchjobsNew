@@ -108,7 +108,7 @@ const logout =()=>{
         element={isLoggedIn && user.userType==='applicant' ? <EditApplicant user={user}/> : <Navigate to={'/'}/> } />  
         
         {/* // passer a la fonction login le type d'user et l'id */}
-        <Route path={`/recruiter/:id/edit`} 
+        <Route path={`/recruiter/:id/edit`}
        element={isLoggedIn && user.userType==='recruiter' ? <EditRecruiter user={user}/> : <Navigate to={'/'}/>} />  
     
 

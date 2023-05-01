@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams, Link, Navigate } from "react-router-dom";
 import axios from "axios";
 import { URL } from "../config";
+import '../App.css';
 
 function ProfileRecruiter(props) {
   let navigate = useNavigate();
@@ -55,7 +56,6 @@ function ProfileRecruiter(props) {
   //handleSubmit - creer loffre
   const handleSubmit = async (e) => {
     e.preventDefault();
-    debugger;
     try {
       const create = await axios.post(`${URL}/recruiter/addJobOffer`, {
         ...myNewOffer,
@@ -81,7 +81,6 @@ function ProfileRecruiter(props) {
 
   // handleSkills - ajouter les skills a l'array
   const handleSkills = (changed) => {
-    debugger;
     setmyNewOffer({
       ...myNewOffer,
       [changed]: [...myNewOffer[changed], skill],
@@ -103,7 +102,6 @@ function ProfileRecruiter(props) {
   // handleApp
   // const id = user._id;
   const handleOffer = async () => {
-    debugger
     console.log(userId);
     try {
       let allMyOffer = await axios.get(
@@ -112,6 +110,7 @@ function ProfileRecruiter(props) {
       console.log(allMyOffer);
       if (allMyOffer.data.ok) {
         setmyOffer([allMyOffer.data.data]);
+        console.log('setmyOffer',[allMyOffer.data.data]) // l'offre à display
         console.log("setmyOffer", myOffer);
         console.log("setoffersId", myOffer[0]._id);
         setoffersId(myOffer[0]._id); // id de l'offre
@@ -295,16 +294,28 @@ function ProfileRecruiter(props) {
                   <p>{c.jobDescription}</p>
                   <h4>Skills</h4>
                   <h4>Soft</h4>
-                  <p>{c.softSkills}</p>
+                  <div className="flex">
+                  {Object.keys(c.softSkills).map((key) => (
+                  <p className="inputArray">{c.softSkills[key]} {console.log(`/recruiter/${offersId}/edit`)}</p>
+                
+                  ))}
+                  </div>
                   <h4>Hard</h4>
-                  <p>{c.hardSkills}</p>
+                  <div className="flex">
+                  {Object.keys(c.hardSkills).map((key) => (
+                  <p className="inputArray">{c.hardSkills[key]}</p>
+                  ))}
+                  </div>
                   <h4>Languages</h4>
-                  <p>{c.languagesSpoken}</p>
-                  {/* <button  onClick= {() => navigate(`/applicant/edit/${id}`)}>edit</button> */}
-                  <button onClick={() => navigate(`/recruiter/${userId}/view`)}>
-                    view
-                  </button>
-                  <button onClick={deleteOffer}>delete</button>
+                  <div className="flex">
+                  {Object.keys(c.languagesSpoken).map((key) => (
+                  <p className="inputArray">{c.languagesSpoken[key]}</p>
+                  ))}
+                  </div>
+                  <Link to={`/recruiter/${userId}/edit`}><button className='btn'>Edit</button></Link>
+                  {/* <button  onClick= {() => navigate(`/recruiter/${offersId}/edit`)}>edit</button> */}
+                  <button className='btn' onClick={() => navigate(`/recruiter/${userId}/view`)}>view</button>
+                  <button className='btn' onClick={deleteOffer}>delete</button>
                 </>
               ))}
             </div>

@@ -64,11 +64,26 @@ useEffect(()=>{
        <p>{myView.bio}</p>
 
        <h4 className='jobDescription'>Skills</h4>
-       <h4 className='jobDescription'>Softs</h4> <p>{myView.softSkills}</p>
+       <h4 className='jobDescription'>Softs</h4> 
+       <div className="flex">
+       {myView.softSkills.map((skill, index) => (
+       <p key={index} className='inputArray'>{skill}</p>
+       ))}
+       </div>
        <h4 className='jobDescription'>Hard</h4>
-       <p>{myView.hardSkills}</p>
+
+       <div className="flex">
+       {myView.hardSkills.map((skill, index) => (
+       <p key={index} className='inputArray'>{skill}</p>
+       ))}
+       </div>
+
        <h4 className='jobDescription'>Languages</h4>
-       <p>{myView.languagesSpoken}</p>
+       <div className="flex">
+       {myView.languagesSpoken.map((skill, index) => (
+       <p key={index} className='inputArray'>{skill}</p>
+       ))}
+       </div>
 
       </div>
        }

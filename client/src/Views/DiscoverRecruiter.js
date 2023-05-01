@@ -7,7 +7,7 @@ import {URL} from "../config"
 function DiscoverRecruiter(user, userID) {
 
 const params = useParams()
-console.log("id from params",params.id)
+console.log("id from params",params.id) // recruiterId
 let id = params.id
 
 let navigate = useNavigate();
@@ -29,22 +29,31 @@ const [myApp, setmyApp]=useState([])
       }}
  
 
-const likeApp = async ()=>{
-  try {
-    let likeApp = await axios.post(`${URL}/recruiter/likeApplicant${id}`)
-    console.log(likeApp)
-  } catch (error) {
-  }
-}
+// const likeApp = async ()=>{
+//   let applicationId = // l'offre liké (celui qui est liké)
+//   let recruiterId = id // celui qui like 
+//   console.log(id)
+  
+//   try {
+//     let likeApp = await axios.post(`${URL}/recruiter/likeApplicant`, {applicationId, recruiterId})
+//     console.log('likeApp',likeApp)
+//   } catch (error) {
+//   }
+// }
 
-const unlikeApp = async ()=>{
-  try {
-    let unlikeApp = await axios.post(`${URL}/recruiter/unlikeApplicant${id}`)
-    console.log(unlikeApp)
-  } catch (error) {
-  }
-}
+// const unlikeApp = async ()=>{
+  
+//   let applicationId = // l'offre liké (celui qui est liké)
+//   let recruiterId = id // celui qui like 
+//   console.log(id)
+//   try {
+//     let unlikeApp = await axios.post(`${URL}/recruiter/unlikeApplicant`,{applicationId, recruiterId} )
+//     console.log('unlikeApp',unlikeApp)
+//   } catch (error) {
+//   }
+// }
 
+// pour liker besoin de cliquer sur view (recupere id de loffre dans les params)
 
 //at every render
 useEffect(()=>{
@@ -63,13 +72,24 @@ useEffect(()=>{
         <div className='bigChip'>
         <button className='chip' onClick= {()=>navigate(`/recruiter/${id}/view`)}>View</button>
 
-        <button onClick={likeApp} className='chip'>Like</button><button onClick={unlikeApp} className='chip'>Unlike</button>
+        {/* <button onClick={likeApp} className='chip'>Like</button><button onClick={unlikeApp} className='chip'>Unlike</button> */}
         </div>
         <p key={i} className='location'>{application.location}</p>
         {application.remote ?  <div className='chip'>remote</div> : <div></div> }
         {application.onSite ? <div className='chip'>onSite</div> : <p></p> }
         {application.flexible ? <div className='chip'>Flexible</div> : <p></p> }
-        <p>{application.softSkills}</p><p>{application.hardSkills}</p>
+
+        <div className="flex">
+        {Object.keys(application.softSkills).map((key) => (
+        <p  className="inputArray" key={key}> {application.softSkills[key]} </p>
+        ))}
+        </div>
+        
+        <div className="flex">
+        {Object.keys(application.hardSkills).map((key) => (
+        <p className="inputArray" key={key} >{application.hardSkills[key]}</p>
+        ))}
+        </div>
       </div>
     </>   
       ))}

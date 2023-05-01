@@ -39,8 +39,7 @@ img{
 
 
 form{
-background: #FFFFFF;
-background: linear-gradient(90deg, #FFFFFF, #3D7CFF);
+background: rgb(247, 247, 240);
 font-family: Montserrat;
 display: flex;
 flex-wrap: wrap;
@@ -117,7 +116,24 @@ padding: 2em;
   margin: .3em;
 }
 
+.flex{
+  display: flex;
+  flex-wrap: wrap;
+}
 
+.inputArray{
+  display: flex;
+  flex-wrap: wrap;
+  color: #b4b4b4;
+  border-radius: 15px;
+  background-color: #e9e6e6;
+  border: 1px solid #cfcdcd;
+  padding: .3em .8em;
+  font-size: 12px;
+  font-family: Montserrat;
+
+
+}
 
 .input-container{
   display: flex;
@@ -159,8 +175,7 @@ label{
     font-family: 'Montserrat';
     font-size: 1em;
     width: 25%;
-    box-shadow: lightslategray;
-    
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
 .radiobtn-container{
