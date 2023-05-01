@@ -28,6 +28,24 @@ const [myApp, setmyApp]=useState([])
           console.log(error);
       }}
  
+
+const likeApp = async ()=>{
+  try {
+    let likeApp = await axios.post(`${URL}/recruiter/likeApplicant${id}`)
+    console.log(likeApp)
+  } catch (error) {
+  }
+}
+
+const unlikeApp = async ()=>{
+  try {
+    let unlikeApp = await axios.post(`${URL}/recruiter/unlikeApplicant${id}`)
+    console.log(unlikeApp)
+  } catch (error) {
+  }
+}
+
+
 //at every render
 useEffect(()=>{
   handleApp();
@@ -45,7 +63,7 @@ useEffect(()=>{
         <div className='bigChip'>
         <button className='chip' onClick= {()=>navigate(`/recruiter/${id}/view`)}>View</button>
 
-        <button className='chip'>Like</button>
+        <button onClick={likeApp} className='chip'>Like</button><button onClick={unlikeApp} className='chip'>Unlike</button>
         </div>
         <p key={i} className='location'>{application.location}</p>
         {application.remote ?  <div className='chip'>remote</div> : <div></div> }
