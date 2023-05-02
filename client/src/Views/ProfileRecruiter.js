@@ -313,8 +313,9 @@ function ProfileRecruiter(props) {
                   ))}
                   </div>
                   <Link to={`/recruiter/${userId}/edit`}><button className='btn'>Edit</button></Link>
+                  <Link to={`/recruiter/${userId}/view`}><button className='btn'>View</button></Link>
                   {/* <button  onClick= {() => navigate(`/recruiter/${offersId}/edit`)}>edit</button> */}
-                  <button className='btn' onClick={() => navigate(`/recruiter/${userId}/view`)}>view</button>
+                  {/* <button className='btn' onClick={() => navigate(`/recruiter/${userId}/view`)}>view</button> */}
                   <button className='btn' onClick={deleteOffer}>delete</button>
                 </>
               ))}

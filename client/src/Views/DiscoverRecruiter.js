@@ -35,7 +35,6 @@ const [myApp, setmyApp]=useState([])
           console.log(error);
       }}
  
-
       const onChipClick =(offerId) =>{
         setviewOfferID(offerId);
         navigate(`/recruiter/${offerId}/view`)

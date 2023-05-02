@@ -50,7 +50,7 @@ return (
      {isLoggedIn===true
      &&
      <NavLink 
-     to={`/Matches/${userID}`}
+     to={`/${userID}/matches`}
      style= {linkStyles.defaultLink}
      >
      

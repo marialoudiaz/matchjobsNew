@@ -4,9 +4,10 @@ import axios from 'axios';
 import {URL} from "../config"
 
 
-function ViewRecruiter() {
+function ViewRecruiter({user}) {
 debugger
-// passer l'id
+
+// passer recruiters_id
 const params = useParams()
 console.log("id from params",params.id)
 //id of application clicked on

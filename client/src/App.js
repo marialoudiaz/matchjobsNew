@@ -13,6 +13,8 @@ import ViewApplicant from './Views/ViewApplicant';
 import ViewRecruiter from './Views/ViewRecruiter';
 import EditApplicant from './Views/EditApplicant';
 import EditRecruiter from './Views/EditRecruiter';
+import MatchesApplicant from './Views/MatchesApplicant';
+import MatchesRecruiter from './Views/MatchesRecruiter';
 import * as jose from 'jose'
 import axios from 'axios';
 import {URL} from "./config"
@@ -109,8 +111,13 @@ const logout =()=>{
         
         {/* // passer a la fonction login le type d'user et l'id */}
         <Route path={`/recruiter/:id/edit`}
-       element={isLoggedIn && user.userType==='recruiter' ? <EditRecruiter user={user}/> : <Navigate to={'/'}/>} />  
+       element={isLoggedIn && user.userType==='recruiter' ? <EditRecruiter user={user}/> : <Navigate to={'/'}/>} />
+
+        <Route path={`/recruiter/:id/matches`}
+        element={isLoggedIn && user.userType==='recruiter' ? <MatchesRecruiter user={user.email} userID={user._id}/> : <Navigate to={'/'}/>} />  
     
+       <Route path={`/applicant/:id/matches`}
+      element={isLoggedIn && user.userType==='applicant' ? <MatchesApplicant user={user.email} userID={user._id}/> : <Navigate to={'/'}/>} />  
 
         </Routes>
     </Router>
