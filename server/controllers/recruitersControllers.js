@@ -241,11 +241,12 @@ const getJobOffer = async(req,res)=>{
 
 
 const getJobApplication = async(req,res)=>{
+  debugger
   // this id = id of one job application
   let {id} = req.params;
   console.log(id)
     try {
-      const jobApp = await JobApplication.findOne({applicantsId: id}) // search something in DB by the name of '_id'
+      const jobApp = await JobApplication.findOne({_id: id}) // search something in DB by the name of '_id'
       // console.log("jobApp",jobApp)
       // if (jobApp){
         res.send({ok: true, data: jobApp})
@@ -287,9 +288,10 @@ const getAllMyJobOffer = async(req,res)=>{
 }
 // //likeApplicant
 const likeApplicant = async(req,res)=>{
+  debugger
   const {applicationId, recruiterId}= req.body
   try {
-    await JobApplication.findOneAndUpdate({_id: applicationId}, {$push: {likedBy: {recruiter_id : recruiterId}}}) // FIND ALL
+    await JobApplication.findOneAndUpdate({_id: applicationId}, {$push: {likedBy: {recruiter_id : recruiterId}}}) // à partir de field permet de ne push que la clef 'recruiter_id'
     res.send({ok:true, data:' Applicant liked successfully'})    
       // if(application){application.likedBy.push({recruiterId})}else{res.send({ok:true, data:"Applicant id could'nt be found"})}
    } catch (error) {
@@ -298,6 +300,7 @@ const likeApplicant = async(req,res)=>{
 }
 // unlikeApplicant
 const unlikeApplicant = async(req,res)=>{
+  debugger
   const {applicationId, recruiterId}= req.body
   try {
     await JobApplication.findOneAndUpdate({_id: applicationId}, {$pull: {likedBy: {recruiter_id : recruiterId}}}) // FIND ALL

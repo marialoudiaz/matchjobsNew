@@ -19,8 +19,10 @@ const jobApplicationSchema = new mongoose.Schema({
     likedBy: [{
         recruiter_id: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: 'applicants'
-        }}],
+          ref: 'applicants',
+        },
+      _id: false,
+      }],
         applicantsId:{
         type: Schema.Types.ObjectId,
         required: true,

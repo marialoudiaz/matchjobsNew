@@ -30,7 +30,12 @@ router.post('/unlikeApplicant',controller.unlikeApplicant)
 // getAllApplications
 router.get('/getAllApplications',controller.getAllApplications)
 
+// getJobApplication
+router.get('/getJobApplication/:id',controller.getJobApplication)
 
 
+// getJobOffer,
+// getAllApplications,
+// getJobApplication,
 
 module.exports = router;

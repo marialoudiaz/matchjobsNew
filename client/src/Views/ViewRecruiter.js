@@ -4,15 +4,13 @@ import axios from 'axios';
 import {URL} from "../config"
 
 
-function ViewRecruiter(user) {
-
+function ViewRecruiter() {
+debugger
 // passer l'id
 const params = useParams()
 console.log("id from params",params.id)
-
-//id of jobapplication
-// id du recruiter
-let id =params.id
+//id of application clicked on
+let id = params.id
 
 // the state component in full size
 const [myView, setmyView]=useState(null)
@@ -21,16 +19,16 @@ const [myView, setmyView]=useState(null)
 
 
 // display the application
-
 // fetch data of this specific application
 // handleApp
      // const id = user._id;
      const handleApp = async ()=>{
       debugger
       try {
-          let singleJob = await axios.get(`${URL}/recruiter/getJobOffer/${id}`) // 
+          let singleJob = await axios.get(`${URL}/recruiter/getJobApplication/${id}`) // 
           console.log(singleJob);
           singleJob.data.ok && setmyView(singleJob.data.data) // {}
+          console.log(myView)
       } catch (error) {
           console.log(error);
       }}
