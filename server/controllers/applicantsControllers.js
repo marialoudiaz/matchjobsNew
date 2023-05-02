@@ -311,7 +311,17 @@ const unlikeOffer = async(req,res)=>{
       res.send(error)
     }}
   
-
+// getAllMatches
+const getAllMatch = async (req,res)=>{
+  let {id} = req.params;
+  try {
+    // find the likers id and display its profile
+    const likers = await JobApplication.findOne({_id: id})
+    console.log(likers)
+    res.send({ok:true, data: likers})
+  } catch (error) {
+    res.send(error)
+  }}
 
 
 
@@ -334,4 +344,5 @@ module.exports = {
   getJobApplication,
   getEmail,
   getAllOffers,
+  getAllMatch,
 }
