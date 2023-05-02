@@ -196,9 +196,9 @@ const deleteJobOffer = async (req,res)=>{
 
 
 const updateJobOffer = async (req,res)=>{
-  debugger
-  const {oldOffer, newOffer,offerID} = req.body;
-  console.log('the two offers passed', oldOffer, newOffer)
+debugger
+  const {offerID, myEdit} = req.body;
+  console.log('the offer passed', myEdit)
   try{
   // let objectid = mongoose.Types.ObjectId(newOffer.recruitersId)
   // // jobOffer.recruitersId = objectid;
@@ -208,9 +208,11 @@ const updateJobOffer = async (req,res)=>{
   // // oldJobOffer.recruitersId = objectidold;
   // console.log(objectidold)
   // console.log(newOffer,oldOffer)
-  const findjobOffer = await JobOffer.findOne({_id: offerID})
-    if (findjobOffer){
-    await JobOffer.updateOne({findjobOffer},{newOffer})
+  const updated = await JobOffer.findOneAndUpdate({_id: offerID},myEdit)
+  // const findjobOffer = await JobOffer.findOne({_id: offerID})
+    if (updated){
+    // const updated = await JobOffer.updateOne({findjobOffer},{myNewOffer})
+    console.log(updated)
     res.send({ok:true, data:`Job offer updated successfully`})
    } else{
     res.send({ok:false, data:`Job offer not found`})

@@ -26,34 +26,37 @@ function EditRecruiter(props) {
 
     
 
-    // la nouvelle offre
-    const [myNewOffer, setmyNewOffer]=useState({
-      companyName: "",
-      jobTitle:"",
-      jobFields:"",
-      remote:false,
-      onSite:false,
-      flexible:false,
-      minPrice: 0,
-      maxPrice: 0,
-      location: "",
-      jobDescription: "",
-      softSkills: [],
-      hardSkills: [],
-      jobFields: "",
-      languagesSpoken: [], 
-    }) 
+    // // la nouvelle offre
+    // const [myNewOffer, setmyNewOffer]=useState({
+    //   companyName: "",
+    //   jobTitle:"",
+    //   jobFields:"",
+    //   remote:false,
+    //   onSite:false,
+    //   flexible:false,
+    //   minPrice: 0,
+    //   maxPrice: 0,
+    //   location: "",
+    //   jobDescription: "",
+    //   softSkills: [],
+    //   hardSkills: [],
+    //   jobFields: "",
+    //   languagesSpoken: [], 
+    // }) 
 
 // State component - collecter les inputs a stocker dans l'array
 const [skill, setSkill] = useState("");
 
 //handleChange du form- pour les inputs
 const handleChange = async (event) => {
-  
   const name = event.target.name;
   const value = event.target.value;
-  setmyNewOffer({ ...myNewOffer, [name]: value });
+  setmyEdit({ ...myEdit, [name]: value });
 };
+
+
+// fetch myEdit
+// change myEfit
 
 // Fetch les données à mettre dans les placeholders (ancienne offre)
      // const id = user._id;
@@ -79,7 +82,7 @@ const handleSubmit = async (e) => {
   // let offerId = props.user._id
   e.preventDefault();
   try {
-    const update = await axios.post(`${URL}/recruiter/updateRecruiter`, {myNewOffer, myEdit,offerID}); // je passe nouvelle offre, ancienne offre + id de l'offre
+    const update = await axios.post(`${URL}/recruiter/updateJobOffer`, {offerID,myEdit}); // je passe nouvelle offre, ancienne offre + id de l'offre
     console.log(update);
     if (update.data.ok) {
       console.log(update.data.data);
@@ -109,9 +112,9 @@ const handleSubmit = async (e) => {
 
   // handleSkills - ajouter les skills a l'array
   const handleSkills = (changed) => {
-    setmyNewOffer({
-      ...myNewOffer,
-      [changed]: [...myNewOffer[changed], skill],
+    setmyEdit({
+      ...myEdit,
+      [changed]: [...myEdit[changed], skill],
     });
     setSkill("");
   };
@@ -140,27 +143,27 @@ useEffect(()=>{
 
       
        <label>Company Name</label>
-       <input type='text' name='companyName' value={myNewOffer.companyName} placeholder={myEdit.companyName}  onChange={handleChange}/>
+       <input type='text' name='companyName' value={myEdit.companyName} placeholder={myEdit.companyName}  onChange={handleChange}/>
        
        <label>Job Title</label>
-       <input type='text' name='jobTitle' value={myNewOffer.jobTitle} placeholder={myEdit.jobTitle}  onChange={handleChange}/>
+       <input type='text' name='jobTitle' value={myEdit.jobTitle} placeholder={myEdit.jobTitle}  onChange={handleChange}/>
 
        <label>Job Field</label>
-       <input type='text' name='jobFields' value={myNewOffer.jobFields} placeholder={myEdit.jobFields} onChange={handleChange}/>
+       <input type='text' name='jobFields' value={myEdit.jobFields} placeholder={myEdit.jobFields} onChange={handleChange}/>
 
        <label>Location</label>
-       <input type='text' name='location' value={myNewOffer.location} placeholder={myEdit.jobTitle} onChange={handleChange}/>
+       <input type='text' name='location' value={myEdit.location} placeholder={myEdit.jobTitle} onChange={handleChange}/>
 
        <label>Mobility</label>
        <p>Remote</p>
-       <input type='radio' name='mobility' value={myNewOffer.remote} placeholder={myEdit.remote} onChange={handleChange}/>
+       <input type='radio' name='mobility' value={myEdit.remote} placeholder={myEdit.remote} onChange={handleChange}/>
        <p>On Site</p>
-       <input type='radio' name='mobility' value={myNewOffer.onSite} placeholder={myEdit.onSite} onChange={handleChange}/>
+       <input type='radio' name='mobility' value={myEdit.onSite} placeholder={myEdit.onSite} onChange={handleChange}/>
        <p>Flexible</p>
-       <input type='radio' name='mobility' value={myNewOffer.flexible} placeholder={myEdit.flexible} onChange={handleChange}/>
+       <input type='radio' name='mobility' value={myEdit.flexible} placeholder={myEdit.flexible} onChange={handleChange}/>
 
        <label>Job Description</label>
-       <input type='text' name='jobDescription' value={myNewOffer.jobDescription} placeholder={myEdit.bio} onChange={handleChange}/>
+       <input type='text' name='jobDescription' value={myEdit.jobDescription} placeholder={myEdit.bio} onChange={handleChange}/>
        
        <label>Skills</label>
        <p>Soft Skills</p>
