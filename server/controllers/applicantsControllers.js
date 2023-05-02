@@ -201,28 +201,30 @@ const deleteApplication = async (req,res)=>{
 
 // //updateJobApplication
 const updateJobApplication = async (req,res)=>{
-  const {jobApp, oldJobApp} = req.body; 
+  const {offerID, myEdit} = req.body; 
+  debugger
   try{
-      const findjobApp = await JobApplication.findOne(oldJobApp)
-      if (findjobApp){
-        await JobApplication.updateOne(findjobApp,{jobApp})
-        res.send({ok:true, data:`Job application updated successfully`})
-      } else{
-        res.send({ok:false, data:`Job application not found`})
-      }
-         }catch(error){
-      res.send(error)
+      const updated = await JobApplication.findOneAndUpdate({_id: offerID},myEdit)
+      if (updated){
+      console.log(updated)
+      res.send({ok:true, data:`Job application updated successfully`})
+     } else{
+      res.send({ok:false, data:`Job application not found`})
+    }
+     }catch(error){
+    res.send(error)
+     }
   }
-}
 
 
 const getJobApplication = async(req,res)=>{
   // this id = id of one job application
+  debugger
   let {id} = req.params;
   console.log(id)
     try {
-      const jobApp = await JobApplication.findOne({applicantsId: id}) // search something in DB by the name of '_id'
-      // console.log("jobApp",jobApp)
+      const jobApp = await JobOffer.findOne({_id: id}) // search something in DB by the name of '_id'
+      console.log("jobApp",jobApp)
       // if (jobApp){
         res.send({ok: true, data: jobApp})
       // }else{
@@ -243,25 +245,30 @@ const getAllMyJobApplications = async(req,res)=>{
 console.log("test")
 // look for records in JobApplications collection with specific applicantsId reference
 // pass to the controller a current applicant_id
-let {id} = req.params;
-  // const {applicantId}= req.body
-
+let {id} = req.params; // const {applicantId}= req.body
   try {
     // empty array with objects of all the job offers that belongs to this recruiter
     // var arrJobApplications =[]
     const allJobApplications = await JobApplication.findOne({applicantsId: id}) // FIND ALL
     console.log("getalljobs",allJobApplications)
     res.send({ok:true, data: allJobApplications})
-  //     for (var ele of allJobApplications){
-  //     if (ele._id.toString() == applicantId.toString()){ // take the job offers of a specific id(user)
-  //       arrJobApplications.push(ele)
-  //     }else {
-  //     }}
-  //  res.send({ok:true, data: arrJobApplications})    
   } catch (error) {
     res.send(error)
   }
 }
+
+// // //likeApplicant
+// const likeApplicant = async(req,res)=>{
+//   debugger
+//   const {applicationId, recruiterId}= req.body
+//   try {
+//     await JobApplication.findOneAndUpdate({_id: applicationId}, {$push: {likedBy: {recruiter_id : recruiterId}}}) // à partir de field permet de ne push que la clef 'recruiter_id'
+//     res.send({ok:true, data:' Applicant liked successfully'})    
+//       // if(application){application.likedBy.push({recruiterId})}else{res.send({ok:true, data:"Applicant id could'nt be found"})}
+//    } catch (error) {
+//     res.send(error)
+//   }
+// }
 
 const getEmail = async(req,res)=>{
   let {id} = req.params;
@@ -280,12 +287,6 @@ const likeOffer = async(req,res)=>{
 
   try {
     const offer = await JobOffer.findOneAndUpdate({_id: offerId}, {$push: {likedBy: {applicant_id : applicantId}}}) // FIND ALL
-      // if(offer){
-      //   offer.likedBy.push(applicantId)
-      //   res.send({ok:true, data:' Offer liked successfully'})    
-      // }else{
-      //   res.send({ok:true, data:"Offer id could'nt be found"})    
-      // }
    } catch (error) {
     res.send(error)
   }
@@ -295,18 +296,7 @@ const likeOffer = async(req,res)=>{
 const unlikeOffer = async(req,res)=>{
   const {offerId, applicantId}= req.body
   try {
-    const offer = await JobOffer.findOneandUpdate({_id: offerId}, {$pull: {likedBy: {applicant_id : applicantId}}}) // FIND ALL
-
-  //     if(offer){
-  //       // findIndex find the id
-  //      const findIndexOffer= offer.likedBy.findIndex(c=>c.toString()== applicantId.toString())
-  //         if (!findIndexOffer==-1){
-  //           offer.likedBy.splice(findIndexOffer, 1) // remove the index found (1)
-  //           res.send({ok:true, data:' Offer unliked successfully'})    
-  //         }else{
-  //       res.send({ok:true, data:"Offer id could'nt be found"})    
-  //  }}else{
-  //   res.send({ok:true, data:"Offer could'nt be found"})    
+    const offer = await JobOffer.findOneandUpdate({_id: offerId}, {$pull: {likedBy: {applicant_id : applicantId}}}) // FIND ALL 
   } catch (error) {
     res.send(error)
   }

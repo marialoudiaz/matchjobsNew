@@ -15,7 +15,7 @@ const jobApplicationSchema = new mongoose.Schema({
     hardSkills:[{type:String,unique:false}],
     jobFields:[{type:String,unique:false}],
     languagesSpoken:[{type:String,unique:false}],
-    uploadedFiles:[{type:String,unique:false}],
+    // uploadedFiles:[{type:String,unique:false}],
     likedBy: [{
         recruiter_id: {
           type: mongoose.Schema.Types.ObjectId,

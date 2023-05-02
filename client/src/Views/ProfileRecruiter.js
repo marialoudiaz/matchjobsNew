@@ -5,13 +5,12 @@ import { URL } from "../config";
 import '../App.css';
 
 function ProfileRecruiter(props) {
-  let navigate = useNavigate();
+  // let navigate = useNavigate();
   // 1 - passer l'id de l'user
   const params = useParams();
   console.log("id user", params.id); //object id de l'user ( et non l'offre)
   let userId = params.id;
 
-  // console.log("props", props)
 
   // 2 - the props I pass - Email of user
   console.log("user Email", props.user);
@@ -102,6 +101,7 @@ function ProfileRecruiter(props) {
   // handleApp
   // const id = user._id;
   const handleOffer = async () => {
+    debugger
     console.log(userId);
     try {
       let allMyOffer = await axios.get(
@@ -109,11 +109,11 @@ function ProfileRecruiter(props) {
       );
       console.log(allMyOffer);
       if (allMyOffer.data.ok) {
-        setmyOffer([allMyOffer.data.data]);
-        console.log('setmyOffer',[allMyOffer.data.data]) // l'offre à display
+        setmyOffer(allMyOffer.data.data);
+        console.log('setmyOffer',allMyOffer.data.data) // l'offre à display
         console.log("setmyOffer", myOffer);
         console.log("setoffersId", myOffer[0]._id);
-        setoffersId(myOffer[0]._id); // id de l'offre
+        setoffersId(myOffer._id); // id de l'offre
       } else {
         console.log("hihi");
       }
@@ -121,6 +121,8 @@ function ProfileRecruiter(props) {
       console.log(error);
     }
   };
+
+  
 
   // fonction pour supprimer
   const deleteOffer = async () => {
@@ -157,6 +159,7 @@ function ProfileRecruiter(props) {
                 {/* // le formulaire avec toutes les inputs a envoyer dans DB */}
 
                 <form onSubmit={handleSubmit}>
+                  
                   <label>Company Name</label>
                   <input
                     name="companyName"
@@ -273,43 +276,43 @@ function ProfileRecruiter(props) {
           <div className="classicPage">
             {/* // applications created */}
             <div className="topTitle">
-              {myOffer.map((c) => (
-                <h2>Hello {c.companyName},</h2>
-              ))}
-              <h2>Welcome back</h2>
+            <h2>Hello {myOffer.companyName},</h2>
+            <h2>Welcome back</h2>
             </div>
 
             <div className="jobApplication">
-              {myOffer.map((c) => (
+             
                 <>
                   {/* <Link to = {`/${type}/view/${c._id}`}> */}
-                  <h3>{c.companyName}</h3>
-                  <h4>{c.jobTitle}</h4>
-                  <p>{c.jobFields}</p>
-                  {c.remote ? <div className="chip">remote</div> : <div></div>}
-                  {c.onSite ? <p>onSite</p> : <p></p>}
-                  {c.flexible ? <p>Flexible</p> : <p></p>}
-                  <p className="location">{c.location}</p>
+                  {console.log('offerID', offersId)}
+                  {console.log('myOffer', myOffer)}
+                  <h3>{myOffer.companyName}</h3>
+                  <h4>{myOffer.jobTitle}</h4>
+                  <p>{myOffer.jobFields}</p>
+                  {myOffer.remote ? <div className="chip">remote</div> : <div></div>}
+                  {myOffer.onSite ? <p>onSite</p> : <p></p>}
+                  {myOffer.flexible ? <p>Flexible</p> : <p></p>}
+                  <p className="location">{myOffer.location}</p>
                   <h4 className="jobDescription">Job Description</h4>
-                  <p>{c.jobDescription}</p>
+                  <p>{myOffer.jobDescription}</p>
                   <h4>Skills</h4>
                   <h4>Soft</h4>
                   <div className="flex">
-                  {Object.keys(c.softSkills).map((key) => (
-                  <p className="inputArray">{c.softSkills[key]} {console.log(`/recruiter/${offersId}/edit`)}</p>
+                  {Object.keys(myOffer.softSkills).map((key) => (
+                  <p className="inputArray">{myOffer.softSkills[key]} {console.log(`/recruiter/${offersId}/edit`)}</p>
                 
                   ))}
                   </div>
                   <h4>Hard</h4>
                   <div className="flex">
-                  {Object.keys(c.hardSkills).map((key) => (
-                  <p className="inputArray">{c.hardSkills[key]}</p>
+                  {Object.keys(myOffer.hardSkills).map((key) => (
+                  <p className="inputArray">{myOffer.hardSkills[key]}</p>
                   ))}
                   </div>
                   <h4>Languages</h4>
                   <div className="flex">
-                  {Object.keys(c.languagesSpoken).map((key) => (
-                  <p className="inputArray">{c.languagesSpoken[key]}</p>
+                  {Object.keys(myOffer.languagesSpoken).map((key) => (
+                  <p className="inputArray">{myOffer.languagesSpoken[key]}</p>
                   ))}
                   </div>
                   <Link to={`/recruiter/${userId}/edit`}><button className='btn'>Edit</button></Link>
@@ -318,7 +321,7 @@ function ProfileRecruiter(props) {
                   {/* <button className='btn' onClick={() => navigate(`/recruiter/${userId}/view`)}>view</button> */}
                   <button className='btn' onClick={deleteOffer}>delete</button>
                 </>
-              ))}
+            
             </div>
           </div>
         )}

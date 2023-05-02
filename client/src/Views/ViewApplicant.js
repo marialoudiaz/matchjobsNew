@@ -6,23 +6,18 @@ import {URL} from "../config"
 
 function ViewApplicant({user}) {
 
-// passer l'id
+// passer applicant_id
 const params = useParams()
 console.log("id from params",params.id)
+// id de l'offre
+let id = params.id
 
-//id of jobapplication
-let id =params.id
 
 // the state component in full size
 const [myView, setmyView]=useState(null)
-// stocker data.data (donc l'objet entier avec toutes les clefs)
-
-
 
 // display the application
-
 // fetch data of this specific application
-// handleApp
      // const id = user._id;
      const handleApp = async ()=>{
       debugger
@@ -33,23 +28,22 @@ const [myView, setmyView]=useState(null)
       } catch (error) {
           console.log(error);
       }}
- 
+
+
 //at every render
 useEffect(()=>{
-  handleApp();
-},[]) 
+!myView && handleApp();
+},[])
 
 
 // map les elements de la card passé en props
 // pr pouvoir passé ce quil n'y a pas dans preview
-
   return (
     <>
-
-      {myView && <div className='jobApplication'>
-        <p>{myView.jobTitle}</p>
+    {myView && <div className='jobApplication'>
+       <p>{myView.companyName}</p>
+       <p>{myView.jobTitle}</p>
         <div className='bigChip'>
-        <button className='chip'>Like</button>
         </div>
         
         <p className='location'>{myView.location}</p>
@@ -62,21 +56,29 @@ useEffect(()=>{
        <p>{myView.bio}</p>
 
        <h4 className='jobDescription'>Skills</h4>
-       <h4 className='jobDescription'>Softs</h4> <p>{myView.softSkills}</p>
+       <h4 className='jobDescription'>Softs</h4> 
+       <div className="flex">
+       {myView.softSkills.map((skill, index) => (
+       <p key={index} className='inputArray'>{skill}</p>
+       ))}
+       </div>
        <h4 className='jobDescription'>Hard</h4>
-       <p>{myView.hardSkills}</p>
-       <h4 className='jobDescription'>Languages</h4>
-       <p>{myView.languagesSpoken}</p>
 
+       <div className="flex">
+       {myView.hardSkills.map((skill, index) => (
+       <p key={index} className='inputArray'>{skill}</p>
+       ))}
+       </div>
+
+       <h4 className='jobDescription'>Languages</h4>
+       <div className="flex">
+       {myView.languagesSpoken.map((skill, index) => (
+       <p key={index} className='inputArray'>{skill}</p>
+       ))}
+       </div>
       </div>
-       }
-      
-      
+       } 
     </>
   )
 }
-
 export default ViewApplicant
-// get all job application
-// button to render view 
-// button like (add to likedBy array)

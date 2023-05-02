@@ -8,7 +8,7 @@ import ViewRecruiter from './ViewRecruiter'
 function DiscoverRecruiter(user, userID) {
 
 const params = useParams()
-console.log("id from params",params.id) // recruiterId
+console.log("id from params- recruiter_id",params.id) // recruiterId
 let id = params.id
 let recruiterId = id // celui qui like 
 
@@ -23,8 +23,6 @@ const [myApp, setmyApp]=useState([])
 
 
 // display the applications
-// handleApp
-     // const id = user._id;
      const handleApp = async ()=>{
       debugger
       try {

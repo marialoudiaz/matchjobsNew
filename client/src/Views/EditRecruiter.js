@@ -79,6 +79,7 @@ const handleSubmit = async (e) => {
   debugger
   console.log('props.user', props.user)
   offerID = myEdit._id
+  console.log(myEdit)
   // let offerId = props.user._id
   e.preventDefault();
   try {

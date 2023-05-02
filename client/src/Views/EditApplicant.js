@@ -4,79 +4,141 @@ import axios from 'axios';
 import {URL} from "../config"
 
 
-function ViewApplicant({user}) {
-
-// passer l'id
-const params = useParams()
-console.log("id from params",params.id)
-
-//id of jobapplication
-let id =params.id
-
-// the state component in full size
-const [myView, setmyView]=useState(null)
-// stocker data.data (donc l'objet entier avec toutes les clefs)
+function EditApplicant(props) {
 
 
+  let navigate = useNavigate();
+  // 1 - passer l'id de l'user
+  const params = useParams();
+  console.log("id user", params.id); //object id de l'user ( et non l'offre)
+  let id = params.id;
 
-// display the application
+  // l'ID a l'id de l'user
+  const [msg, setMsg]= useState('')
 
-// fetch data of this specific application
-// handleApp
+  // the state component in full size
+  const [myEdit, setmyEdit]=useState(null)
+  console.log('myEdit', myEdit)
+  var offerID = '';
+
+  // State component - collecter les inputs a stocker dans l'array
+   const [skill, setSkill] = useState("");
+
+  //handleChange du form- pour les inputs
+  const handleChange = async (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setmyEdit({ ...myEdit, [name]: value });
+  };
+
+
+// Fetch les données à mettre dans les placeholders (ancienne offre)
      // const id = user._id;
-     const handleApp = async ()=>{
+     const fetchPrevData = async ()=>{
       debugger
       try {
           let singleJob = await axios.get(`${URL}/applicant/getJobApplication/${id}`)
           console.log(singleJob);
-          singleJob.data.ok && setmyView(singleJob.data.data) // {}
+          singleJob.data.ok && setmyEdit(singleJob.data.data) // {} // on assigne les données a setmyEdit
+          offerID= myEdit._id
+         console.log('offerID',offerID)
       } catch (error) {
           console.log(error);
       }}
+
+
+    //handleSubmit - creer loffre
+    const handleSubmit = async (e) => {
+      debugger
+      console.log('props.user', props.user)
+      offerID = myEdit._id
+      // let offerId = props.user._id
+      e.preventDefault();
+      try {
+        const update = await axios.post(`${URL}/applicant/updateJobApplication`, {offerID, myEdit}); // je passe nouvelle offre, ancienne offre + id de l'offre
+        console.log(update);
+        if (update.data.ok) {
+          console.log(update.data.data);
+          setMsg(update.data.data);
+        } else {
+          console.log(update.data.data);
+          setMsg(update.data.data);
+        }
+      } catch (error) {}
+    };
+
+
+    const handleChangeSkills = (event) => {
+      setSkill(event.target.value);
+    };
+  
+    // handleSkills - ajouter les skills a l'array
+    const handleSkills = (changed) => {
+      setmyEdit({
+        ...myEdit,
+        [changed]: [...myEdit[changed], skill],
+      });
+      setSkill("");
+    };
+
+
  
-//at every render
-useEffect(()=>{
-  handleApp();
-},[]) 
+  //At every render
+  useEffect(()=>{
+    fetchPrevData();
+  },[]) 
 
 
-// map les elements de la card passé en props
-// pr pouvoir passé ce quil n'y a pas dans preview
+
+//////////////////// RETURN 
 
   return (
-    <>
+// map les elements de la card passé en props pr pouvoir passé ce quil n'y a pas dans preview => dans placeholders
+  <>
+    {myEdit && <div className='jobApplication'>
+  <form onSubmit= {handleSubmit}>
 
-      {myView && <div className='jobApplication'>
-        <p>{myView.jobTitle}</p>
-        <div className='bigChip'>
-        <button className='chip'>Like</button>
-        </div>
-        
-        <p className='location'>{myView.location}</p>
-       
-        {myView.remote ?  <div className='chip'>remote</div> : <div></div> }
-        {myView.onSite ? <div className='chip'>onSite</div> : <p></p> }
-        {myView.flexible ? <div className='chip'>Flexible</div> : <p></p> }
-        
-       <h4 className='jobDescription'>Job Description</h4>
-       <p>{myView.bio}</p>
+     
+     <label>Job Title</label>
+     <input type='text' name='jobTitle' value={myEdit.jobTitle} placeholder={myEdit.jobTitle}  onChange={handleChange}/>
 
-       <h4 className='jobDescription'>Skills</h4>
-       <h4 className='jobDescription'>Softs</h4> <p>{myView.softSkills}</p>
-       <h4 className='jobDescription'>Hard</h4>
-       <p>{myView.hardSkills}</p>
-       <h4 className='jobDescription'>Languages</h4>
-       <p>{myView.languagesSpoken}</p>
+     <label>Job Field</label>
+     <input type='text' name='jobFields' value={myEdit.jobFields} placeholder={myEdit.jobFields} onChange={handleChange}/>
 
-      </div>
-       }
-      
-      
-    </>
-  )
+     <label>Location</label>
+     <input type='text' name='location' value={myEdit.location} placeholder={myEdit.jobTitle} onChange={handleChange}/>
+
+     <label>Mobility</label>
+     <p>Remote</p>
+     <input type='radio' name='mobility' value={myEdit.remote} placeholder={myEdit.remote} onChange={handleChange}/>
+     <p>On Site</p>
+     <input type='radio' name='mobility' value={myEdit.onSite} placeholder={myEdit.onSite} onChange={handleChange}/>
+     <p>Flexible</p>
+     <input type='radio' name='mobility' value={myEdit.flexible} placeholder={myEdit.flexible} onChange={handleChange}/>
+
+     <label>Bio</label>
+     <input type='text' name='bio' value={myEdit.bio} placeholder={myEdit.bio} onChange={handleChange}/>
+     
+     <label>Skills</label>
+     <p>Soft Skills</p>
+     <input type='text' name="temporarySoft"  placeholder={myEdit.softSkills} onChange={handleChangeSkills} />
+     <button type="button" onClick={() => handleSkills("softSkills")} className="btn">Add Skill</button>
+     
+     <p>Hard Skills</p>
+     <input type='text'  name="temporaryHard"  placeholder={myEdit.hardSkills} onChange={handleChangeSkills} />
+     <button type="button" onClick={() => handleSkills("hardSkills")} className="btn">Add Skill</button>
+     
+     <label>Languages</label>
+     <input type='text' name="temporaryLanguage"  placeholder={myEdit.languagesSpoken} onChange={handleChangeSkills} />
+     <button type="button" onClick={() => handleSkills("languagesSpoken")} className="btn">Add Languages</button>
+     <button type="submit" className="btn">Create offer</button>
+     <p>{msg}</p>
+  </form>
+    </div>
+     }
+    
+    
+  </>
+)
 }
-
-export default ViewApplicant
-// get all job application
-// button to render view 
-// button like (add to likedBy array)
+export default EditApplicant

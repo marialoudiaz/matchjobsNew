@@ -24,7 +24,7 @@ function ProfileApplicant(props) {
 
   // the application to be displayed
   const [myApp, setmyApp]=useState(null)
-  console.log(myApp)
+  console.log('myApp first',myApp)
 
   // la nouvelle application créée
   const [myNewApp, setmyNewApp] = useState({
@@ -41,7 +41,6 @@ function ProfileApplicant(props) {
     jobFields: "",
     languagesSpoken: [],
   });
-
 
 
   // State component - collecter les inputs a stocker dans l'array
@@ -103,20 +102,25 @@ function ProfileApplicant(props) {
   const handleApp = async () => {
     console.log(userId);
     try {
+      debugger
       let allMyApp = await axios.get(`${URL}/applicant/getAllMyJobApplications/${userId}`);
       console.log(allMyApp);
       if (allMyApp.data.ok) {
-        setmyApp([allMyApp.data.data]);
-        console.log('setmyApp',[allMyApp.data.data]) // l'offre à display
-        console.log("setmyApp", myApp);
-        console.log("setappId", myApp[0]._id);
-        setoffersId(myApp[0]._id); // id de l'offre
+        setmyApp(allMyApp.data.data);
+        setoffersId(myApp._id); // id de l'offre
+        // console.log('setmyOffer',allMyOffer.data.data) // l'offre à display
+        // console.log("setmyOffer", myOffer);
+        // console.log("setoffersId", myOffer[0]._id);
+        // setoffersId(myOffer._id); // id de l'offre
       } else {
         console.log("hihi");
       }} catch (error) {
       console.log(error);
     }
-  };
+  };  
+        
+console.log('offersId',offersId)
+
 
   // fonction pour supprimer
   const deleteApp = async () => {
@@ -129,11 +133,13 @@ function ProfileApplicant(props) {
     }
   };
 
+  useEffect(()=>{console.log(myApp)},[myApp])
 
   return (
     <div className="page-wrapper">
       <div className="InitalPage">
         {/* <h1>Hello {email}</h1> */}
+        {console.log('second myApp',myApp)}
 
         {!myApp ? (
           ////////////////// IF CONDITION
@@ -249,7 +255,9 @@ function ProfileApplicant(props) {
             <h3>you don't have any application created yet</h3>
             <p>all your applications will be displayed here</p>
           </>
-        ) : (
+        ) 
+        : 
+        (
           ////////////////// ELSE CONDITION
 
           // Version avec les offres affichées
@@ -261,35 +269,34 @@ function ProfileApplicant(props) {
             </div>
 
             <div className="jobApplication">
-              {myApp.map((c) => (
                 <>
                   {/* <Link to = {`/${type}/view/${c._id}`}> */}
-                  <h4>{c.jobTitle}</h4>
-                  <p>{c.jobFields}</p>
-                  {c.remote ? <div className="chip">remote</div> : <div></div>}
-                  {c.onSite ? <p>onSite</p> : <p></p>}
-                  {c.flexible ? <p>Flexible</p> : <p></p>}
-                  <p className="location">{c.location}</p>
+                  <h4>{myApp.jobTitle}</h4>
+                  <p>{myApp.jobFields}</p>
+                  {myApp.remote ? <div className="chip">remote</div> : <div></div>}
+                  {myApp.onSite ? <p>onSite</p> : <p></p>}
+                  {myApp.flexible ? <p>Flexible</p> : <p></p>}
+                  <p className="location">{myApp.location}</p>
                   <h4 className="jobDescription">Job Description</h4>
-                  <p>{c.jobDescription}</p>
+                  <p>{myApp.jobDescription}</p>
                   <h4>Skills</h4>
                   <h4>Soft</h4>
                   <div className="flex">
-                  {Object.keys(c.softSkills).map((key) => (
-                  <p className="inputArray">{c.softSkills[key]} {console.log(`/applicant/${offersId}/edit`)}</p>
+                  {Object.keys(myApp.softSkills).map((key) => (
+                  <p className="inputArray">{myApp.softSkills[key]} {console.log(`/applicant/${offersId}/edit`)}</p>
                 
                   ))}
                   </div>
                   <h4>Hard</h4>
                   <div className="flex">
-                  {Object.keys(c.hardSkills).map((key) => (
-                  <p className="inputArray">{c.hardSkills[key]}</p>
+                  {Object.keys(myApp.hardSkills).map((key) => (
+                  <p className="inputArray">{myApp.hardSkills[key]}</p>
                   ))}
                   </div>
                   <h4>Languages</h4>
                   <div className="flex">
-                  {Object.keys(c.languagesSpoken).map((key) => (
-                  <p className="inputArray">{c.languagesSpoken[key]}</p>
+                  {Object.keys(myApp.languagesSpoken).map((key) => (
+                  <p className="inputArray">{myApp.languagesSpoken[key]}</p>
                   ))}
                   </div>
                   <Link to={`/applicant/${userId}/edit`}><button className='btn'>Edit</button></Link>
@@ -297,7 +304,6 @@ function ProfileApplicant(props) {
                   <button className='btn' onClick={() => navigate(`/applicant/${userId}/view`)}>view</button>
                   <button className='btn' onClick={deleteApp}>delete</button>
                 </>
-              ))}
             </div>
           </div>
         )}

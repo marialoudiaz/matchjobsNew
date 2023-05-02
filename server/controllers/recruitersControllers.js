@@ -323,6 +323,7 @@ const unlikeApplicant = async(req,res)=>{
 
   // getAllJobApplications in the main
   const getAllApplications = async (req,res)=>{
+    debugger
   try {
     const allJobApplications = await JobApplication.find({})
     res.send({ok:true, data: allJobApplications})
