@@ -14,7 +14,7 @@ let recruiterId = id // celui qui like
 
 
 const [viewOfferID, setviewOfferID]=useState('')
-const [likeOfferID, setlikeOfferID]=useState('')
+// const [likeOfferID, setlikeOfferID]=useState('')
 
 
 let navigate = useNavigate();

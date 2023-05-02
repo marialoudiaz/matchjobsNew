@@ -28,10 +28,12 @@ router.post('/likeApplicant',controller.likeApplicant)
 router.post('/unlikeApplicant',controller.unlikeApplicant)
 
 // getAllApplications
-router.get('/getAllApplications',controller.getAllApplications)
+router.get('/getAllApplications/:id',controller.getAllApplications)
 
 // getJobApplication
-router.get('/getJobApplication/:id',controller.getJobApplication)
+router.get('/getJobApplication',controller.getJobApplication)
+
+router.get('/getAllMatch/:id', controller.getAllMatch)
 
 
 // getJobOffer,
