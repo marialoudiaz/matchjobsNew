@@ -29,7 +29,22 @@ router.get('/getEmail/:id',controller.getEmail)
 router.post('/likeOffer',controller.likeOffer)
 // //unlikeJobOffer
 router.post('/unlikeOffer',controller.unlikeOffer)
-
+// getAllOffers
 router.get('/getAllOffers',controller.getAllOffers)
+
+// getLikedby
+router.get('/getLikedby/:id',controller.getLikedby)
+
+// deleteLikedBy (delete the person who liked you from your model)
+// router.post('/deleteLikedBy',controller.deleteLikedBy)
+
+// // addMatchWith
+// router.post('/addMatchWith',controller.addMatchWith)
+
+// // getMatchWith
+// router.get('/getMatchWith/:id',controller.getMatchWith)
+
+// // deleteMatchWith
+// router.post('/deleteMatchWith',controller.deleteMatchWith)
 
 module.exports = router;

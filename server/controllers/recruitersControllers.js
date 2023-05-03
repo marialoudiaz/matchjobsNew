@@ -165,7 +165,7 @@ const addJobOffer = async (req,res) =>{
   try {
    const recruiter = await Recruiter.findOne({email})
    if(recruiter){
-      const newOffer = await JobOffer.create({companyName,jobTitle,remote,onSite,flexible,minPrice,maxPrice,location,jobDescription,softSkills,hardSkills,jobFields, languagesSpoken,likedBy :[], recruitersId: recruiter._id})
+      const newOffer = await JobOffer.create({companyName,jobTitle,remote,onSite,flexible,minPrice,maxPrice,location,jobDescription,softSkills,hardSkills,jobFields, languagesSpoken,likedBy :[], recruitersId: recruiter._id, matchWith :[]})
       console.log(newOffer)
       res.send({ok:true,data:'new job offer created successfully'})
    }else{

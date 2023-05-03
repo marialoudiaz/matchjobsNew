@@ -21,6 +21,7 @@ const jobOfferSchema = new mongoose.Schema({
         required:true,
         ref:'recruiters',
     },
+    matchWith:[{applicant_id: {type:mongoose.Schema.Types.ObjectId,ref:'applicants',},_id: false,}],
     active:{type:Boolean,required:false,unique:false}
     
   

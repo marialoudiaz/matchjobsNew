@@ -172,7 +172,7 @@ const addApplication = async (req,res) =>{
   try {
    const applicant = await Applicant.findOne({email})
    if(applicant){
-      const newApplication = await JobApplication.create({jobTitle, remote,onSite, flexible,minPrice,maxPrice,location,bio,softSkills,hardSkills, jobFields,languagesSpoken, uploadedFiles,likedBy :[], applicantsId: applicant._id })
+      const newApplication = await JobApplication.create({jobTitle, remote,onSite, flexible,minPrice,maxPrice,location,bio,softSkills,hardSkills, jobFields,languagesSpoken, uploadedFiles,likedBy :[], applicantsId: applicant._id, matchWith :[] })
       console.log(newApplication)
       res.send({ok:true,data:'new job application created successfully'})
    }else{
@@ -323,7 +323,38 @@ const getAllMatch = async (req,res)=>{
     res.send(error)
   }}
 
+// getLikedby
+const getLikedby = async(req,res)=>{
+  // prend user.id pass
+  let {id} = req.params;
+  try {
+    // L'APPLICATION
+    // find the offer of the user based on the id of the user(v)
+    const myJobApp = await JobApplication.findOne({applicantsId: id}) // à partir de l'id (params) de l'user trouver une application (jobApplication) contenant la clef 'applicantsid' dont la valeur est id(params)
+    console.log('myJobApp-likedBy', myJobApp.likedBy)
+    let recIDs = myJobApp.likedBy.map(rec=>rec.recruiter_id) // map function
+    const recruiters = await JobOffer.find({recruitersId:{$in : recIDs}}) // {recruitersId: myJobApp.likedBy[0].recruiter_id}
+    console.log('recruiters ', recruiters)
+    // // Store the application id into a variable
+    // let myAppId = myJobApp._id
+    // console.log('myAppId',myAppId)
+    // LIKEDBY
+    // inside this offer find at likedBy all recruiters_id``
+    // const mylikedBy = await JobApplication.find({"likedBy.recruiter_id": {$in: [myAppId]}});
+    // console.log('mylikedBy', mylikedBy);
+    res.send({ ok: true, data: recruiters });
+} catch (error) {
+  console.error(error);
+}
+};
 
+// deleteLikedBy (delete the person who liked you from your model)
+
+// addMatchWith
+
+// getMatchWith
+
+// deleteMatchWith
 
 
 
@@ -345,4 +376,12 @@ module.exports = {
   getEmail,
   getAllOffers,
   getAllMatch,
+  getLikedby,
+  // deleteLikedBy,
+  // addMatchWith,
+  // getMatchWith,
+  // deleteMatchWith,
+
+
+
 }

@@ -301,3 +301,11 @@ padding: 2%;
 .transparent{
   display: none;
 }
+
+.likeOffer{
+  background-color: yellow;
+}
+
+.matchOffer{
+  background-color: green;
+}

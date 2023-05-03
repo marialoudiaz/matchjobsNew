@@ -16,18 +16,9 @@ const jobApplicationSchema = new mongoose.Schema({
     jobFields:[{type:String,unique:false}],
     languagesSpoken:[{type:String,unique:false}],
     // uploadedFiles:[{type:String,unique:false}],
-    likedBy: [{
-        recruiter_id: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'applicants',
-        },
-      _id: false,
-      }],
-        applicantsId:{
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref:'applicants',
-    },
+    likedBy: [{recruiter_id: {type: mongoose.Schema.Types.ObjectId,ref: 'applicants',},_id: false,}],
+    applicantsId:{type: Schema.Types.ObjectId,required: true,ref:'applicants',},
+    matchWith:[{recruiter_id: {type:mongoose.Schema.Types.ObjectId,ref:'applicants',},_id: false,}],
     active:{type:Boolean,required:false,unique:false}
 
 },
