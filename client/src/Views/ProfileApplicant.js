@@ -100,11 +100,15 @@ function ProfileApplicant(props) {
 // handleApp
   // const id = user._id;
   const handleApp = async () => {
-    console.log(userId);
+    let id = userId
+    console.log('userId', userId);
+    console.log('id', id);
+
     try {
       debugger
-      let allMyApp = await axios.get(`${URL}/applicant/getAllMyJobApplications/${userId}`);
+      let allMyApp = await axios.get(`${URL}/applicant/getAllMyJobApplications/${id}`);
       console.log(allMyApp);
+      console.log(allMyApp.data.data)
       if (allMyApp.data.ok) {
         setmyApp(allMyApp.data.data);
         setoffersId(myApp._id); // id de l'offre
@@ -113,7 +117,7 @@ function ProfileApplicant(props) {
         // console.log("setoffersId", myOffer[0]._id);
         // setoffersId(myOffer._id); // id de l'offre
       } else {
-        console.log("hihi");
+        console.log("not application found");
       }} catch (error) {
       console.log(error);
     }
@@ -133,7 +137,10 @@ console.log('offersId',offersId)
     }
   };
 
-  useEffect(()=>{console.log(myApp)},[myApp])
+  useEffect(()=>{
+    // console.log(myApp)[myApp]
+    handleApp()
+  },[])
 
   return (
     <div className="page-wrapper">
@@ -205,10 +212,10 @@ console.log('offersId',offersId)
                     value={myNewApp.location}
                     onChange={handleChange}
                   />
-                  <label>Job Description</label>
+                  <label>Bio</label>
                   <input
-                    name="jobDescription"
-                    value={myNewApp.jobDescription}
+                    name="bio"
+                    value={myNewApp.bio}
                     onChange={handleChange}
                   />
 

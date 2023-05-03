@@ -239,10 +239,10 @@ const getJobApplication = async(req,res)=>{
 
 
 
-
 // // getAllMyJobApplications
 const getAllMyJobApplications = async(req,res)=>{
 console.log("test")
+debugger
 // look for records in JobApplications collection with specific applicantsId reference
 // pass to the controller a current applicant_id
 let {id} = req.params; // const {applicantId}= req.body
