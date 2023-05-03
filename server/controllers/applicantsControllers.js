@@ -323,6 +323,7 @@ const getAllMatch = async (req,res)=>{
     res.send(error)
   }}
 
+  
 // getLikedby
 const getLikedby = async(req,res)=>{
   // prend user.id pass
@@ -332,16 +333,10 @@ const getLikedby = async(req,res)=>{
     // find the offer of the user based on the id of the user(v)
     const myJobApp = await JobApplication.findOne({applicantsId: id}) // à partir de l'id (params) de l'user trouver une application (jobApplication) contenant la clef 'applicantsid' dont la valeur est id(params)
     console.log('myJobApp-likedBy', myJobApp.likedBy)
-    let recIDs = myJobApp.likedBy.map(rec=>rec.recruiter_id) // map function
+    // map function that returns an array with every recruiter_id
+    let recIDs = myJobApp.likedBy.map(rec=>rec.recruiter_id) 
     const recruiters = await JobOffer.find({recruitersId:{$in : recIDs}}) // {recruitersId: myJobApp.likedBy[0].recruiter_id}
     console.log('recruiters ', recruiters)
-    // // Store the application id into a variable
-    // let myAppId = myJobApp._id
-    // console.log('myAppId',myAppId)
-    // LIKEDBY
-    // inside this offer find at likedBy all recruiters_id``
-    // const mylikedBy = await JobApplication.find({"likedBy.recruiter_id": {$in: [myAppId]}});
-    // console.log('mylikedBy', mylikedBy);
     res.send({ ok: true, data: recruiters });
 } catch (error) {
   console.error(error);
@@ -349,6 +344,24 @@ const getLikedby = async(req,res)=>{
 };
 
 // deleteLikedBy (delete the person who liked you from your model)
+// pull id of the recruiter from you likedby.recruiters-id db
+const deleteLikedBy = async(req,res)=>{
+  const {likeurId} = req.body; // id of the user who liked me
+  try {
+  // recIDs - 
+  const deleteLikeur = await JobApplication.findOneAndDelete({recruitersId:{$in : recIDs}})
+  console.log(deleteLikeur)
+    if (deleteLikeur){
+      res.send({ok:true, data: 'This user is no longer in your likes' })
+    } else {
+      res.send({ok:true, data: 'Failed to fin the user' })
+    }
+  } catch (error) {
+    res.send(error) 
+  }
+}
+
+
 
 // addMatchWith
 
@@ -377,11 +390,8 @@ module.exports = {
   getAllOffers,
   getAllMatch,
   getLikedby,
-  // deleteLikedBy,
+  deleteLikedBy,
   // addMatchWith,
   // getMatchWith,
   // deleteMatchWith,
-
-
-
 }
