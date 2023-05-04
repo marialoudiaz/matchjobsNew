@@ -392,7 +392,23 @@ res.send({ok: true, data: 'Applications and Offers successfully added to both ma
 
 // getMatchWith (do the same in recruiter)
 /// get array of all offerIDin match With
-
+const getMatchWith = async(req,res)=>{
+  // prend user.id pass
+  debugger
+  let {id} = req.params;
+  try {
+    // find the offer of the user based on the id of the user(v)
+    const myJobApp = await JobApplication.findOne({applicantsId: id}) // à partir de l'id (params) de l'user trouver une application (jobApplication) contenant la clef 'applicantsid' dont la valeur est id(params)
+    console.log('myJobApp-likedBy', myJobApp.matchWith)
+    // map function that returns an array with every recruiter_id
+    let recIDs = myJobApp.matchWith.map(rec=>rec.recruiter_id) 
+    const recruiters = await JobOffer.find({recruitersId:{$in : recIDs}}) // {recruitersId: myJobApp.likedBy[0].recruiter_id}
+    console.log('recruiters ', recruiters)
+    res.send({ ok: true, data: recruiters });
+} catch (error) {
+  console.error(error);
+}
+};
 
 // deleteMatchWith
 
@@ -419,6 +435,6 @@ module.exports = {
   getLikedby,
   // deleteLikedBy,
   addMatchWith,
-  // getMatchWith,
+  getMatchWith,
   // deleteMatchWith,
 }

@@ -34,12 +34,16 @@ const handleLikes = async ()=>{
 
 
   ///// Render ce que j'ai liké en retour - Mes matchs
+  //'/getMatchWith/:id',
   // add to my matchWith the offers_id when i click on match button
-  // const handleMatch = async ()=>{
-  //   try {
-  //   } catch (error) {
-  //   }
-  // }
+  const handleMatch = async ()=>{
+    try {
+      let allMyMatches = await axios.get(`${URL}/applicant/getMatchWith/${applicantsId}`)
+      console.log('allMyMatches',allMyMatches); // retourne an array with all objects (offers) inside
+      setMatchOffer(allMyMatches.data.data)
+    } catch (error) {
+      console.log(error);
+    }}
    
 
   // // Fonction pour matcher (envoyer mon id dans matchWith)
@@ -94,7 +98,7 @@ const handleLikes = async ()=>{
   //A Chaque Render
   useEffect(()=>{
     handleLikes();
-    // handleMatch();
+    handleMatch();
   },[]) 
 
 
@@ -130,7 +134,7 @@ return (
         <div className="jobApplication">
 {/*{console.log('offerID', offersId)} {console.log('myOffer', myOffer)} */}
       {/* //the offer displayed */}
-      {likeOffer.map((c)=>(
+      {likeOffer.map((c)=>( //matchOffer
         <>
         <h3>{c.companyName}</h3>
          <h4>{c.jobTitle}</h4>
@@ -179,9 +183,7 @@ return (
   // end of like - ending div
   )}
   </div>
-  
-  
-  
+
       {/* <div> // starting div of matches */}
            <>
         {!matchOffer
@@ -196,58 +198,47 @@ return (
         :
         (
         <>
-        <p>hihi</p>
-        {/* <div className='matchOffer'>
-        <div className="classicPage">
-        <div className="topTitle">
-        <div className="jobApplication">
-  
-          {console.log('offerID', offersId)}
-          {console.log('myOffer', myOffer)}
-          <h3>{matchOffer.companyName}</h3>
-          <h4>{matchOffer.jobTitle}</h4>
-          <p>{matchOffer.jobFields}</p>
-          {matchOffer.remote ? <div className="chip">remote</div> : <div></div>}
-          {matchOffer.onSite ? <p>onSite</p> : <p></p>}
-          {matchOffer.flexible ? <p>Flexible</p> : <p></p>}
-          <p className="location">{matchOffer.location}</p>
+          <div className='matchOffer'>
+          <div className="classicPage">
+          <div className="topTitle">
+          <div className="jobApplication">
+            {console.log(matchOffer)}
+       {matchOffer.map((d)=>(
+        <>
+          {/* // {console.log('offerID', offersId)}
+          // {console.log('myOffer', myOffer)} */}
+          <h3>{d.companyName}</h3>
+          <h4>{d.jobTitle}</h4>
+          <p>{d.jobFields}</p>
+          {d.remote ? <div className="chip">remote</div> : <div></div>}
+          {d.onSite ? <p>onSite</p> : <p></p>}
+          {d.flexible ? <p>Flexible</p> : <p></p>}
+          <p className="location">{d.location}</p>
           <h4 className="jobDescription">Job Description</h4>
-          <p>{matchOffer.jobDescription}</p>
+          <p>{d.jobDescription}</p>
           <h4>Skills</h4>
           <h4>Soft</h4>
-           
-          <div className="flex">
-          {Object.keys(matchOffer.softSkills).map((key) => (<p className="inputArray">{matchOffer.softSkills[key]} {console.log(`/recruiter/${offersId}/edit`)}</p>))}
-          </div>
-           
+          <div className="flex">{Object.keys(d.softSkills).map((key) => (<p className="inputArray">{d.softSkills[key]}</p>))} </div>
           <h4>Hard</h4>
-          <div className="flex">
-          {Object.keys(matchOffer.hardSkills).map((key) => (<p className="inputArray">{matchOffer.hardSkills[key]}</p>))}
-          </div>
-           
+          <div className="flex">{Object.keys(d.hardSkills).map((key) => (<p className="inputArray">{d.hardSkills[key]}</p>))}</div>
           <h4>Languages</h4>
-          <div className="flex">
-          {Object.keys(matchOffer.languagesSpoken).map((key) => (<p className="inputArray">{matchOffer.languagesSpoken[key]}</p>))}
-          </div> */}
-  
-       
-        {/* </div>
+          <div className="flex">{Object.keys(d.languagesSpoken).map((key) => (<p className="inputArray">{d.languagesSpoken[key]}</p>))}</div> 
+          
+          </>
+          ))}
        
         </div>
-      
         </div>
-      
-        </div> */}
+        </div>
+        </div>
         
         </>
   
-  
-  
-      
       )}
    
 {/* // the end of the whole return */}
-  </> </>
+  </> 
+  </>
   )
   }
   export default MatchesApplicant

@@ -42,7 +42,7 @@ router.get('/getLikedby/:id',controller.getLikedby)
 router.post('/addMatchWith',controller.addMatchWith)
 
 // // getMatchWith
-// router.get('/getMatchWith/:id',controller.getMatchWith)
+router.get('/getMatchWith/:id',controller.getMatchWith)
 
 // // deleteMatchWith
 // router.post('/deleteMatchWith',controller.deleteMatchWith)
