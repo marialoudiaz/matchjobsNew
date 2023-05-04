@@ -10,7 +10,7 @@ function MatchesApplicant(props) {
   const params = useParams()
   console.log("id from params",params.id)  // recruiterId
   let id = params.id
-  let applicantsId = id // celui qui like 
+  let applicantsId = id // User connecté (son id)
 
     // 2 - the props I pass - Email of user
   console.log("user Email", props.user);
@@ -34,6 +34,7 @@ const handleLikes = async ()=>{
 
 
   ///// Render ce que j'ai liké en retour - Mes matchs
+  // add to my matchWith the offers_id when i click on match button
   // const handleMatch = async ()=>{
   //   try {
   //   } catch (error) {
@@ -70,6 +71,8 @@ const handleLikes = async ()=>{
   //   } catch (error) {
   //   }
   // }  
+// /deleteLikedBy',controller.deleteLikedBy)
+
 
   // Fonction pour supprimer un match (enlever mon id de matchWith)
   // const deleteMatches = async ()=>{
@@ -99,9 +102,6 @@ const handleLikes = async ()=>{
 
 // getLikedby
 // /getLikedby/:id',controller.getLikedby)
-
-// deleteLikedBy
-// /deleteLikedBy',controller.deleteLikedBy)
 
 
 
@@ -156,8 +156,11 @@ return (
          <h4>Languages</h4>
          <div className="flex">
          {Object.keys(c.languagesSpoken).map((key) => (<p className="inputArray">{c.languagesSpoken[key]}</p>))}
+         <button className='btn'> delete like </button>
+         <button className='btn'> Match with recruiter </button> 
+         {/* onClick={deleteLikes} */}
          </div>
-         {/* <button className='btn' onClick={deleteMatch}>delete</button> */}
+         
          </>
       ))}
          

@@ -345,27 +345,54 @@ const getLikedby = async(req,res)=>{
 
 // deleteLikedBy (delete the person who liked you from your model)
 // pull id of the recruiter from you likedby.recruiters-id db
-const deleteLikedBy = async(req,res)=>{
-  const {likeurId} = req.body; // id of the user who liked me
-  try {
-  // recIDs - 
-  const deleteLikeur = await JobApplication.findOneAndDelete({recruitersId:{$in : recIDs}})
-  console.log(deleteLikeur)
-    if (deleteLikeur){
-      res.send({ok:true, data: 'This user is no longer in your likes' })
-    } else {
-      res.send({ok:true, data: 'Failed to fin the user' })
-    }
-  } catch (error) {
-    res.send(error) 
-  }
-}
+// const deleteLikedBy = async(req,res)=>{
+//   const {likeurId} = req.body; // id of the user who liked me
+//   try {
+//   // recIDs - 
+//   const deleteLikeur = await JobApplication.findOneAndDelete({recruitersId:{$in : recIDs}})
+//   console.log(deleteLikeur)
+//     if (deleteLikeur){
+//       res.send({ok:true, data: 'This user is no longer in your likes' })
+//     } else {
+//       res.send({ok:true, data: 'Failed to fin the user' })
+//     }
+//   } catch (error) {
+//     res.send(error) 
+//   }
+// }
 
 
 
 // addMatchWith
+const addMatchWith = async (req,res)=>{
+// ADD id of my application to matchWith of the offer (applicants-id > application => matchWith (of offerID))
+// ADD offerID to my MatchWith
+debugger
+  try {
+    // Récupérer mon profil pour l'envoyer au recruiter
+const {id,offerId} = req.body;  // je prends mon userid et offerId(recruiter)
+console.log('id', id, 'offerId', offerId)
+const allJobApplications = await JobApplication.findOne({applicantsId: id}) // je cherche mon profil avec mon userid
+console.log(allJobApplications._id)
+let myProfile = allJobApplications._id // j'assigne l'id de l'offre (on ne stocke pas lobjet entier mais son id)
+console.log(myProfile)
 
-// getMatchWith
+// Envoyer Mon profil au recruiter (trouver le bon recruiter et push mon profil)
+const sendProfile2Rec = await JobOffer.findOneAndUpdate({_id: offerId}, {$push: {matchWith: {applicant_id : myProfile}}})
+console.log(sendProfile2Rec)
+
+//Envoyer le profil du recruiter dans matchWith de mon application (profil)
+const sendRec2Profile = await JobApplication.findOneAndUpdate({applicantsId: id}, {$push: {matchWith: {recruiter_id : offerId}}})
+console.log(sendRec2Profile)
+res.send({ok: true, data: 'Applications and Offers successfully added to both matchWith arrays'})
+  } catch (error) {
+    res.send(error)
+  }
+}
+
+// getMatchWith (do the same in recruiter)
+/// get array of all offerIDin match With
+
 
 // deleteMatchWith
 
@@ -390,8 +417,8 @@ module.exports = {
   getAllOffers,
   getAllMatch,
   getLikedby,
-  deleteLikedBy,
-  // addMatchWith,
+  // deleteLikedBy,
+  addMatchWith,
   // getMatchWith,
   // deleteMatchWith,
 }
