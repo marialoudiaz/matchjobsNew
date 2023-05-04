@@ -399,10 +399,11 @@ const getMatchWith = async(req,res)=>{
   try {
     // find the offer of the user based on the id of the user(v)
     const myJobApp = await JobApplication.findOne({applicantsId: id}) // à partir de l'id (params) de l'user trouver une application (jobApplication) contenant la clef 'applicantsid' dont la valeur est id(params)
-    console.log('myJobApp-likedBy', myJobApp.matchWith)
+    console.log('myJobApp-matchWith', myJobApp.matchWith)
     // map function that returns an array with every recruiter_id
     let recIDs = myJobApp.matchWith.map(rec=>rec.recruiter_id) 
-    const recruiters = await JobOffer.find({recruitersId:{$in : recIDs}}) // {recruitersId: myJobApp.likedBy[0].recruiter_id}
+    console.log('recIDs ', recIDs)
+    const recruiters = await JobOffer.find({_id:{$in : recIDs}}) // {recruitersId: myJobApp.likedBy[0].recruiter_id}
     console.log('recruiters ', recruiters)
     res.send({ ok: true, data: recruiters });
 } catch (error) {

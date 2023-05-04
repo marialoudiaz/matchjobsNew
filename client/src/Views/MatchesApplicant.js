@@ -33,17 +33,21 @@ const handleLikes = async ()=>{
   }}
 
 
+      // DEBUGGER LE CLIENT
   ///// Render ce que j'ai liké en retour - Mes matchs
   //'/getMatchWith/:id',
   // add to my matchWith the offers_id when i click on match button
   const handleMatch = async ()=>{
+    console.log('applicantsId in matches', applicantsId)
     try {
       let allMyMatches = await axios.get(`${URL}/applicant/getMatchWith/${applicantsId}`)
       console.log('allMyMatches',allMyMatches); // retourne an array with all objects (offers) inside
+      console.log('allMyMatches',allMyMatches.data.data)
       setMatchOffer(allMyMatches.data.data)
     } catch (error) {
       console.log(error);
     }}
+
    
 
   // // Fonction pour matcher (envoyer mon id dans matchWith)
@@ -88,9 +92,7 @@ const handleLikes = async ()=>{
   // // Obtenir l'email d'une offre
   // const getEmail = async ()=>{
   //   try {
-      
   //   } catch (error) {
-      
   //   }
   // }
 
@@ -167,9 +169,6 @@ return (
          
          </>
       ))}
-         
-  
-      
       {/* // end of div jobApplication */}
       </div>
       {/* // end of div topTitle */}
@@ -198,12 +197,13 @@ return (
         :
         (
         <>
+        <h2>Here are your matches</h2>
           <div className='matchOffer'>
           <div className="classicPage">
           <div className="topTitle">
           <div className="jobApplication">
             {console.log(matchOffer)}
-       {matchOffer.map((d)=>(
+            {matchOffer.map((d)=>(
         <>
           {/* // {console.log('offerID', offersId)}
           // {console.log('myOffer', myOffer)} */}
@@ -223,10 +223,8 @@ return (
           <div className="flex">{Object.keys(d.hardSkills).map((key) => (<p className="inputArray">{d.hardSkills[key]}</p>))}</div>
           <h4>Languages</h4>
           <div className="flex">{Object.keys(d.languagesSpoken).map((key) => (<p className="inputArray">{d.languagesSpoken[key]}</p>))}</div> 
-          
           </>
           ))}
-       
         </div>
         </div>
         </div>
