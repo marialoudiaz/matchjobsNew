@@ -13,7 +13,6 @@ const mongoose = require('mongoose');
 
 // DB CONNECT
 
-  console.log(process.env.MONGO)
   async function connecting(){
 try {
  
