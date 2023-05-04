@@ -1,6 +1,7 @@
 const express = require('express');
 const app= express();
 const mongoose = require('mongoose');
+const PORT = proccess.env.PORT
   // check schemas or give error
   mongoose.set('debug', true);
   require('dotenv').config();
@@ -36,7 +37,7 @@ res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
 });
 
 connecting().then(() => {
-  app.listen(5555, () => {
+  app.listen(PORT, () => {
       console.log("listening for requests");
   })
 })
