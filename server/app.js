@@ -11,13 +11,6 @@ const mongoose = require('mongoose');
 
 
 
-  const path = require('path');
-  app.use(express.static(__dirname));
-  app.use(express.static(path.join(__dirname, '../client/build')));
-  app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
-  });
-
 // DB CONNECT
 
   console.log(process.env.MONGO)
@@ -35,6 +28,16 @@ connecting()
 app.use('/recruiter/', require('./routes/recruitersRoutes'));
 app.use('/applicant/', require('./routes/applicantsRoutes'));
 app.use('/admin/', require('./routes/adminRoutes'));
+
+
+const path = require('path');
+app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, '../client/build')));
+app.get('/*', function (req, res) {
+res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+});
+
+
 app.listen(5555, ()=>console.log('listening on port 5555'));
 
 
