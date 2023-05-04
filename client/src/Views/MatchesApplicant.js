@@ -26,7 +26,7 @@ function MatchesApplicant(props) {
 const handleLikes = async ()=>{
   try {
     let allMyLikes = await axios.get(`${URL}/applicant/getLikedBy/${applicantsId}`)
-    console.log(allMyLikes); // retourne an array with all objects (offers) inside
+    console.log('allMyLikes',allMyLikes); // retourne an array with all objects (offers) inside
     setLikeOffer(allMyLikes.data.data)
   } catch (error) {
     console.log(error);
@@ -122,61 +122,60 @@ return (
         )
         :
         (
-          <><p>hihi</p></>
-      //   <>
-      //   <div className='likeOffer'>
-      //   <div className="classicPage">
-      //   <div className="topTitle">
-      //   <div className="jobApplication">
+        <>
+        <div className='likeOffer'>
+        <h2>Here are the recruiters who liked you so far !</h2>
+        <div className="classicPage">
+        <div className="topTitle">
+        <div className="jobApplication">
+{/*{console.log('offerID', offersId)} {console.log('myOffer', myOffer)} */}
+      {/* //the offer displayed */}
+      {likeOffer.map((c)=>(
+        <>
+        <h3>{c.companyName}</h3>
+         <h4>{c.jobTitle}</h4>
+         <p>{c.jobFields}</p>
+         {c.remote ? <div className="chip">remote</div> : <div></div>}
+         {c.onSite ? <p>onSite</p> : <p></p>}
+         {c.flexible ? <p>Flexible</p> : <p></p>}
+         <p className="location">{c.location}</p>
+         <h4 className="jobDescription">Job Description</h4>
+         <p>{c.jobDescription}</p>
+         <h4>Skills</h4>
+         <h4>Soft</h4>
+         
+         <div className="flex">
+         {Object.keys(c.softSkills).map((key) => ( <p className="inputArray">{c.softSkills[key]}</p> ))}
+         </div>
+         
+         <h4>Hard</h4>
+         <div className="flex">
+         {Object.keys(c.hardSkills).map((key) => (<p className="inputArray">{c.hardSkills[key]}</p> ))}
+         </div>
+         
+         <h4>Languages</h4>
+         <div className="flex">
+         {Object.keys(c.languagesSpoken).map((key) => (<p className="inputArray">{c.languagesSpoken[key]}</p>))}
+         </div>
+         {/* <button className='btn' onClick={deleteMatch}>delete</button> */}
+         </>
+      ))}
+         
+  
+      
+      {/* // end of div jobApplication */}
+      </div>
+      {/* // end of div topTitle */}
+      </div>
+      {/* // end of div classicPage */}
+      </div>
+      {/* // end of div - likeOffer */}
+      </div>
         
-      //   {console.log('offerID', offersId)}
-      //   {console.log('myOffer', myOffer)}
-  
-      // // the offer displayed
-      //   <h3>{c.companyName}</h3>
-      //   <h4>{c.jobTitle}</h4>
-      //   <p>{c.jobFields}</p>
-      //   {c.remote ? <div className="chip">remote</div> : <div></div>}
-      //   {c.onSite ? <p>onSite</p> : <p></p>}
-      //   {c.flexible ? <p>Flexible</p> : <p></p>}
-      //   <p className="location">{c.location}</p>
-      //   <h4 className="jobDescription">Job Description</h4>
-      //   <p>{c.jobDescription}</p>
-      //   <h4>Skills</h4>
-      //   <h4>Soft</h4>
-         
-      //   <div className="flex">
-      //   {Object.keys(c.softSkills).map((key) => ( <p className="inputArray">{c.softSkills[key]}</p> ))}
-      //   </div>
-         
-      //   <h4>Hard</h4>
-      //   <div className="flex">
-      //   {Object.keys(matchOffer.hardSkills).map((key) => (<p className="inputArray">{matchOffer.hardSkills[key]}</p> ))}
-      //   </div>
-         
-      //   <h4>Languages</h4>
-      //   <div className="flex">
-      //   {Object.keys(matchOffer.languagesSpoken).map((key) => (<p className="inputArray">{matchOffer.languagesSpoken[key]}</p>))}
-      //   </div>
-      //   {/* <button className='btn' onClick={deleteMatch}>delete</button> */}
-  
-  
-      //   {/* // end of div jobApplication */}
-      //   </div>
-      //   {/* // end of div topTitle */}
-      //   </div>
-      //   {/* // end of div classicPage */}
-      //   </div>
-      //   {/* // end of div - likeOffer */}
-      //   </div>
-        
-      //   </>
-  
+         </>
   // end of like - ending div
   )}
   </div>
-
-  
   
   
   
@@ -186,7 +185,7 @@ return (
          // if condition
         ? (
         <>
-        <h1>You don't have any matches, yet.</h1>
+        <h2>You don't have any matches, yet.</h2>
         <h4>Keep chasing !</h4>
         </>
         )
