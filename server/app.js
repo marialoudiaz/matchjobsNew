@@ -1,7 +1,7 @@
 const express = require('express');
 const app= express();
 const mongoose = require('mongoose');
-const PORT = proccess.env.PORT
+const PORT = process.env.PORT
   // check schemas or give error
   mongoose.set('debug', true);
   require('dotenv').config();
