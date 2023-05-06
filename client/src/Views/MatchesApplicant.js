@@ -12,7 +12,10 @@ function MatchesApplicant(props) {
   let id = params.id
   let applicantsId = id // User connecté (son id)
 
-    // 2 - the props I pass - Email of user
+  let offerId=''
+
+
+  // 2 - the props I pass - Email of user
   console.log("user Email", props.user);
 
 // créer un state component (likeOffer) pour stocker les likes que j'ai recu
@@ -33,7 +36,6 @@ const handleLikes = async ()=>{
   }}
 
 
-      // DEBUGGER LE CLIENT
   ///// Render ce que j'ai liké en retour - Mes matchs
   //'/getMatchWith/:id',
   // add to my matchWith the offers_id when i click on match button
@@ -51,20 +53,18 @@ const handleLikes = async ()=>{
    
 
   // // Fonction pour matcher (envoyer mon id dans matchWith)
-  // const doMatch = async (applicationId)=>{
-  //   // j'appuye sur bouton avec fonction (doMatch)
-
-  //   // Alert - "it's a match"
-  //   // Affiche la div cachée avec le mail (icon clicable)
-  //   // Requête post - (addMatchWith)
-  //   console.log(recruiterId)
-  //   console.log(applicationId)
-  //   try {
-  //     let likeApp = await axios.post(`${URL}/recruiter/likeApplicant`, {applicationId, recruiterId})
-  //     console.log('likeApp',likeApp)
-  //   } catch (error) {
-  //   }
-  // }
+    const doMatch = async ()=>{
+  console.log('id', id)
+  console.log('offerId',offerId)
+  //Requête post - (addMatchWith)
+    try {
+      // const create = await axios.post(`${URL}/applicant/addApplication`, {...myNewApp,email: props.user,});
+      let doMatch = await axios.post(`${URL}/applicant/addMatchWith`, {id,offerId})
+      console.log('doMatch',doMatch)
+        //Alert - "it's a match" (in the response)
+    } catch (error) {
+    }
+  }
 
   // // Fonction pour supprimer un like (enlever mon id de likedBy)
   // const deleteLikes = async (applicationId)=>{
@@ -149,6 +149,9 @@ return (
          <p>{c.jobDescription}</p>
          <h4>Skills</h4>
          <h4>Soft</h4>
+
+         <div className='transparent'>{offerId = c._id}</div>
+         
          
          <div className="flex">
          {Object.keys(c.softSkills).map((key) => ( <p className="inputArray">{c.softSkills[key]}</p> ))}
@@ -163,7 +166,7 @@ return (
          <div className="flex">
          {Object.keys(c.languagesSpoken).map((key) => (<p className="inputArray">{c.languagesSpoken[key]}</p>))}
          <button className='btn'> delete like </button>
-         <button className='btn'> Match with recruiter </button> 
+         <button className='btn' onClick={() => doMatch()}> Match with recruiter </button> 
          {/* onClick={deleteLikes} */}
          </div>
          
