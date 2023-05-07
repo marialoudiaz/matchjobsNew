@@ -273,18 +273,21 @@ let {id} = req.params; // const {applicantId}= req.body
 const getEmail = async(req,res)=>{
   // take offerId (of the offer)
   debugger
-  let {id} = req.params; //offerId
+  const {offerIdEmail}= req.body // offerId
+  // let {id} = req.params; //offerId
   // let offerId = {id: id}
   try {
-    const findOffer = await JobOffer.findOne({_id: id})
+    // Find the specific offer
+    const findOffer = await JobOffer.findOne({_id: offerIdEmail})
     console.log(findOffer)
-    // find recruitersId inside object
-    let recruitersId = findOffer.data.data.recruitersId
+    // find recruitersId inside this offer
+    let recruitersId = findOffer.recruitersId
     console.log(recruitersId)
-    let getRecruiter = await Recruiter.find({recruitersId})
+    // Find user based on recruitersId
+    let getRecruiter = await Recruiter.findOne({_id: recruitersId})
     console.log(getRecruiter)
-    // return object.email
-    let email = getRecruiter.data.data.email
+    // Return email of user
+    let email = getRecruiter.email
     console.log(email)
     res.send({ok:true, data: email})
   } catch (error) {

@@ -24,7 +24,7 @@ router.get('/getJobApplication/:id', controller.getJobApplication)
 // getAllMyJobApplications/?id=''
 router.get('/getAllMyJobApplications/:id',controller.getAllMyJobApplications) 
 // getEmail
-router.get('/getEmail/:id',controller.getEmail)
+router.post('/getEmail',controller.getEmail)
 // //likeJobOffer
 router.post('/likeOffer',controller.likeOffer)
 // //unlikeJobOffer

@@ -2,6 +2,7 @@ import React, { useState, useEffect} from 'react';
 import { useNavigate, useParams, Link, Navigate } from "react-router-dom";
 import axios from 'axios';
 import {URL} from "../config"
+import { FaMailBulk } from 'react-icons/fa';
 
 function MatchesApplicant(props) {
 
@@ -12,11 +13,15 @@ function MatchesApplicant(props) {
   let id = params.id
   let applicantsId = id // User connecté (son id)
 
+  // Variable utilisée dans doMatch
   let offerId=''
 
 
+  // Variable utilisée dans getEmail
+  let offerIdEmail=''
+
   // 2 - the props I pass - Email of user
-  console.log("user Email", props.user);
+  console.log("user email", props.user);
 
 // créer un state component (likeOffer) pour stocker les likes que j'ai recu
   const [likeOffer, setLikeOffer]=useState(null)
@@ -36,9 +41,8 @@ const handleLikes = async ()=>{
   }}
 
 
-  ///// Render ce que j'ai liké en retour - Mes matchs
-  //'/getMatchWith/:id',
-  // add to my matchWith the offers_id when i click on match button
+  //Render ce que j'ai liké en retour - Mes matchs
+  //add to my matchWith the offers_id when i click on match button
   const handleMatch = async ()=>{
     console.log('applicantsId in matches', applicantsId)
     try {
@@ -50,7 +54,6 @@ const handleLikes = async ()=>{
       console.log(error);
     }}
 
-   
 
   // // Fonction pour matcher (envoyer mon id dans matchWith)
     const doMatch = async ()=>{
@@ -66,7 +69,21 @@ const handleLikes = async ()=>{
     }
   }
 
-  // // Fonction pour supprimer un like (enlever mon id de likedBy)
+  //Obtenir l'email d'une offre
+  const getEmail = async()=>{
+    console.log('offerID', offerIdEmail)
+    try {
+      // recoit l'email
+      let getEmail = await axios.post(`${URL}/applicant/getEmail`, {offerIdEmail})
+      console.log('email to email',getEmail)
+      // une fois reçu lance mail:to
+    } catch (error) {
+    }
+  }
+
+
+
+  // // Fonction pour supprimer un like (enlever mon id de likedBy) /deleteLikedBy',controller.deleteLikedBy)
   // const deleteLikes = async (applicationId)=>{
   //   //j'appuye dessus
   //   // pull (enleve) recruiters._id de mes likedBy 
@@ -78,8 +95,7 @@ const handleLikes = async ()=>{
   //     console.log('unlikeApp',unlikeApp)
   //   } catch (error) {
   //   }
-  // }  
-// /deleteLikedBy',controller.deleteLikedBy)
+  // }
 
 
   // Fonction pour supprimer un match (enlever mon id de matchWith)
@@ -89,13 +105,7 @@ const handleLikes = async ()=>{
   //   }
   // }
 
-  // // Obtenir l'email d'une offre
-  // const getEmail = async ()=>{
-  //   try {
-  //   } catch (error) {
-  //   }
-  // }
-
+  
 
   //A Chaque Render
   useEffect(()=>{
@@ -218,6 +228,7 @@ return (
           {d.flexible ? <p>Flexible</p> : <p></p>}
           <p className="location">{d.location}</p>
           <h4 className="jobDescription">Job Description</h4>
+          
           <p>{d.jobDescription}</p>
           <h4>Skills</h4>
           <h4>Soft</h4>
@@ -226,6 +237,12 @@ return (
           <div className="flex">{Object.keys(d.hardSkills).map((key) => (<p className="inputArray">{d.hardSkills[key]}</p>))}</div>
           <h4>Languages</h4>
           <div className="flex">{Object.keys(d.languagesSpoken).map((key) => (<p className="inputArray">{d.languagesSpoken[key]}</p>))}</div> 
+          <div className='transparent'>{offerIdEmail = d._id}</div>
+          <div className='btn'><FaMailBulk onClick={() => getEmail()}/>Get in touch</div>
+
+
+
+
           </>
           ))}
         </div>
@@ -236,8 +253,8 @@ return (
         </>
   
       )}
-   
-{/* // the end of the whole return */}
+    
+        {/* // the end of the whole return */}
   </> 
   </>
   )
