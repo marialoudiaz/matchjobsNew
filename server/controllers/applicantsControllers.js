@@ -361,7 +361,7 @@ const getLikedby = async(req,res)=>{
 
 // deleteLikedBy (delete the person who liked you from your model)
 // pull out id of the recruiter from you likedby.recruiters-id db
-const deleteLikedBy = async(req,res)=>{
+const deleteLikedBy = async(req,res)=>{ 
   // take id of the user + id of the offer
   const {userId, offerDeleteId} = req.body;
   try {
@@ -429,6 +429,24 @@ const getMatchWith = async(req,res)=>{
 };
 
 // deleteMatchWith
+const deleteMatchWith = async(req,res)=>{
+  // take id of the user + id of the offer
+  const {userId, offerDeleteId} = req.body;
+  try {
+    // take id of the offer and return object
+  const findOffer = await JobOffer.findOne({_id: offerDeleteId})
+  console.log('recruitersId', findOffer.recruitersId)
+  let recruitersId = findOffer.recruitersId
+  // pull userId from object.likedBy
+  const pullId = await JobApplication.findOneAndUpdate({applicantsId: userId}, {$pull: {matchWith: {recruitersId : recruitersId}}})
+  // await JobOffer.findOneandUpdate({_id: offerId}, {$pull: {likedBy: {applicant_id : applicantId}}}) 
+  console.log('pullId', pullId)
+  res.send({ok:true, data: 'This user is no longer in your matches' })
+  } catch (error) {
+    res.send(error) 
+  }
+}
+
 
 
 
@@ -454,5 +472,5 @@ module.exports = {
   deleteLikedBy,
   addMatchWith,
   getMatchWith,
-  // deleteMatchWith,
+  deleteMatchWith,
 }

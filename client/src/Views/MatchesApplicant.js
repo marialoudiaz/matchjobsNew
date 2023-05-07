@@ -105,11 +105,15 @@ const handleLikes = async ()=>{
 
 
   // Fonction pour supprimer un match (enlever mon id de matchWith)
-  // const deleteMatches = async ()=>{
-  //   try {
-  //   } catch (error) {
-  //   }
-  // }
+  const deleteMatches = async ()=>{
+    let userId = applicantsId;
+    let offerDeleteId= offerIdEmail;
+    try {
+      let unMatchOffer = await axios.post(`${URL}/applicant/deleteLikedBy`,{userId, offerDeleteId} ) 
+      console.log('unMatchOffer',unMatchOffer)    
+    } catch (error) {
+    }
+  }
 
   
 
@@ -243,6 +247,7 @@ return (
           <h4>Languages</h4>
           <div className="flex">{Object.keys(d.languagesSpoken).map((key) => (<p className="inputArray">{d.languagesSpoken[key]}</p>))}</div> 
           <div className='transparent'>{offerIdEmail = d._id}</div>
+          <button className='btn' onClick={() => deleteMatches()}> Delete Match </button>
           <div><FaMailBulk onClick={() => getEmail()}/>Get in touch</div>
 
 

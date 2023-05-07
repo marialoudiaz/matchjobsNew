@@ -45,6 +45,6 @@ router.post('/addMatchWith',controller.addMatchWith)
 router.get('/getMatchWith/:id',controller.getMatchWith)
 
 // // deleteMatchWith
-// router.post('/deleteMatchWith',controller.deleteMatchWith)
+router.post('/deleteMatchWith',controller.deleteMatchWith)
 
 module.exports = router;
