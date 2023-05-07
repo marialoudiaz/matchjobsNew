@@ -3,6 +3,7 @@ import { useNavigate, useParams, Link, Navigate } from "react-router-dom";
 import axios from 'axios';
 import {URL} from "../config"
 import { FaMailBulk } from 'react-icons/fa';
+import Mailto from './Mailto';
 
 function MatchesApplicant(props) {
 
@@ -19,6 +20,9 @@ function MatchesApplicant(props) {
 
   // Variable utilisée dans getEmail
   let offerIdEmail=''
+
+  //Variable for email to email
+  let emailtoemail=''
 
   // 2 - the props I pass - Email of user
   console.log("user email", props.user);
@@ -75,8 +79,11 @@ const handleLikes = async ()=>{
     try {
       // recoit l'email
       let getEmail = await axios.post(`${URL}/applicant/getEmail`, {offerIdEmail})
-      console.log('email to email',getEmail)
+      console.log('email to email',getEmail.data.data)
+      emailtoemail= getEmail.data.data
       // une fois reçu lance mail:to
+      {window.open(`mailto:${emailtoemail}?subject=We%20just%20matched%20&body=Type%20in%20..`) }
+      // {<Mailto label={"Write me an E-Mail"} mailto={`mailto:${emailtoemail}`} />}
     } catch (error) {
     }
   }
@@ -238,8 +245,7 @@ return (
           <h4>Languages</h4>
           <div className="flex">{Object.keys(d.languagesSpoken).map((key) => (<p className="inputArray">{d.languagesSpoken[key]}</p>))}</div> 
           <div className='transparent'>{offerIdEmail = d._id}</div>
-          <div className='btn'><FaMailBulk onClick={() => getEmail()}/>Get in touch</div>
-
+          <div><FaMailBulk onClick={() => getEmail()}/>Get in touch</div>
 
 
 

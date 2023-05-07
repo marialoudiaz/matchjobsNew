@@ -288,7 +288,7 @@ const getEmail = async(req,res)=>{
     console.log(getRecruiter)
     // Return email of user
     let email = getRecruiter.email
-    console.log(email)
+    console.log('finalemail', email)
     res.send({ok:true, data: email})
   } catch (error) {
     res.send(error)
