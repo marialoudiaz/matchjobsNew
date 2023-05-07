@@ -360,22 +360,23 @@ const getLikedby = async(req,res)=>{
 };
 
 // deleteLikedBy (delete the person who liked you from your model)
-// pull id of the recruiter from you likedby.recruiters-id db
-// const deleteLikedBy = async(req,res)=>{
-//   const {likeurId} = req.body; // id of the user who liked me
-//   try {
-//   // recIDs - 
-//   const deleteLikeur = await JobApplication.findOneAndDelete({recruitersId:{$in : recIDs}})
-//   console.log(deleteLikeur)
-//     if (deleteLikeur){
-//       res.send({ok:true, data: 'This user is no longer in your likes' })
-//     } else {
-//       res.send({ok:true, data: 'Failed to fin the user' })
-//     }
-//   } catch (error) {
-//     res.send(error) 
-//   }
-// }
+// pull out id of the recruiter from you likedby.recruiters-id db
+const deleteLikedBy = async(req,res)=>{
+  // take id of the user + id of the offer
+  const {userId, offerDeleteId} = req.body;
+  try {
+    // take id of the offer and return object
+  const findOffer = await JobOffer.findOne({_id: offerDeleteId})
+  console.log('recruitersId', findOffer.recruitersId)
+  let recruitersId = findOffer.recruitersId
+  // pull userId from object.likedBy
+  const pullId = await JobApplication.findOneAndUpdate({applicantsId: userId}, {$pull: {likedBy: {recruitersId : recruitersId}}})
+  console.log('pullId', pullId)
+  res.send({ok:true, data: 'This user is no longer in your likes' })
+  } catch (error) {
+    res.send(error) 
+  }
+}
 
 
 
@@ -450,7 +451,7 @@ module.exports = {
   getAllOffers,
   getAllMatch,
   getLikedby,
-  // deleteLikedBy,
+  deleteLikedBy,
   addMatchWith,
   getMatchWith,
   // deleteMatchWith,

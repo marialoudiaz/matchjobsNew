@@ -3,7 +3,6 @@ import { useNavigate, useParams, Link, Navigate } from "react-router-dom";
 import axios from 'axios';
 import {URL} from "../config"
 import { FaMailBulk } from 'react-icons/fa';
-import Mailto from './Mailto';
 
 function MatchesApplicant(props) {
 
@@ -90,19 +89,19 @@ const handleLikes = async ()=>{
 
 
 
-  // // Fonction pour supprimer un like (enlever mon id de likedBy) /deleteLikedBy',controller.deleteLikedBy)
-  // const deleteLikes = async (applicationId)=>{
-  //   //j'appuye dessus
-  //   // pull (enleve) recruiters._id de mes likedBy 
-  //   ///appeler fonction async
-  //   console.log(recruiterId)
-  //   console.log(applicationId)
-  //   try {
-  //     let unlikeApp = await axios.post(`${URL}/recruiter/unlikeApplicant`,{applicationId, recruiterId} )
-  //     console.log('unlikeApp',unlikeApp)
-  //   } catch (error) {
-  //   }
-  // }
+  //Fonction pour supprimer un like (enlever mon id de likedBy) /deleteLikedBy',controller.deleteLikedBy)
+  const deleteLikes = async ()=>{
+    let userId = applicantsId;
+    let offerDeleteId= offerId;
+  console.log('userId',userId)
+  console.log('offerDeleteId',offerDeleteId)
+  // applicationId
+  try {
+  let unlikeOffer = await axios.post(`${URL}/applicant/deleteLikedBy`,{userId, offerDeleteId} ) 
+  console.log('unlikeOffer',unlikeOffer)    
+  } catch (error) { 
+  }
+}
 
 
   // Fonction pour supprimer un match (enlever mon id de matchWith)
@@ -182,9 +181,8 @@ return (
          <h4>Languages</h4>
          <div className="flex">
          {Object.keys(c.languagesSpoken).map((key) => (<p className="inputArray">{c.languagesSpoken[key]}</p>))}
-         <button className='btn'> delete like </button>
+         <button className='btn' onClick={() => deleteLikes()}> delete like </button>
          <button className='btn' onClick={() => doMatch()}> Match with recruiter </button> 
-         {/* onClick={deleteLikes} */}
          </div>
          
          </>

@@ -36,7 +36,7 @@ router.get('/getAllOffers',controller.getAllOffers)
 router.get('/getLikedby/:id',controller.getLikedby)
 
 // // deleteLikedBy (delete the person who liked you from your model)
-// router.post('/deleteLikedBy',controller.deleteLikedBy)
+router.post('/deleteLikedBy',controller.deleteLikedBy)
 
 // addMatchWith
 router.post('/addMatchWith',controller.addMatchWith)
