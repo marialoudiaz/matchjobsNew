@@ -367,10 +367,8 @@ const deleteLikedBy = async(req,res)=>{
     // trouver l'offre sur laquelle je clicke
   const findOffer = await JobOffer.findOne({_id: offerDeleteId})
   console.log('recruitersId', findOffer.recruitersId)
-
   // Extraire recruitersId de l'offre
   let recruitersId = findOffer.recruitersId
-
   // find the profile of user based on its id
   // pull recruitersId from object.likedBy
   const pullId = await JobApplication.findOneAndUpdate({applicantsId: userId}, {$pull: {likedBy: {recruiter_id : recruitersId}}})
@@ -432,23 +430,27 @@ const getMatchWith = async(req,res)=>{
 
 // deleteMatchWith
 const deleteMatchWith = async(req,res)=>{
+  debugger
   // take id of the user + id of the offer
   const {userId, offerDeleteId} = req.body;
   try {
-    // take id of the offer and return object
+    // Trouver l'offre que je veux retirer de mes matchs
   const findOffer = await JobOffer.findOne({_id: offerDeleteId})
   console.log('recruitersId', findOffer.recruitersId)
   let recruitersId = findOffer.recruitersId
-  // pull userId from object.likedBy
-  const pullId = await JobApplication.findOneAndUpdate({applicantsId: userId}, {$pull: {matchWith: {recruitersId : recruitersId}}})
-  // await JobOffer.findOneandUpdate({_id: offerId}, {$pull: {likedBy: {applicant_id : applicantId}}}) 
-  console.log('pullId', pullId)
+  
+  //Je trouve mon profil
+  // J'enleve de matchWith le recruiter
+  const removeMyMatch = await JobApplication.findOneAndUpdate({applicantsId: userId}, {$pull: {matchWith: {recruiter_id : recruitersId}}})
+  console.log('removeMyMatch', removeMyMatch)
+  //Enleve mon id des matchs de l'user
+  const removeHisMatch = await JobOffer.findOneAndUpdate({recruitersId: recruitersId}, {$pull: {matchWith: {applicant_id: userId}}})
+  console.log('removeHisMatch', removeHisMatch)
   res.send({ok:true, data: 'This user is no longer in your matches' })
   } catch (error) {
     res.send(error) 
   }
 }
-
 
 
 
