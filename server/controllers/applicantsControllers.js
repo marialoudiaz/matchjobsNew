@@ -300,7 +300,6 @@ const getEmail = async(req,res)=>{
 // // //likeJobOffer
 const likeOffer = async(req,res)=>{
   const {offerId, applicantId}= req.body
-
   try {
     const offer = await JobOffer.findOneAndUpdate({_id: offerId}, {$push: {likedBy: {applicant_id : applicantId}}}) // FIND ALL
    } catch (error) {
@@ -365,19 +364,22 @@ const deleteLikedBy = async(req,res)=>{
   // take id of the user + id of the offer
   const {userId, offerDeleteId} = req.body;
   try {
-    // take id of the offer and return object
+    // trouver l'offre sur laquelle je clicke
   const findOffer = await JobOffer.findOne({_id: offerDeleteId})
   console.log('recruitersId', findOffer.recruitersId)
+
+  // Extraire recruitersId de l'offre
   let recruitersId = findOffer.recruitersId
-  // pull userId from object.likedBy
-  const pullId = await JobApplication.findOneAndUpdate({applicantsId: userId}, {$pull: {likedBy: {recruitersId : recruitersId}}})
+
+  // find the profile of user based on its id
+  // pull recruitersId from object.likedBy
+  const pullId = await JobApplication.findOneAndUpdate({applicantsId: userId}, {$pull: {likedBy: {recruiter_id : recruitersId}}})
   console.log('pullId', pullId)
   res.send({ok:true, data: 'This user is no longer in your likes' })
   } catch (error) {
     res.send(error) 
   }
 }
-
 
 
 // addMatchWith

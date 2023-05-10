@@ -13,9 +13,6 @@ function MatchesApplicant(props) {
   let id = params.id
   let applicantsId = id // User connecté (son id)
 
-  // Variable utilisée dans doMatch
-  let offerId=''
-
 
   // Variable utilisée dans getEmail
   let offerIdEmail=''
@@ -60,12 +57,12 @@ const handleLikes = async ()=>{
 
   // // Fonction pour matcher (envoyer mon id dans matchWith)
     const doMatch = async ()=>{
-  console.log('id', id)
-  console.log('offerId',offerId)
+  // console.log('id', id)
+  // console.log('offerId',offerId)
   //Requête post - (addMatchWith)
     try {
       // const create = await axios.post(`${URL}/applicant/addApplication`, {...myNewApp,email: props.user,});
-      let doMatch = await axios.post(`${URL}/applicant/addMatchWith`, {id,offerId})
+      // let doMatch = await axios.post(`${URL}/applicant/addMatchWith`, {id,offerId})
       console.log('doMatch',doMatch)
         //Alert - "it's a match" (in the response)
     } catch (error) {
@@ -90,14 +87,14 @@ const handleLikes = async ()=>{
 
 
   //Fonction pour supprimer un like (enlever mon id de likedBy) /deleteLikedBy',controller.deleteLikedBy)
-  const deleteLikes = async ()=>{
+  const deleteLikes = async (offerID)=>{
     let userId = applicantsId;
-    let offerDeleteId= offerId;
+    let offerDeleteId = offerID;
   console.log('userId',userId)
   console.log('offerDeleteId',offerDeleteId)
   // applicationId
   try {
-  let unlikeOffer = await axios.post(`${URL}/applicant/deleteLikedBy`,{userId, offerDeleteId} ) 
+  let unlikeOffer = await axios.post(`${URL}/applicant/deleteLikedBy`,{userId, offerDeleteId} )
   console.log('unlikeOffer',unlikeOffer)    
   } catch (error) { 
   }
@@ -115,20 +112,12 @@ const handleLikes = async ()=>{
     }
   }
 
-  
 
   //A Chaque Render
   useEffect(()=>{
     handleLikes();
     handleMatch();
   },[]) 
-
-
-  ////////// ROUTES FOR CONTROLLERS
-
-// getLikedby
-// /getLikedby/:id',controller.getLikedby)
-
 
 
 return (
@@ -169,26 +158,20 @@ return (
          <p>{c.jobDescription}</p>
          <h4>Skills</h4>
          <h4>Soft</h4>
-
-         <div className='transparent'>{offerId = c._id}</div>
-         
-         
+         <div className='transparent'>{c._id}</div>
          <div className="flex">
          {Object.keys(c.softSkills).map((key) => ( <p className="inputArray">{c.softSkills[key]}</p> ))}
          </div>
-         
          <h4>Hard</h4>
          <div className="flex">
          {Object.keys(c.hardSkills).map((key) => (<p className="inputArray">{c.hardSkills[key]}</p> ))}
          </div>
-         
          <h4>Languages</h4>
          <div className="flex">
          {Object.keys(c.languagesSpoken).map((key) => (<p className="inputArray">{c.languagesSpoken[key]}</p>))}
-         <button className='btn' onClick={() => deleteLikes()}> delete like </button>
+         <button className='btn' onClick={() => deleteLikes(c._id)}> delete like </button>
          <button className='btn' onClick={() => doMatch()}> Match with recruiter </button> 
          </div>
-         
          </>
       ))}
       {/* // end of div jobApplication */}
@@ -199,12 +182,10 @@ return (
       </div>
       {/* // end of div - likeOffer */}
       </div>
-        
          </>
   // end of like - ending div
   )}
   </div>
-
       {/* <div> // starting div of matches */}
            <>
         {!matchOffer
