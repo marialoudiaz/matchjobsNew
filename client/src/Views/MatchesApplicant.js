@@ -114,13 +114,8 @@ const handleLikes = async ()=>{
   //A Chaque Render
   useEffect(()=>{
     handleLikes();
-    deleteLikes();
     handleMatch();
-    doMatch();
-    deleteMatches();
   },[])
-
-
 
 
 return (
