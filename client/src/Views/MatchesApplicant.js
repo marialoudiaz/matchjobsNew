@@ -22,7 +22,7 @@ function MatchesApplicant(props) {
   const [likeOffer, setLikeOffer]=useState(null)
 // créer un state component (matchOffer) pour stocker les matchs (ceux qui m'ont liké et que j'ai liké en retour)
   const [matchOffer, setMatchOffer]=useState(null)
-
+  const [alert,setAlert]=useState('')
 
 // Render les likes que j'ai recu
   // Render les likes que j'ai recu
@@ -60,10 +60,10 @@ const handleLikes = async ()=>{
   // console.log('offerId',offerId)
   //Requête post - (addMatchWith)
     try {
-      // const create = await axios.post(`${URL}/applicant/addApplication`, {...myNewApp,email: props.user,});
-      // let doMatch = await axios.post(`${URL}/applicant/addMatchWith`, {id,offerId})
+      const create = await axios.post(`${URL}/applicant/addApplication`, {...myNewApp,email: props.user,});
+      let doMatch = await axios.post(`${URL}/applicant/addMatchWith`, {id,offerId})
       console.log('doMatch',doMatch)
-        //Alert - "it's a match" (in the response)
+      setAlert('Its a match!')
     } catch (error) {
     }
   }
@@ -163,6 +163,7 @@ return (
          <button className='btn' onClick={() => deleteLikes(c._id)}> delete like </button>
          <button className='btn' onClick={() => doMatch()}> Match with recruiter </button> 
          </div>
+         <div><p>{alert}</p></div>
          </>
       ))}
       {/* // end of div jobApplication */}
