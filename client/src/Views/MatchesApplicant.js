@@ -115,13 +115,10 @@ const handleLikes = async ()=>{
   useEffect(()=>{
     handleLikes();
     deleteLikes();
-  },[likeOffer]) 
-
-  useEffect(()=>{
     handleMatch();
     doMatch();
     deleteMatches();
-  },[matchOffer]) 
+  },[])
 
 
 
