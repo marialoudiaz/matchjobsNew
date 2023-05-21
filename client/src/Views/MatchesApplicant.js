@@ -60,8 +60,8 @@ const handleLikes = async ()=>{
   // console.log('offerId',offerId)
   //Requête post - (addMatchWith)
     try {
-      const create = await axios.post(`${URL}/applicant/addApplication`, {...myNewApp,email: props.user,});
-      let doMatch = await axios.post(`${URL}/applicant/addMatchWith`, {id,offerId})
+      // const create = await axios.post(`${URL}/applicant/addApplication`, {...myNewApp,email: props.user,});
+      // let doMatch = await axios.post(`${URL}/applicant/addMatchWith`, {id,offerId})
       console.log('doMatch',doMatch)
       setAlert('Its a match!')
     } catch (error) {
