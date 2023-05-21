@@ -7,25 +7,19 @@ import {URL} from "../config"
 function ProfileApplicant(props) {
 
   let navigate = useNavigate();
-
   // passer l'id
   const params = useParams();
   console.log("id user", params.id); //object id de l'user ( et non l'offre)
   let userId = params.id;
-
   // 2 - the props I pass - Email of user
   console.log("user Email", props.user);
-
   // 3 - L'id de l'offre
   const [offersId, setoffersId] = useState("");
-
   // l'ID a l'id de l'user
   const [msg, setMsg] = useState("");
-
   // the application to be displayed
   const [myApp, setmyApp]=useState(null)
   console.log('myApp first',myApp)
-
   // la nouvelle application créée
   const [myNewApp, setmyNewApp] = useState({
     jobTitle: "",
@@ -42,10 +36,8 @@ function ProfileApplicant(props) {
     languagesSpoken: [],
   });
 
-
   // State component - collecter les inputs a stocker dans l'array
    const [skill, setSkill] = useState("");
-
    //handleChange du form- pour les inputs
     const handleChange = async (event) => {
     const name = event.target.name;
@@ -81,12 +73,9 @@ function ProfileApplicant(props) {
 
       // handleSkills - ajouter les skills a l'array
       const handleSkills = (changed) => {
-        setmyNewApp({
-      ...myNewApp,
-      [changed]: [...myNewApp[changed], skill],
-    });
-    setSkill("");
-  };
+        setmyNewApp({...myNewApp,[changed]: [...myNewApp[changed], skill],});
+        setSkill("");
+      };
 
   // useEffect(() => {
   //   console.log(myNewOffer);
@@ -94,7 +83,7 @@ function ProfileApplicant(props) {
 
   useEffect(() =>{
     handleApp()
-  }, []);
+  }, [myApp]);
 
 
 // handleApp
