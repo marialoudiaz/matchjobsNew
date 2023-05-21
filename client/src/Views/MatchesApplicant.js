@@ -30,9 +30,9 @@ const handleLikes = async ()=>{
     let allMyLikes = await axios.get(`${URL}/applicant/getLikedBy/${applicantsId}`)
     console.log('allMyLikes',allMyLikes); // retourne an array with all objects (offers) inside
     if (!Array.isArray(allMyLikes.data.data)) {
-      setLikeOffer(allMyLikes.data.data)
-    }else{
       setLikeOffer(null)
+    }else{
+      setLikeOffer(allMyLikes.data.data)
     }
   } catch (error) {
     console.log(error);
