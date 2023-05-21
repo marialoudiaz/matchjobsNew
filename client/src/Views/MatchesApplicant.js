@@ -4,6 +4,7 @@ import axios from 'axios';
 import {URL} from "../config"
 import { FaMailBulk } from 'react-icons/fa';
 import '/Users/mariadiaz/Documents/BCS/matchjobs/matchjobs/client/src/App.css';
+import { addMatchWith } from '../../../server/controllers/applicantsControllers';
 
 function MatchesApplicant(props) {
   // Prendre id de ceux qui likent
@@ -98,9 +99,9 @@ const handleLikes = async ()=>{
 }
 
   // Fonction pour supprimer un match (enlever mon id de matchWith)
-  const deleteMatches = async ()=>{
-    let userId = applicantsId;
-    let offerDeleteId= offerIdEmail;
+  const deleteMatches = async (props)=>{
+    let userId = id; // id user connecté
+    let offerDeleteId= props; // id de l'offre
     try {
       let unMatchOffer = await axios.post(`${URL}/applicant/deleteLikedBy`,{userId, offerDeleteId} ) 
       console.log('unMatchOffer',unMatchOffer)    
@@ -111,8 +112,15 @@ const handleLikes = async ()=>{
   //A Chaque Render
   useEffect(()=>{
     handleLikes();
+    deleteLikes();
+  },[likeOffer]) 
+  useEffect(()=>{
     handleMatch();
-  },[]) 
+    addMatchWith();
+    deleteMatches();
+  },[matchOffer]) 
+
+
 
 
 return (
@@ -220,7 +228,7 @@ return (
           <h4>Languages</h4>
           <div className="flex">{Object.keys(d.languagesSpoken).map((key) => (<p className="inputArray">{d.languagesSpoken[key]}</p>))}</div> 
           <div className='transparent'>{offerIdEmail = d._id}</div>
-          <button className='btn' onClick={() => deleteMatches()}> Delete Match </button>
+          <button className='btn' onClick={() => deleteMatches(d._id)}> Delete Match </button>
           <div><FaMailBulk onClick={() => getEmail()}/>Get in touch</div>
           </>
           ))}

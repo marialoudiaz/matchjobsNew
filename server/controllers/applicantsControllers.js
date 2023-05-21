@@ -435,7 +435,6 @@ const deleteMatchWith = async(req,res)=>{
   const findOffer = await JobOffer.findOne({_id: offerDeleteId})
   console.log('recruitersId', findOffer.recruitersId)
   let recruitersId = findOffer.recruitersId
-  
   //Je trouve mon profil
   // J'enleve de matchWith le recruiter
   const removeMyMatch = await JobApplication.findOneAndUpdate({applicantsId: userId}, {$pull: {matchWith: {recruiter_id : recruitersId}}})
