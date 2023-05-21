@@ -55,13 +55,13 @@ const handleLikes = async ()=>{
   }
 
   // // Fonction pour matcher (envoyer mon id dans matchWith)
-    const doMatch = async()=>{
-  // console.log('id', id)
-  // console.log('offerId',offerId)
-  //Requête post - (addMatchWith)
-    try {
+    const doMatch = async(props)=>{
+      let offerId = props
+      console.log('id', id); //------ userID
+      console.log('offerId',offerId); //------ offerID
+    try { //Requête post - (addMatchWith)
       // const create = await axios.post(`${URL}/applicant/addApplication`, {...myNewApp,email: props.user,});
-      // let doMatch = await axios.post(`${URL}/applicant/addMatchWith`, {id,offerId})
+      let doMatch = await axios.post(`${URL}/applicant/addMatchWith`, {id,offerId})
       console.log('doMatch',doMatch)
       setAlert('Its a match!')
     } catch (error) {
@@ -161,7 +161,7 @@ return (
          <div className="flex">
          {Object.keys(c.languagesSpoken).map((key) => (<p className="inputArray">{c.languagesSpoken[key]}</p>))}
          <button className='btn' onClick={() => deleteLikes(c._id)}> delete like </button>
-         <button className='btn' onClick={() => doMatch()}> Match with recruiter </button> 
+         <button className='btn' onClick={() => doMatch(c._id)}> Match with recruiter </button> 
          </div>
          <div><p>{alert}</p></div>
          </>
