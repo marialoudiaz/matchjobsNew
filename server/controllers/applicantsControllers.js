@@ -384,7 +384,6 @@ const deleteLikedBy = async(req,res)=>{
 const addMatchWith = async (req,res)=>{
 // ADD id of my application to matchWith of the offer (applicants-id > application => matchWith (of offerID))
 // ADD offerID to my MatchWith
-debugger
   try {
     // Récupérer mon profil pour l'envoyer au recruiter
 const {id,offerId} = req.body;  // je prends mon userid et offerId(recruiter)
@@ -393,11 +392,9 @@ const allJobApplications = await JobApplication.findOne({applicantsId: id}) // j
 console.log(allJobApplications._id)
 let myProfile = allJobApplications._id // j'assigne l'id de l'offre (on ne stocke pas lobjet entier mais son id)
 console.log(myProfile)
-
 // Envoyer Mon profil au recruiter (trouver le bon recruiter et push mon profil)
 const sendProfile2Rec = await JobOffer.findOneAndUpdate({_id: offerId}, {$push: {matchWith: {applicant_id : myProfile}}})
 console.log(sendProfile2Rec)
-
 //Envoyer le profil du recruiter dans matchWith de mon application (profil)
 const sendRec2Profile = await JobApplication.findOneAndUpdate({applicantsId: id}, {$push: {matchWith: {recruiter_id : offerId}}})
 console.log(sendRec2Profile)
