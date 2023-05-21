@@ -3,6 +3,7 @@ import { useNavigate, useParams, Link, Navigate } from "react-router-dom";
 import axios from 'axios';
 import {URL} from "../config"
 import { FaMailBulk } from 'react-icons/fa';
+import './App.css';
 
 function MatchesApplicant(props) {
   // Prendre id de ceux qui likent
