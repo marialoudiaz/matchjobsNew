@@ -4,7 +4,7 @@ import axios from 'axios';
 import {URL} from "../config"
 import { FaMailBulk } from 'react-icons/fa';
 import '/Users/mariadiaz/Documents/BCS/matchjobs/matchjobs/client/src/App.css';
-import { addMatchWith } from '../../../server/controllers/applicantsControllers';
+// import { addMatchWith } from '../../../server/controllers/applicantsControllers';
 
 function MatchesApplicant(props) {
   // Prendre id de ceux qui likent
@@ -116,9 +116,10 @@ const handleLikes = async ()=>{
     handleLikes();
     deleteLikes();
   },[likeOffer]) 
+
   useEffect(()=>{
     handleMatch();
-    addMatchWith();
+    doMatch();
     deleteMatches();
   },[matchOffer]) 
 
