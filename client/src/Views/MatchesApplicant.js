@@ -5,24 +5,18 @@ import {URL} from "../config"
 import { FaMailBulk } from 'react-icons/fa';
 
 function MatchesApplicant(props) {
-
-
   // Prendre id de ceux qui likent
   const params = useParams()
   console.log("id from params",params.id)  // recruiterId
   let id = params.id
   let applicantsId = id // User connecté (son id)
 
-
   // Variable utilisée dans getEmail
   let offerIdEmail=''
-
   //Variable for email to email
   let emailtoemail=''
-
   // 2 - the props I pass - Email of user
   console.log("user email", props.user);
-
 // créer un state component (likeOffer) pour stocker les likes que j'ai recu
   const [likeOffer, setLikeOffer]=useState(null)
 // créer un state component (matchOffer) pour stocker les matchs (ceux qui m'ont liké et que j'ai liké en retour)
@@ -35,7 +29,11 @@ const handleLikes = async ()=>{
   try {
     let allMyLikes = await axios.get(`${URL}/applicant/getLikedBy/${applicantsId}`)
     console.log('allMyLikes',allMyLikes); // retourne an array with all objects (offers) inside
-    setLikeOffer(allMyLikes.data.data)
+    if (allMyLikes.data.data!=[]){
+      setLikeOffer(allMyLikes.data.data)
+    }else{
+      setLikeOffer(null)
+    }
   } catch (error) {
     console.log(error);
   }}
@@ -56,7 +54,7 @@ const handleLikes = async ()=>{
 
 
   // // Fonction pour matcher (envoyer mon id dans matchWith)
-    const doMatch = async ()=>{
+    const doMatch = async()=>{
   // console.log('id', id)
   // console.log('offerId',offerId)
   //Requête post - (addMatchWith)
@@ -84,8 +82,6 @@ const handleLikes = async ()=>{
     }
   }
 
-
-
   //Fonction pour supprimer un like (enlever mon id de likedBy) /deleteLikedBy',controller.deleteLikedBy)
   const deleteLikes = async (offerID)=>{
     let userId = applicantsId;
@@ -100,7 +96,6 @@ const handleLikes = async ()=>{
   }
 }
 
-
   // Fonction pour supprimer un match (enlever mon id de matchWith)
   const deleteMatches = async ()=>{
     let userId = applicantsId;
@@ -112,7 +107,6 @@ const handleLikes = async ()=>{
     }
   }
 
-
   //A Chaque Render
   useEffect(()=>{
     handleLikes();
@@ -123,10 +117,8 @@ const handleLikes = async ()=>{
 return (
   // the whole return
   <>
-  
   {/* // the return of likes */}
   <div>
-    
     {!likeOffer
     // the if condition
       ? (
@@ -134,9 +126,7 @@ return (
           <h1>You don't have any likes, yet.</h1>
           <h4>Keep chasing !</h4>
         </>
-        )
-        :
-        (
+        ):(
         <>
         <div className='likeOffer'>
         <h2>Here are the recruiters who liked you so far !</h2>
@@ -230,9 +220,6 @@ return (
           <div className='transparent'>{offerIdEmail = d._id}</div>
           <button className='btn' onClick={() => deleteMatches()}> Delete Match </button>
           <div><FaMailBulk onClick={() => getEmail()}/>Get in touch</div>
-
-
-
           </>
           ))}
         </div>
