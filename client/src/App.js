@@ -1,4 +1,4 @@
-import './App.css';
+import '/Users/mariadiaz/Documents/BCS/matchjobs/matchjobs/client/src/App.css';
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import Navbar from "./Components/Navbar"
