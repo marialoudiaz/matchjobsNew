@@ -92,9 +92,7 @@ function ProfileApplicant(props) {
     let id = userId
     console.log('userId', userId);
     console.log('id', id);
-
     try {
-      debugger
       let allMyApp = await axios.get(`${URL}/applicant/getAllMyJobApplications/${id}`);
       console.log(allMyApp);
       console.log(allMyApp.data.data)

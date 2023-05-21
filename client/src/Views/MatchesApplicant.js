@@ -70,7 +70,8 @@ const handleLikes = async ()=>{
   }
 
   //Obtenir l'email d'une offre
-  const getEmail = async()=>{
+  const getEmail = async(props)=>{
+    let offerIdEmail = props
     console.log('offerID', offerIdEmail)
     try {
       // recoit l'email
@@ -103,8 +104,9 @@ const handleLikes = async ()=>{
     let userId = id; // id user connecté
     let offerDeleteId= props; // id de l'offre
     try {
-      let unMatchOffer = await axios.post(`${URL}/applicant/deleteLikedBy`,{userId, offerDeleteId} ) 
-      console.log('unMatchOffer',unMatchOffer)    
+      let unMatchOffer = await axios.post(`${URL}/applicant/deleteMatchWith`,{userId, offerDeleteId} ) 
+      console.log('unMatchOffer',unMatchOffer)
+      setAlert('Match deleted !')    
     } catch (error) {
     }
   }
@@ -229,10 +231,11 @@ return (
           <div className="flex">{Object.keys(d.languagesSpoken).map((key) => (<p className="inputArray">{d.languagesSpoken[key]}</p>))}</div> 
           <div className='transparent'>{offerIdEmail = d._id}</div>
           <button className='btn' onClick={() => deleteMatches(d._id)}> Delete Match </button>
-          <div><FaMailBulk onClick={() => getEmail()}/>Get in touch</div>
+          <div><FaMailBulk onClick={() => getEmail(d._id)}/>Get in touch</div>
           </>
           ))}
         </div>
+        <div><p>{alert}</p></div>
         </div>
         </div>
         </div>

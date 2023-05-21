@@ -272,7 +272,6 @@ let {id} = req.params; // const {applicantId}= req.body
 
 const getEmail = async(req,res)=>{
   // take offerId (of the offer)
-  debugger
   const {offerIdEmail}= req.body // offerId
   // let {id} = req.params; //offerId
   // let offerId = {id: id}
