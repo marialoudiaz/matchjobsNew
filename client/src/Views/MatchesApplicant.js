@@ -29,7 +29,7 @@ const handleLikes = async ()=>{
   try {
     let allMyLikes = await axios.get(`${URL}/applicant/getLikedBy/${applicantsId}`)
     console.log('allMyLikes',allMyLikes); // retourne an array with all objects (offers) inside
-    if (allMyLikes.data.data!=[]){
+    if (!Array.isArray(allMyLikes.data.data)) {
       setLikeOffer(allMyLikes.data.data)
     }else{
       setLikeOffer(null)
@@ -50,7 +50,7 @@ const handleLikes = async ()=>{
       setMatchOffer(allMyMatches.data.data)
     } catch (error) {
       console.log(error);
-    }}
+    }
 
 
   // // Fonction pour matcher (envoyer mon id dans matchWith)
