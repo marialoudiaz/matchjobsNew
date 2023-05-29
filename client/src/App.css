@@ -1,4 +1,4 @@
-  @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Raleway:wght@300&family=Roboto:wght@500&family=Rubik:wght@500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@0,600;1,500&family=Raleway:wght@300&family=Roboto:wght@500&family=Rubik:wght@500&family=Source+Sans+Pro:wght@500&family=Krona+One&display=swap');
 
 *{
     box-sizing : border-box;
@@ -6,15 +6,24 @@
     padding: 0;
 }
 
+.container{
+background-color: #f5f7f99b;
+}
+
 img{
   width : 100%;
  }
 
  h1{
-  font-family: Rubik;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
   color:white;
   font-weight: 500;
   font-size: 8vw;
+ }
+
+ h2{
+  font-family: 'Source Sans Pro', sans-serif;
  }
 
  .links{
@@ -190,21 +199,40 @@ label{
 }
 
 .WP-Container{
-background: #FFFFFF;
-background: linear-gradient(90deg, #FFFFFF, #3D7CFF);
 font-family: Montserrat;
 display: flex;
 flex-wrap: wrap;
-flex-direction: column;
 align-items: center;
 gap: 1em;
-padding: 2%;
+padding: 15em;
+}
+
+
+.WP-Header{
+  font-family: Montserrat;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 3em;
+
 }
 
 .WP-text{
+  font-size: 3em;
   text-align: center;
+  margin:0;
+  padding:.5em;
 }
 
+.WP-btn{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap:1em;
+  padding-top: .5em;
+  }
 
 .msg{
   background-color: aliceblue;
@@ -252,21 +280,23 @@ padding: 2%;
 }
 
 .btnWP {
-  align-items: center;
-  background-color: #fff;
-  border-radius: 24px;
-  color: #3c4043;
-  font-family: Roboto;
-  font-size: 14px;
-  font-weight: 500;
-  justify-content: center;
-  letter-spacing: .25px;
-  padding: 5px 30px;
-  margin: auto;
-  text-align: center;
-  width: 50%;
-  height: 25px;
-  border: none;
+    align-items: center;
+    background-color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 10em;
+    box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+    box-sizing: border-box;
+    color: rgba(0, 0, 0, 0.85);
+    display: inline-flex;
+    font-size: 16px;
+    font-weight: 600;
+    justify-content: center;
+    line-height: 1.25;
+    margin: 0;
+    min-height: 3rem;
+    padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+    position: relative;
+    width: auto;
 }
 
 .card{
