@@ -12,8 +12,8 @@ function Welcome() {
   <div className='container'>
   <div className='WP-Header' style={{padding:'1em'}}>
     <h3>matchjobs</h3> {/*logo */}
-      <p>log in</p>
-      <p>get started</p>
+      <button className='buttonNoStyle' onClick={() => navigate("/login")}>log in</button>
+      <button className='buttonNoStyle' onClick={() => navigate("/register")}>get started</button>
   </div>
   <div className='WP-Container' style={{ backgroundImage: `url(${image})`, backgroundSize: 'cover'}}>
         <div className='WP-text'>
