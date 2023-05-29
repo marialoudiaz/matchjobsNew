@@ -429,6 +429,8 @@ const deleteMatchWith = async(req,res)=>{
   debugger
   // take id of the user + id of the offer
   const {userId, offerDeleteId} = req.body;
+  console.log('liliID', id)
+  console.log('offre a delete', offerDeleteId)
   try {
     // Trouver l'offre que je veux retirer de mes matchs
   const findOffer = await JobOffer.findOne({_id: offerDeleteId})
@@ -446,7 +448,6 @@ const deleteMatchWith = async(req,res)=>{
     res.send(error) 
   }
 }
-
 
 
 module.exports = {

@@ -89,15 +89,14 @@ const handleLikes = async ()=>{
   const deleteLikes = async (offerID)=>{
     let userId = applicantsId;
     let offerDeleteId = offerID;
-  console.log('userId',userId)
-  console.log('offerDeleteId',offerDeleteId)
-  // applicationId
+    console.log('userId',userId)
+    console.log('offerDeleteId',offerDeleteId)
+    // applicationId
   try {
-  let unlikeOffer = await axios.post(`${URL}/applicant/deleteLikedBy`,{userId, offerDeleteId} )
-  console.log('unlikeOffer',unlikeOffer)    
-  } catch (error) { 
+    let unlikeOffer = await axios.post(`${URL}/applicant/deleteLikedBy`,{userId, offerDeleteId} )
+    console.log('unlikeOffer',unlikeOffer)    
+  } catch (error) { }
   }
-}
 
   // Fonction pour supprimer un match (enlever mon id de matchWith)
   const deleteMatches = async (props)=>{
