@@ -38,7 +38,6 @@ const handleSubmit = async(e) => {
     // login for applicant
     if (userType==='applicant'){
       //j'envoie une requete post au server
-      debugger
       const response = await axios.post(`${URL}/applicant/login`,{email: userEmail, password:userPass})
       // si l'user exist je decode le token, prend l'email et le met dans localStorage  
       if (response.data.ok){
