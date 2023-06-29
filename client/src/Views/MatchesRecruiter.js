@@ -11,8 +11,8 @@ const params = useParams()
 console.log("id from params",params.id);  // applicantId
 let id = params.id;
 let recruitersId = id;
-let likers =''
-let offerIdEmail='';
+let likers ='';
+let appIdEmail='';
 let emailtoemail='';
 console.log("user email", props.user);
 const [likeApp, setLikeApp]=useState(null);
