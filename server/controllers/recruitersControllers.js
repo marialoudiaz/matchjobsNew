@@ -201,14 +201,6 @@ debugger
   const {offerID, myEdit} = req.body;
   console.log('the offer passed', myEdit)
   try{
-  // let objectid = mongoose.Types.ObjectId(newOffer.recruitersId)
-  // // jobOffer.recruitersId = objectid;
-  // console.log(objectid)
-  
-  // let objectidold = mongoose.Types.ObjectId(oldOffer.recruitersId)
-  // // oldJobOffer.recruitersId = objectidold;
-  // console.log(objectidold)
-  // console.log(newOffer,oldOffer)
   const updated = await JobOffer.findOneAndUpdate({_id: offerID},myEdit)
   // const findjobOffer = await JobOffer.findOne({_id: offerID})
     if (updated){
@@ -287,6 +279,27 @@ const getAllMyJobOffer = async(req,res)=>{
     res.send(error)
   }
 }
+
+const getEmail = async(req,res)=>{
+  const {offerIdEmail}= req.body
+  try {
+    const findApp = await JobApplication.findOne({_id: offerIdEmail})
+    console.log(findApp, 'FindApp')
+    let applicantsId = findApp.applicantsId
+    console.log(applicantsId, 'applicantsId')
+    let getApplicant = await Applicant.findOne({_id: applicantsId})
+    console.log(getApplicant,'getApplicant')
+    let email = getApplicant.email
+    console.log('finalemail', email)
+    res.send({ok:true, data: email})
+  } catch (error) {
+    res.send(error)
+  }
+}
+
+
+
+
 // //likeApplicant
 const likeApplicant = async(req,res)=>{
   debugger
@@ -306,17 +319,6 @@ const unlikeApplicant = async(req,res)=>{
   try {
     await JobApplication.findOneAndUpdate({_id: applicationId}, {$pull: {likedBy: {recruiter_id : recruiterId}}}) // FIND ALL
     res.send({ok:true, data:' Applicant unliked successfully'})
-  //     if(application){
-  //       // findIndex find the id
-  //      const findIndexApplication = application.likedBy.findIndex(c=>c.toString()== recruiterId.toString())
-  //         if (!findIndexApplication==-1){
-  //           application.likedBy.splice(findIndexApplication, 1) // remove the index found (1)
-  //           res.send({ok:true, data:' Applicant unliked successfully'})    
-  //         }else{
-  //       res.send({ok:true, data:"Applicant id could'nt be found"})    
-  //  }}else{
-  //   res.send({ok:true, data:"Applicant could'nt be found"})    
-  //  }
 } catch (error) {
     res.send(error)
   }}
@@ -324,7 +326,6 @@ const unlikeApplicant = async(req,res)=>{
 
   // getAllJobApplications in the main
   const getAllApplications = async (req,res)=>{
-    debugger
   try {
     const allJobApplications = await JobApplication.find({})
     res.send({ok:true, data: allJobApplications})
@@ -337,12 +338,114 @@ const unlikeApplicant = async(req,res)=>{
     let {id} = req.params;
     try {
       // find the likers id and display its profile
-      const likers = await JobApplication.findOne({_id: id})
+      const likers = await JobOffer.findOne({_id: id})
       console.log(likers)
       res.send({ok:true, data: likers})
     } catch (error) {
       res.send(error)
     }}
+
+
+const getLikedBy = async(req,res)=>{
+  // prend user.id pass
+  let {id} = req.params;
+  try {
+    // L'APPLICATION
+    // find the offer of the user based on the id of the user(v)
+    const myJobOffer = await JobOffer.findOne({recruitersId: id}) // à partir de l'id (params) de l'user trouver une application (jobApplication) contenant la clef 'applicantsid' dont la valeur est id(params)
+    console.log('myJobOffer-likedBy', myJobOffer.likedBy)
+    // map function that returns an array with every recruiter_id
+    let appIDs = myJobApp.likedBy.map(app=>app.applicant_id) 
+    const applicants = await JobApplication.find({applicantsId:{$in : appIDs}}) // {recruitersId: myJobApp.likedBy[0].recruiter_id}
+    console.log('applicants', applicants)
+    res.send({ ok: true, data: applicants });
+} catch (error) {
+  console.error(error);
+}
+};
+
+const deleteLikedBy = async(req,res)=>{ 
+  // take id of the user + id of the offer
+  const {userId, appDeleteId} = req.body;
+  try {
+    // trouver l'offre sur laquelle je clicke
+  const findApp = await JobApplication.findOne({_id: appDeleteId})
+  console.log('applicantsId', findApp.applicantsId)
+  let applicantsId = findApp.applicantsId
+  const pullId = await JobOffer.findOneAndUpdate({recruitersId: userId}, {$pull: {likedBy: {applicantsId : applicantsId}}})
+  console.log('pullId', pullId)
+  res.send({ok:true, data: 'This user is no longer in your likes' })
+  } catch (error) {
+    res.send(error) 
+  }
+}
+
+
+// addMatchWith
+const addMatchWith = async (req,res)=>{
+  try {
+const {id,offerId} = req.body;  // je prends mon userid et offerId(recruiter)
+console.log('id', id, 'offerId', offerId)
+const allJobOffer = await JobOffer.findOne({recruitersId: id}) // je cherche mon profil avec mon userid
+console.log(allJobOffer._id)
+let myProfile = allJobOffer._id // j'assigne l'id de l'offre (on ne stocke pas lobjet entier mais son id)
+console.log(myProfile)
+// Envoyer Mon profil au recruiter (trouver le bon recruiter et push mon profil)
+const sendProfile2App = await JobApplication.findOneAndUpdate({_id: offerId}, {$push: {matchWith: {recruiter_id : myProfile}}})
+console.log(sendProfile2App)
+//Envoyer le profil de l'applicant dans matchWith de mon offre (profil)
+const sendApp2Profile = await JobOffer.findOneAndUpdate({recruitersId: id}, {$push: {matchWith: {applicant_id : offerId}}})
+console.log(sendApp2Profile)
+res.send({ok: true, data: 'Applications and Offers successfully added to both matchWith arrays'})
+  } catch (error) {
+    res.send(error)
+  }
+}
+
+// getMatchWith (do the same in recruiter)
+/// get array of all offerIDin match With
+const getMatchWith = async(req,res)=>{
+  // prend user.id pass
+  let {id} = req.params;
+  try {
+    // find the offer of the user based on the id of the user(v)
+    const myJobOffer = await JobOffer.findOne({recruitersId: id}) // à partir de l'id (params) de l'user trouver une application (jobApplication) contenant la clef 'applicantsid' dont la valeur est id(params)
+    console.log('myJobOffer-matchWith', myJobOffer.matchWith)
+    // map function that returns an array with every recruiter_id
+    let appIDs = myJobOffer.matchWith.map(app=>app.applicant_id) 
+    console.log('appIDs ', appIDs)
+    const applicants = await JobApplication.find({_id:{$in : appIDs}}) // {recruitersId: myJobApp.likedBy[0].recruiter_id}
+    console.log('applicants', applicants)
+    res.send({ ok: true, data: applicants });
+} catch (error) {
+  console.error(error);
+}
+};
+
+// deleteMatchWith
+const deleteMatchWith = async(req,res)=>{
+  // take id of the user + id of the offer
+  const {userId, appDeleteId} = req.body;
+  console.log('userconnecté', userId)
+  console.log('application a delete', appDeleteId)
+  try {
+    // Trouver l'offre que je veux retirer de mes matchs
+  const findApp = await JobApplication.findOne({_id: appDeleteId})
+  console.log('applicantsId', findApp.applicantsId)
+  let applicantsId = findApp.applicantsId
+  //Je trouve mon profil
+  // J'enleve de matchWith le recruiter
+  const removeMyMatch = await JobOffer.findOneAndUpdate({recruitersId: userId}, {$pull: {matchWith: {applicant_id : applicantsId}}})
+  console.log('removeMyMatch', removeMyMatch)
+  //Enleve mon id des matchs de l'user
+  const removeHisMatch = await JobApplication.findOneAndUpdate({applicantsId: applicantsId}, {$pull: {matchWith: {recruiter_id: userId}}})
+  console.log('removeHisMatch', removeHisMatch)
+  res.send({ok:true, data: 'This user is no longer in your matches' })
+  } catch (error) {
+    res.send(error) 
+  }
+}
+
 
 
 module.exports = {
@@ -363,4 +466,11 @@ module.exports = {
     getAllApplications,
     getJobApplication,
     getAllMatch,
+    getEmail,
+    getLikedBy,
+    deleteLikedBy,
+    addMatchWith,
+    getMatchWith,
+    deleteMatchWith,
+
   }

@@ -22,7 +22,6 @@ try {
 }
 }
 
-
 app.use('/recruiter/', require('./routes/recruitersRoutes'));
 app.use('/applicant/', require('./routes/applicantsRoutes'));
 app.use('/admin/', require('./routes/adminRoutes'));

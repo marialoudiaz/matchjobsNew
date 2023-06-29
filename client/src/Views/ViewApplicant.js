@@ -38,6 +38,8 @@ useEffect(()=>{
 
 // map les elements de la card passé en props
 // pr pouvoir passé ce quil n'y a pas dans preview
+
+// voit l'offre d'emploi (get joboffer.js)
   return (
     <>
     {myView && <div className='jobApplication'>
@@ -53,7 +55,7 @@ useEffect(()=>{
         {myView.flexible ? <div className='chip'>Flexible</div> : <p></p> }
         
        <h4 className='jobDescription'>Job Description</h4>
-       <p>{myView.bio}</p>
+       <p>{myView.jobDescription}</p>
 
        <h4 className='jobDescription'>Skills</h4>
        <h4 className='jobDescription'>Softs</h4> 

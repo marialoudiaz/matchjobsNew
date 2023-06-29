@@ -5,7 +5,6 @@ import {URL} from "../config"
 
 
 function ViewRecruiter({user}) {
-debugger
 
 // passer recruiters_id
 const params = useParams()
@@ -36,32 +35,27 @@ const [myView, setmyView]=useState(null)
  
 //at every render
 useEffect(()=>{
-  handleApp();
+  !myView && handleApp();
 },[]) 
 
 
 // map les elements de la card passé en props
 // pr pouvoir passé ce quil n'y a pas dans preview
 
+// voit la candidature (jobapplication.js)
   return (
     <>
-
       {myView && <div className='jobApplication'>
-       <p>{myView.companyName}</p>
        <p>{myView.jobTitle}</p>
         <div className='bigChip'>
-        <button className='chip'>Like</button>
+        {/* <button className='chip'>Like</button> */}
         </div>
-        
         <p className='location'>{myView.location}</p>
-       
         {myView.remote ?  <div className='chip'>remote</div> : <div></div> }
         {myView.onSite ? <div className='chip'>onSite</div> : <p></p> }
         {myView.flexible ? <div className='chip'>Flexible</div> : <p></p> }
-        
        <h4 className='jobDescription'>Job Description</h4>
        <p>{myView.bio}</p>
-
        <h4 className='jobDescription'>Skills</h4>
        <h4 className='jobDescription'>Softs</h4> 
        <div className="flex">
@@ -70,20 +64,17 @@ useEffect(()=>{
        ))}
        </div>
        <h4 className='jobDescription'>Hard</h4>
-
        <div className="flex">
        {myView.hardSkills.map((skill, index) => (
        <p key={index} className='inputArray'>{skill}</p>
        ))}
        </div>
-
        <h4 className='jobDescription'>Languages</h4>
        <div className="flex">
        {myView.languagesSpoken.map((skill, index) => (
        <p key={index} className='inputArray'>{skill}</p>
        ))}
        </div>
-
       </div>
        }
       

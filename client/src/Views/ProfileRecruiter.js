@@ -5,7 +5,7 @@ import { URL } from "../config";
 import '../App.css';
 
 function ProfileRecruiter(props) {
-  // let navigate = useNavigate();
+  let navigate = useNavigate();
   // 1 - passer l'id de l'user
   const params = useParams();
   console.log("id user", params.id); //object id de l'user ( et non l'offre)
@@ -95,27 +95,26 @@ function ProfileRecruiter(props) {
 
   useEffect(() =>{
     handleOffer()
-  }, []);
+  }, [myOffer]);
 
 
   // handleApp
   // const id = user._id;
   const handleOffer = async () => {
-    debugger
-    console.log(userId);
+    let id = userId;
+    console.log('userId', userId);
+    console.log('id', id);
     try {
-      let allMyOffer = await axios.get(
-        `${URL}/recruiter/getAllMyJobOffers/${userId}`
-      );
+      let allMyOffer = await axios.get(`${URL}/recruiter/getAllMyJobOffers/${id}`);
       console.log(allMyOffer);
       if (allMyOffer.data.ok) {
         setmyOffer(allMyOffer.data.data);
-        console.log('setmyOffer',allMyOffer.data.data) // l'offre à display
-        console.log("setmyOffer", myOffer);
-        console.log("setoffersId", myOffer[0]._id);
+        // console.log('setmyOffer',allMyOffer.data.data) // l'offre à display
+        // console.log("setmyOffer", myOffer);
+        // console.log("setoffersId", myOffer[0]._id);
         setoffersId(myOffer._id); // id de l'offre
       } else {
-        console.log("hihi");
+        console.log("no offer found");
       }
     } catch (error) {
       console.log(error);
@@ -138,10 +137,7 @@ function ProfileRecruiter(props) {
   // render the applications every render
   useEffect(() => {
     handleOffer();
-  }, []);
-
-
-
+  },[]);
 
   return (
     <div className="page-wrapper">
@@ -155,7 +151,6 @@ function ProfileRecruiter(props) {
             <div className="card">
               <div className="top-card">
                 {/* <div className='inside-card'><p onClick= {<Navigate to={'/recruiter/${user._id}/view'}/>}>Create a new offer</p></div> */}
-
                 {/* // le formulaire avec toutes les inputs a envoyer dans DB */}
 
                 <form onSubmit={handleSubmit}>
@@ -319,6 +314,7 @@ function ProfileRecruiter(props) {
                   <Link to={`/recruiter/${userId}/view`}><button className='btn'>View</button></Link>
                   {/* <button  onClick= {() => navigate(`/recruiter/${offersId}/edit`)}>edit</button> */}
                   {/* <button className='btn' onClick={() => navigate(`/recruiter/${userId}/view`)}>view</button> */}
+                  <button className='btn' onClick={() => navigate(`/recruiter/${userId}/view`)}>view</button>
                   <button className='btn' onClick={deleteOffer}>delete</button>
                 </>
             

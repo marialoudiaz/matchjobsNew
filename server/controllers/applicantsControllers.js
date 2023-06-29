@@ -5,7 +5,6 @@ const JobOffer = require('../models/joboffer')
 const  Recruiter = require('../models/recruiter')
 const argon2 = require("argon2"); //https://github.com/ranisalt/node-argon2/wiki/Options
 const jwt = require("jsonwebtoken");
-
 const jwt_secret = process.env.JWT_SECRET;
 
 const register = async (req, res, next) => {
@@ -257,19 +256,6 @@ let {id} = req.params; // const {applicantId}= req.body
   }
 }
 
-// // //likeApplicant
-// const likeApplicant = async(req,res)=>{
-//   debugger
-//   const {applicationId, recruiterId}= req.body
-//   try {
-//     await JobApplication.findOneAndUpdate({_id: applicationId}, {$push: {likedBy: {recruiter_id : recruiterId}}}) // à partir de field permet de ne push que la clef 'recruiter_id'
-//     res.send({ok:true, data:' Applicant liked successfully'})    
-//       // if(application){application.likedBy.push({recruiterId})}else{res.send({ok:true, data:"Applicant id could'nt be found"})}
-//    } catch (error) {
-//     res.send(error)
-//   }
-// }
-
 const getEmail = async(req,res)=>{
   // take offerId (of the offer)
   const {offerIdEmail}= req.body // offerId
@@ -407,7 +393,6 @@ res.send({ok: true, data: 'Applications and Offers successfully added to both ma
 /// get array of all offerIDin match With
 const getMatchWith = async(req,res)=>{
   // prend user.id pass
-  debugger
   let {id} = req.params;
   try {
     // find the offer of the user based on the id of the user(v)
@@ -426,7 +411,6 @@ const getMatchWith = async(req,res)=>{
 
 // deleteMatchWith
 const deleteMatchWith = async(req,res)=>{
-  debugger
   // take id of the user + id of the offer
   const {userId, offerDeleteId} = req.body;
   console.log('liliID', userId)

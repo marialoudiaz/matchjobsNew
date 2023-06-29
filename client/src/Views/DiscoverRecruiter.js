@@ -13,14 +13,9 @@ let id = params.id
 let recruiterId = id // celui qui like 
 
 
-const [viewOfferID, setviewOfferID]=useState('')
-// const [likeOfferID, setlikeOfferID]=useState('')
-
-
+const [viewAppID, setviewAppID]=useState('')
 let navigate = useNavigate();
 const [myApp, setmyApp]=useState([])
-// stocker data.data (donc l'objet entier avec toutes les clefs)
-
 
 // display the applications
      const handleApp = async ()=>{
@@ -34,7 +29,7 @@ const [myApp, setmyApp]=useState([])
       }}
  
       const onChipClick =(offerId) =>{
-        setviewOfferID(offerId);
+        setviewAppID(offerId);
         navigate(`/recruiter/${offerId}/view`)
       }
 
@@ -74,21 +69,17 @@ useEffect(()=>{
       {myApp.map((application, i)=>(
         <>
         <div key={i} className='jobApplication'>
-        <p >{application.companyName}</p>
-        <p >{application.jobTitle}</p>
+        <p>{application.jobTitle}</p>
         <div className='bigChip'>
-        {/* {viewOfferID = application._id} */}
         <button className='chip' onClick= {()=> onChipClick(application._id)}>View</button>
-        <div className='transparent'><ViewRecruiter viewOfferID={viewOfferID} /></div> 
-        
+        <div className='transparent'><ViewRecruiter viewAppID={viewAppID} /></div> 
         <button onClick={()=>likeApp(application._id)} className='chip'>Like</button>
         <button onClick={()=>unlikeApp(application._id)} className='chip'>Unlike</button>
-
         </div>
         <p className='location'>{application.location}</p>
         {application.remote ?  <div className='chip'>remote</div> : <div></div> }
-        {application.onSite ? <div className='chip'>onSite</div> : <p></p> }
-        {application.flexible ? <div className='chip'>Flexible</div> : <p></p> }
+        {application.onSite ? <div className='chip'>on site</div> : <p></p> }
+        {application.flexible ? <div className='chip'>flexible</div> : <p></p> }
 
         <div className="flex">
         {Object.keys(application.softSkills).map((key) => (
@@ -110,7 +101,3 @@ useEffect(()=>{
   )
 }
 export default DiscoverRecruiter
-
-// map each offer
-// get for an offer (c._id)
-// pass c._id to the function (onClick) qui gère le lien vers la page view

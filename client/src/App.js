@@ -23,15 +23,10 @@ import {URL} from "./config"
 function App() {
   // get the token from local storage
 const [token, setToken]= useState(JSON.parse(localStorage.getItem('token')));
-
 // verifier si connecté ou non
 const [isLoggedIn, setIsLoggedIn]= useState(null);
-
 // update l'état de l'user
 const [user,SetUser] = useState({});
-
-
-
 
 // at every render verifier le token
 useEffect(

@@ -104,7 +104,7 @@ function ProfileApplicant(props) {
         // console.log("setoffersId", myOffer[0]._id);
         // setoffersId(myOffer._id); // id de l'offre
       } else {
-        console.log("not application found");
+        console.log("no application found");
       }} catch (error) {
       console.log(error);
     }

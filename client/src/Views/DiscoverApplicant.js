@@ -72,8 +72,8 @@ function DiscoverApplicant(user, userID) {
       {myOffer.map((application, i)=>(
         <>
         <div key={i} className='jobApplication'>
-        <p >{application.companyName}</p>
-        <p >{application.jobTitle}</p>
+        <p>{application.companyName}</p>
+        <p>{application.jobTitle}</p>
         <div className='bigChip'>
         {/* {viewOfferID = application._id} */}
         <button className='chip' onClick= {()=> onChipClick(application._id)}>View</button>
@@ -85,8 +85,8 @@ function DiscoverApplicant(user, userID) {
         </div>
         <p className='location'>{application.location}</p>
         {application.remote ?  <div className='chip'>remote</div> : <div></div> }
-        {application.onSite ? <div className='chip'>onSite</div> : <p></p> }
-        {application.flexible ? <div className='chip'>Flexible</div> : <p></p> }
+        {application.onSite ? <div className='chip'>on site</div> : <p></p> }
+        {application.flexible ? <div className='chip'>flexible</div> : <p></p> }
 
         <div className="flex">
         {Object.keys(application.softSkills).map((key) => (

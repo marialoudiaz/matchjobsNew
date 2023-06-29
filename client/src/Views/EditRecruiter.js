@@ -12,56 +12,25 @@ function EditRecruiter(props) {
   console.log("id user", params.id); //object id de l'user ( et non l'offre)
   let id = params.id;
 
+  const [msg, setMsg]= useState('');
 
-    // // 3 - L'id de l'offre
-    // const [offersId, setoffersId] = useState("");
+  // the state component in full size
+  const [myEdit, setmyEdit]=useState(null)
+  console.log('myEdit', myEdit)
+  var offerID = '';
 
-    // l'ID a l'id de l'user
-    const [msg, setMsg]= useState('')
+  const [skill, setSkill] = useState("");
 
-    // the state component in full size
-    const [myEdit, setmyEdit]=useState(null)
-    console.log('myEdit', myEdit)
-    var offerID = '';
+  const handleChange = async (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setmyEdit({ ...myEdit, [name]: value });
+  };
 
-    
-
-    // // la nouvelle offre
-    // const [myNewOffer, setmyNewOffer]=useState({
-    //   companyName: "",
-    //   jobTitle:"",
-    //   jobFields:"",
-    //   remote:false,
-    //   onSite:false,
-    //   flexible:false,
-    //   minPrice: 0,
-    //   maxPrice: 0,
-    //   location: "",
-    //   jobDescription: "",
-    //   softSkills: [],
-    //   hardSkills: [],
-    //   jobFields: "",
-    //   languagesSpoken: [], 
-    // }) 
-
-// State component - collecter les inputs a stocker dans l'array
-const [skill, setSkill] = useState("");
-
-//handleChange du form- pour les inputs
-const handleChange = async (event) => {
-  const name = event.target.name;
-  const value = event.target.value;
-  setmyEdit({ ...myEdit, [name]: value });
-};
-
-
-// fetch myEdit
-// change myEfit
 
 // Fetch les données à mettre dans les placeholders (ancienne offre)
      // const id = user._id;
      const fetchPrevData = async ()=>{
-      debugger
       try {
           let singleJob = await axios.get(`${URL}/recruiter/getJobOffer/${id}`) // 
           console.log(singleJob);
@@ -79,8 +48,6 @@ const handleSubmit = async (e) => {
   debugger
   console.log('props.user', props.user)
   offerID = myEdit._id
-  console.log(myEdit)
-  // let offerId = props.user._id
   e.preventDefault();
   try {
     const update = await axios.post(`${URL}/recruiter/updateJobOffer`, {offerID,myEdit}); // je passe nouvelle offre, ancienne offre + id de l'offre
@@ -95,15 +62,6 @@ const handleSubmit = async (e) => {
   } catch (error) {}
 };
 
-// // Appeler le controller create
-// const replaceData = async ()=>{
-//   try {
-//     let updateData = await axios.post(`${URL}/recruiter/addJobOffer/${id}`) // 
-//     console.log(singleJob);
-//     singleJob.data.ok && setmyEdit(singleJob.data.data) // {} // on assigne les données a setmyEdit
-// } catch (error) {
-//     console.log(error);
-// }}   
 
 // Change nimporte quel array basé sur l'argument passé (la valeur)
   // update l'état du form avec la valeur de la skill à l'intérieur d'un certain array
@@ -121,8 +79,6 @@ const handleSubmit = async (e) => {
   };
 
 
-
-
 //At every render
 useEffect(()=>{
   fetchPrevData();
@@ -132,16 +88,10 @@ useEffect(()=>{
 
 
 //////////////////////////////////////////// RETURN  //////////////////////////////////////////////////////////
-
-
-
-// map les elements de la card passé en props pr pouvoir passé ce quil n'y a pas dans preview => dans placeholders
-  return (
+return (
     <>
-
       {myEdit && <div className='jobApplication'>
     <form onSubmit= {handleSubmit}>
-
       
        <label>Company Name</label>
        <input type='text' name='companyName' value={myEdit.companyName} placeholder={myEdit.companyName}  onChange={handleChange}/>

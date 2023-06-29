@@ -35,9 +35,15 @@ router.get('/getJobApplication/:id',controller.getJobApplication)
 
 router.get('/getAllMatch/:id', controller.getAllMatch)
 
+router.get('/getEmail/:id', controller.getEmail)
 
-// getJobOffer,
-// getAllApplications,
-// getJobApplication,
+router.get('/getLikedBy/:id', controller.getLikedBy)
+router.get('/getMatchWith/:id', controller.getMatchWith)
+
+router.post('/deleteLikedBy',controller.deleteLikedBy)
+router.post('/addMatchWith',controller.addMatchWith)
+router.post('/deleteMatchWith',controller.deleteMatchWith)
+
+
 
 module.exports = router;
