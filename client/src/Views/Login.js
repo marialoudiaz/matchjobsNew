@@ -4,6 +4,8 @@ import axios from 'axios';
 import {URL} from "../config"
 import App from '../App.css'
 import * as jose from 'jose'
+import image from "/Users/mariadiaz/Documents/BCS/matchjobs/matchjobs/client/src/img/matchjobs_splash.jpg"
+
 
 function Login(props) {
   let navigate = useNavigate();
@@ -73,15 +75,14 @@ const handleSubmit = async(e) => {
   return (
     <>
     
-    <form className='form' onSubmit={handleSubmit}>
-
+    <form className='form' onSubmit={handleSubmit} style={{ backgroundImage: `url(${image})`, backgroundSize: 'cover'}}>
+      <div className='centered-block'>
       <div>
-    <h1>Welcome back !</h1>
-      <h3>Please enter your personal informations</h3>
-      <h4 className='links' onClick={() => navigate("/register")}>I want to register</h4>
+       <h2 style={{fontFamily:'Montserrat', fontSize:'2em'}}>matchjobs</h2>
+        <h1>Welcome back!</h1>
+          <h3>Please enter your personal informations</h3>
+            <h4 className='links' onClick={() => navigate("/register")}>I want to register</h4>
       </div>
-   
-      
       <div className='input-container'>
         <label>email</label>
         <input className='inputs' name='email' type='email' onChange={userInfosChange}></input>
@@ -96,8 +97,11 @@ const handleSubmit = async(e) => {
                 <label htmlFor='applicant'>Applicant</label>
         </div>
       </div>
-  <button className='btn' >login</button>
-  <p>{msg}</p>
+      <div>
+        <button className='btn'>login</button>
+        <p>{msg}</p>
+      </div>
+  </div>
 </form>
 
     </>

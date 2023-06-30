@@ -4,6 +4,8 @@ import axios from 'axios';
 import {URL} from "../config"
 import App from '../App.css'
 import * as jose from 'jose'
+import image from "/Users/mariadiaz/Documents/BCS/matchjobs/matchjobs/client/src/img/matchjobs_splash.jpg"
+
 
 function Register(props) {
   let navigate = useNavigate();
@@ -73,16 +75,20 @@ const userInfosChange = e=>{
 
   return (
     <>
-  <form className='form' onSubmit={handleSubmit}>
+  <form className='form' onSubmit={handleSubmit} style={{ backgroundImage: `url(${image})`, backgroundSize: 'cover'}}>
+  <div className='centered-block'>
+    <div>
     <h1> Create a new account</h1>
     <h4 className='links' onClick={() => navigate("/login")}>already a member? Login </h4>
+    </div>
+    <div className='inputL-R'>
     <label>email</label>
     <input className='inputs' name='email' type='email' onChange={userInfosChange}></input>
     <label>password</label>
     <input className='inputs' name='password' type='password' onChange={userInfosChange}></input>
     <label>password 2</label>
     <input className='inputs' name='password2' type='password' onChange={userInfosChange}></input>
-
+    </div>
     <label>please select the type of user you are </label>
     <div className='radiobtn-container'>
             <input className='radio' type='radio' name='user' value = 'recruiter' onClick = {usertypeChange} />
@@ -92,6 +98,7 @@ const userInfosChange = e=>{
     </div>
     <button className='btn' >create account</button>
     <p className={msg !== null ? 'msg' : 'none'} >{msg}</p>
+    </div>
   </form>
     </>
   )
