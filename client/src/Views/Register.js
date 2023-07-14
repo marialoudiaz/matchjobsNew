@@ -76,10 +76,10 @@ const userInfosChange = e=>{
   return (
     <>
       <div className='WP-Header' style={{padding:'1em'}}>
-    <h3>matchjobs</h3> {/*logo */}
-      <button className='buttonNoStyle' onClick={() => navigate("/login")}>log in</button>
-      <button className='buttonNoStyle' onClick={() => navigate("/register")}>get started</button>
-  </div>
+       <h3><button className='buttonNoStyle' onClick={() => navigate("/")}>matchjobs</button></h3> 
+        <button className='buttonNoStyle' onClick={() => navigate("/login")}>log in</button>
+        <button className='buttonNoStyle' onClick={() => navigate("/register")}>get started</button>
+      </div>
   <form className='form' onSubmit={handleSubmit} style={{ backgroundImage: `url(${image})`, backgroundSize: 'cover'}}>
   <div className='centered-block'>
 
