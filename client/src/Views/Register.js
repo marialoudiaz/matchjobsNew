@@ -77,26 +77,31 @@ const userInfosChange = e=>{
     <>
   <form className='form' onSubmit={handleSubmit} style={{ backgroundImage: `url(${image})`, backgroundSize: 'cover'}}>
   <div className='centered-block'>
+
     <div>
+      <p>matchjobs logo</p>
     <h1> Create a new account</h1>
     <h4 className='links' onClick={() => navigate("/login")}>already a member? Login </h4>
     </div>
-    <div className='inputL-R'>
+
+    <div className='input-container'>
     <label>email</label>
     <input className='inputs' name='email' type='email' onChange={userInfosChange}></input>
     <label>password</label>
     <input className='inputs' name='password' type='password' onChange={userInfosChange}></input>
-    <label>password 2</label>
+    <label>password confirmation</label>
     <input className='inputs' name='password2' type='password' onChange={userInfosChange}></input>
     </div>
-    <label>please select the type of user you are </label>
+
+    
     <div className='radiobtn-container'>
+          <label>Choose your user type</label>
             <input className='radio' type='radio' name='user' value = 'recruiter' onClick = {usertypeChange} />
             <label htmlFor='recruiter'>Recruiter</label>
             <input className='radio' type='radio' name='user' value = 'applicant' onClick = {usertypeChange} />
             <label htmlFor='applicant'>Applicant</label>
     </div>
-    <button className='btn' >create account</button>
+    <button className='btn' >start my journey</button>
     <p className={msg !== null ? 'msg' : 'none'} >{msg}</p>
     </div>
   </form>

@@ -73,12 +73,11 @@ form h3{
 }
 
 .centered-block{
+  display:flex;
+  flex-wrap: wrap;
   background-color: #e9e5e5b6;
   padding: 5em;
   border-radius: 2em;
-  display:flex;
-  flex-wrap: wrap;
-  align-items: center;
   width: 50%
 }
 
@@ -91,10 +90,6 @@ margin: 1em 0 1em 0;
 font-weight: 400;
 }
 
-.inputL-R{
-  display: flex;
-  flex-wrap:nowrap;
-}
 /*/////////////////////////////////CARDS/////////////////////////////////*/
 
 .allCards{
@@ -227,16 +222,20 @@ background-color: green;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .inputs {
   border: none;
   padding: 1rem;
   border-radius: 2rem;
-  width: 50%;
+  width: auto;
   background: #e8e8e8;
-  margin: .3em;
+  margin: 1em;
+ }
+
+ label{
+  font-weight: 500;
  }
 
  .inputs:focus {
@@ -257,7 +256,8 @@ label{
  align-items: center;
  font-size: 16px;
  font-family: Montserrat;
- gap:1em;
+ font-weight: 500;
+ gap:3em;
  margin-top: 1em;
  margin-bottom:2em
 }
@@ -279,7 +279,6 @@ label{
 
 /* CSS */
 .btn {
-  align-items: center;
   background-color: #fff;
   border:none;
   border-radius: 24px;
@@ -288,6 +287,7 @@ label{
   font-family: Roboto;
   font-size: 14px;
   justify-content: center;
+  align-items: center;
   letter-spacing: .25px;
   max-width: 100%;
   padding: 2px 24px;

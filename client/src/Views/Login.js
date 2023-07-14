@@ -77,12 +77,14 @@ const handleSubmit = async(e) => {
     
     <form className='form' onSubmit={handleSubmit} style={{ backgroundImage: `url(${image})`, backgroundSize: 'cover'}}>
       <div className='centered-block'>
+      
       <div>
-       <h2 style={{fontFamily:'Montserrat', fontSize:'2em'}}>matchjobs</h2>
+      <p>matchjobs logo</p>
         <h1>Welcome back!</h1>
           <h3>Please enter your personal informations</h3>
             <h4 className='links' onClick={() => navigate("/register")}>I want to register</h4>
       </div>
+
       <div className='input-container'>
         <label>email</label>
         <input className='inputs' name='email' type='email' onChange={userInfosChange}></input>
@@ -96,8 +98,6 @@ const handleSubmit = async(e) => {
                 <input type='radio' name='user' value = 'applicant' onClick = {usertypeChange} />
                 <label htmlFor='applicant'>Applicant</label>
         </div>
-      </div>
-      <div>
         <button className='btn'>login</button>
         <p>{msg}</p>
       </div>
