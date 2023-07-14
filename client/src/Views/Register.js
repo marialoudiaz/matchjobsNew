@@ -75,6 +75,11 @@ const userInfosChange = e=>{
 
   return (
     <>
+      <div className='WP-Header' style={{padding:'1em'}}>
+    <h3>matchjobs</h3> {/*logo */}
+      <button className='buttonNoStyle' onClick={() => navigate("/login")}>log in</button>
+      <button className='buttonNoStyle' onClick={() => navigate("/register")}>get started</button>
+  </div>
   <form className='form' onSubmit={handleSubmit} style={{ backgroundImage: `url(${image})`, backgroundSize: 'cover'}}>
   <div className='centered-block'>
 
@@ -101,7 +106,7 @@ const userInfosChange = e=>{
             <input className='radio' type='radio' name='user' value = 'applicant' onClick = {usertypeChange} />
             <label htmlFor='applicant'>Applicant</label>
     </div>
-    <button className='btn' >start my journey</button>
+    <button className='btn'>start my journey</button>
     <p className={msg !== null ? 'msg' : 'none'} >{msg}</p>
     </div>
   </form>
