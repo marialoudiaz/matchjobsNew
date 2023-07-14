@@ -97,9 +97,16 @@ font-weight: 400;
   flex-wrap: wrap;
 }
 
+.classicPage{
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+}
+
 .topTitle{
   font-family: Raleway;
   margin: .7em;
+
 }
 
 .jobApplication{

@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/static/css/main.babc1017.css",
-    "main.js": "/static/js/main.cc00ea4c.js",
+    "main.js": "/static/js/main.27e379f1.js",
     "static/js/787.c4e7f8f9.chunk.js": "/static/js/787.c4e7f8f9.chunk.js",
     "static/media/matchjobs_splash.jpg": "/static/media/matchjobs_splash.4a8341414be3a1fe10a2.jpg",
     "index.html": "/index.html",
     "main.babc1017.css.map": "/static/css/main.babc1017.css.map",
-    "main.cc00ea4c.js.map": "/static/js/main.cc00ea4c.js.map",
+    "main.27e379f1.js.map": "/static/js/main.27e379f1.js.map",
     "787.c4e7f8f9.chunk.js.map": "/static/js/787.c4e7f8f9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.babc1017.css",
-    "static/js/main.cc00ea4c.js"
+    "static/js/main.27e379f1.js"
   ]
 }
