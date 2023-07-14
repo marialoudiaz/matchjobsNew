@@ -14,6 +14,7 @@ const linkStyles = {
     padding: "3rem",
     position: "relative",
     fontFamily: 'Montserrat',
+    marginBottom: 'drak-grey',
   },
 };
 // Je passe comme props la fonction qui permet de savoir si je suis logged in (avec le token)
