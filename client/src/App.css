@@ -15,7 +15,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center; */
-  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgb(213 213 255 / 45%) 0%, rgb(243 243 243 / 96%) 100%);
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(213, 213, 255, 0.723) 0%, rgb(243, 243, 243) 100%);
   padding: 8em;
 };
 
@@ -122,11 +122,11 @@ p.location{
   flex-wrap: wrap;
 }
 
-.classicPage{
+/* .classicPage{
 display: flex;
 flex-wrap: wrap;
 justify-content: center;
-}
+} */
 
 .topTitle{
   font-family: Raleway;
