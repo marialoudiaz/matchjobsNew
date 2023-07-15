@@ -261,7 +261,7 @@ console.log('offersId',offersId)
             <div className="topTitle">
                <h2>Hello, </h2> <h2>Welcome back</h2>
             </div>
-
+              <h3>My profile</h3>
             <div className="jobApplication">
                 <>
                   {/* <Link to = {`/${type}/view/${c._id}`}> */}
@@ -295,8 +295,8 @@ console.log('offersId',offersId)
                   </div>
                   <Link to={`/applicant/${userId}/edit`}><button className='btn'>Edit</button></Link>
                   {/* <button  onClick= {() => navigate(`/recruiter/${offersId}/edit`)}>edit</button> */}
-                  <button className='btn' onClick={() => navigate(`/applicant/${userId}/view`)}>view</button>
-                  <button className='btn' onClick={deleteApp}>delete</button>
+                  <button className='btn' onClick={() => navigate(`/applicant/${userId}/view`)}>View</button>
+                  <button className='btn' onClick={deleteApp}>Delete</button>
                 </>
             </div>
           </div>

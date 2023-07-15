@@ -6,6 +6,19 @@
     padding: 0;
 }
 
+.topTitle h2{
+  color: white;
+}
+
+.page-wrapper{
+  /* background-image: url("/path/to/image.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center; */
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgb(213 213 255 / 45%) 0%, rgb(243 243 243 / 96%) 100%);
+  padding: 8em;
+};
+
 .container{
 background-color: #f5f7f99b;
 }
@@ -23,7 +36,8 @@ img{
  }
 
  h2{
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2em;
  }
 
  .links{
@@ -41,6 +55,8 @@ img{
   flex-wrap: wrap;
   font-family: 'Montserrat';
   font-size: 20px;
+  margin:1em;
+  
 }
 
 .navbar-right{
@@ -90,6 +106,15 @@ margin: 1em 0 1em 0;
 font-weight: 400;
 }
 
+.location{
+  background-color: #cfcdcd;
+  border-radius: 60%;
+}
+
+p.location{
+  color: #2c2b2b;
+}
+
 /*/////////////////////////////////CARDS/////////////////////////////////*/
 
 .allCards{
@@ -105,17 +130,17 @@ justify-content: center;
 
 .topTitle{
   font-family: Raleway;
-  margin: .7em;
+  margin: 1em;
 
 }
 
 .jobApplication{
-  background-color:#FBFAF9;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  background-color:#FFFFFF;
   padding: 2em;
   margin: 3em 1.5em;
+  border: .5px solid #e6e6e6;
   border-radius: 20px;
-  width: 35%;
+  width: 25%;
 }
 
 .jobApplication p{
@@ -129,6 +154,7 @@ justify-content: center;
   font-family: Montserrat;
   font-size: 16px;
   color: #515050;
+  margin: 0.5em;
 
 }
 
@@ -216,7 +242,7 @@ background-color: green;
   flex-wrap: wrap;
   color: #b4b4b4;
   border-radius: 15px;
-  background-color: #e9e6e6;
+  background-color: #f6f4f4;
   border: 1px solid #cfcdcd;
   padding: .3em .8em;
   font-size: 12px;
@@ -286,7 +312,7 @@ label{
 
 /* CSS */
 .btn {
-  background-color: #fff;
+  background-color: #ececec;
   border:none;
   border-radius: 24px;
   box-sizing: border-box;
@@ -297,11 +323,13 @@ label{
   align-items: center;
   letter-spacing: .25px;
   max-width: 100%;
+  margin: 1.5em .3em 1em;
   padding: 2px 24px;
   position: relative;
   text-align: center;
   width: 30%;
   height: 30px;
+  font-weight: 500;
   z-index: 0;
 }
 

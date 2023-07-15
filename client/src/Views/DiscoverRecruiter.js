@@ -69,7 +69,7 @@ useEffect(()=>{
       {myApp.map((application, i)=>(
         <>
         <div key={i} className='jobApplication'>
-        <p>{application.jobTitle}</p>
+        <h4>{application.jobTitle}</h4>
         <div className='bigChip'>
         <button className='chip' onClick= {()=> onChipClick(application._id)}>View</button>
         <div className='transparent'><ViewRecruiter viewAppID={viewAppID} /></div> 

@@ -68,11 +68,12 @@ function DiscoverApplicant(user, userID) {
   // OFFRES DANS LE MAIN (A VERIFIER)
   return (
     <>
+    <div className='page-wrapper'>
     <div className='allCards'>
       {myOffer.map((application, i)=>(
         <>
         <div key={i} className='jobApplication'>
-        <p>{application.companyName}</p>
+        <h4>{application.companyName}</h4>
         <p>{application.jobTitle}</p>
         <div className='bigChip'>
         {/* {viewOfferID = application._id} */}
@@ -83,7 +84,7 @@ function DiscoverApplicant(user, userID) {
         <button onClick={()=>unlikeApp(application._id)} className='chip'>Unlike</button>
 
         </div>
-        <p className='location'>{application.location}</p>
+        <p className='location'><img src={imageUrl} alt="My Image"></img>{application.location}</p>
         {application.remote ?  <div className='chip'>remote</div> : <div></div> }
         {application.onSite ? <div className='chip'>on site</div> : <p></p> }
         {application.flexible ? <div className='chip'>flexible</div> : <p></p> }
@@ -104,6 +105,7 @@ function DiscoverApplicant(user, userID) {
     </>   
       ))}
    </div> 
+   </div>
     </>
   )
 }
