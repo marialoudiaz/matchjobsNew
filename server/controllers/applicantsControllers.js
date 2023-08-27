@@ -45,6 +45,7 @@ const register = async (req, res, next) => {
 };
 
 const login = async (req, res) => {
+  debugger
   const { email, password } = req.body;
   if (!email || !password){
     return res.json({ ok: false, message: "All fields are required" });
@@ -55,7 +56,8 @@ const login = async (req, res) => {
   try {
     const user = await Applicant.findOne({ email });
     if (!user) return res.json({ ok: false, message: "Invalid user provided" });
-    const match = await argon2.verify(user.password, password);
+    console.log("les mots de passe",user.password, password) // les mots de passe existent bien dans la db
+    const match = await argon2.verify(user.password, password); // argon2 ne fonctionne pas (ne fait pas le de-hachage; considèrent que les deux mdp ne matchent pas )
     if (match) {
       // once user is verified and confirmed we send back the token to keep in localStorage in the client and in this token we can add some data -- payload -- to retrieve from the token in the client and see, for example, which user is logged in exactly. The payload would be the first argument in .sign() method. In the following example we are sending an object with key userEmail and the value of email coming from the "user" found in line 47
       const token = jwt.sign({email:user.email, userType:"applicant",_id:user._id}, jwt_secret, { expiresIn: "1h" }); //{expiresIn:'365d'}
@@ -63,7 +65,7 @@ const login = async (req, res) => {
       res.json({ ok: true, message: "welcome back", token, email });
     } else return res.json({ ok: false, message: "Invalid data provided" });
   } catch (error) {
-    res.json({ ok: false, error });
+    res.json({ ok: false, message: "je suis dans le catch aaaaaah"});
   }
 };
 
