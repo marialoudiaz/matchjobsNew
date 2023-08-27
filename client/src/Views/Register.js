@@ -39,7 +39,6 @@ const userInfosChange = e=>{
       if(userType==='applicant'){
       const response = await axios.post(`${URL}/applicant/register`, {email: userEmail, password:userPass, password2: userPass2});
       setMsg(response.data.message);
-    
           if (response.data.ok) {
           let decodedToken = jose.decodeJwt(response.data.token)
           console.log("Email extracted from the JWT token after login: ", decodedToken.userEmail)
@@ -55,7 +54,6 @@ const userInfosChange = e=>{
         debugger
       const response = await axios.post(`${URL}/recruiter/register`, {email: userEmail, password:userPass, password2: userPass2});
       setMsg(response.data.message);
-    
           if (response.data.ok) {
           let decodedToken = jose.decodeJwt(response.data.token)
           console.log("Email extracted from the JWT token after login: ", decodedToken.userEmail)
@@ -64,9 +62,9 @@ const userInfosChange = e=>{
           props.login(response.data.token)
           navigate(`/recruiter/${decodedToken._id}`)
           }, 2000);
-        }else {
-        setMsg(response.data.message)
-        }
+          }else {
+          setMsg(response.data.message)
+          }
       }
   } catch (error) {
     console.log(error);
@@ -80,6 +78,7 @@ const userInfosChange = e=>{
         <button className='buttonNoStyle' onClick={() => navigate("/login")}>log in</button>
         <button className='buttonNoStyle' onClick={() => navigate("/register")}>get started</button>
       </div>
+  
   <form className='form' onSubmit={handleSubmit} style={{ backgroundImage: `url(${image})`, backgroundSize: 'cover'}}>
   <div className='centered-block'>
 

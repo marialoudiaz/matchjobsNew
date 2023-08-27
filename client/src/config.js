@@ -1,4 +1,4 @@
-const URL='https://drab-lime-sawfish-hem.cyclic.app'
+const URL='http://localhost:5555'
 export {URL}
 
 //https://drab-lime-sawfish-hem.cyclic.app

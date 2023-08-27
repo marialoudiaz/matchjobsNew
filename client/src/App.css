@@ -10,14 +10,7 @@
   color: white;
 }
 
-.page-wrapper{
-  /* background-image: url("/path/to/image.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center; */
-  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(213, 213, 255, 0.723) 0%, rgb(243, 243, 243) 100%);
-  padding: 8em;
-};
+
 
 .container{
 background-color: #f5f7f99b;
@@ -26,6 +19,11 @@ background-color: #f5f7f99b;
 img{
   width : 100%;
  }
+
+.video{
+  z-index:-10000;
+  /* filter: blur(5px); */
+}
 
  h1{
   font-family: 'Montserrat', sans-serif;
@@ -84,9 +82,9 @@ form h3{
 }
 
 .page-wrapper{
-  margin: 2em 1em;
+  margin-top:-60em;
+};
 
-}
 
 .centered-block{
   display:flex;
@@ -107,13 +105,18 @@ font-weight: 400;
 }
 
 .location{
-  background-color: #cfcdcd;
-  border-radius: 60%;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0.3em;
+    padding: 0.5em;
+    gap: .5em;
+    font-family: Montserrat;
+    font-size: 15px;
+    background-color: #f1f1f1;
+    color: #999797;
+    border-radius: 0.5em;
 }
 
-p.location{
-  color: #2c2b2b;
-}
 
 /*/////////////////////////////////CARDS/////////////////////////////////*/
 
@@ -138,7 +141,7 @@ justify-content: center;
   background-color:#FFFFFF;
   padding: 2em;
   margin: 3em 1.5em;
-  border: .5px solid #e6e6e6;
+  border: .5px solid #d9d6d6;
   border-radius: 20px;
   width: 25%;
 }
@@ -152,7 +155,7 @@ justify-content: center;
 
 .jobApplication h4{
   font-family: Montserrat;
-  font-size: 16px;
+  font-size: 20px;
   color: #515050;
   margin: 0.5em;
 
@@ -166,27 +169,31 @@ justify-content: center;
 
 
 .bigChip{
-  display: inline;
-  border-radius: 5px;
-  background-color: #f6f2f2;
-  border: 1px solid #cfcdcd;
-  padding: .2em 0.02em;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   font-size: 12px;
   font-family: Montserrat;
-  margin: .3em;
+  margin: 0.3em;
+  padding: 0.2em 0.02em;
+  gap: 0.1em;
+  border-radius: 4em;
 }
 
 .chip{
   display: inline;
   color: #b4b4b4;
-  border-radius: 5px;
-  background-color: #e9e6e6;
-  border: 1px solid #cfcdcd;
-  padding: .2em .5em;
+  background-color: #ebe5f5;
+  border: 1px solid #d2c8e4;
+  border-radius: .5em;
+  padding: .6em;
+  align-items: center;
+  color: #6340a3;
   font-size: 12px;
   font-family: Montserrat;
   margin: .3em;
 }
+
 
 .flex{
   display: flex;

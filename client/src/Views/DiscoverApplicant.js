@@ -3,6 +3,13 @@ import { useNavigate, useParams, Link, Navigate } from "react-router-dom";
 import axios from 'axios';
 import {URL} from "../config"
 import ViewApplicant from './ViewApplicant'
+import { FaLocationArrow } from "react-icons/fa";
+import { IoEyeOutline } from "react-icons/io5";
+import { IoHeartDislikeOutline } from "react-icons/io5";
+import { IoHeartOutline } from "react-icons/io5";
+import backgroundVideo from '../img/bg.mp4'
+
+
 
 function DiscoverApplicant(user, userID) {
 
@@ -20,7 +27,6 @@ function DiscoverApplicant(user, userID) {
 
   // display the applications
   const handleOffer = async ()=>{
-  debugger
     try {
      let allMyOffer = await axios.get(`${URL}/applicant/getAllOffers`)
      console.log(allMyOffer);
@@ -45,7 +51,6 @@ function DiscoverApplicant(user, userID) {
   }
 
   const unlikeApp = async (offerId)=>{
-    debugger
     console.log(applicantId)
     console.log(offerId)
     try {
@@ -68,8 +73,9 @@ function DiscoverApplicant(user, userID) {
   // OFFRES DANS LE MAIN (A VERIFIER)
   return (
     <>
+    <video className='video' autoPlay loop muted id='video'><source src={backgroundVideo} type='video/mp4'/></video>
     <div className='page-wrapper'>
-    <div className='allCards'>
+      <div className='allCards'>
       {myOffer.map((application, i)=>(
         <>
         <div key={i} className='jobApplication'>
@@ -77,17 +83,16 @@ function DiscoverApplicant(user, userID) {
         <p>{application.jobTitle}</p>
         <div className='bigChip'>
         {/* {viewOfferID = application._id} */}
-        <button className='chip' onClick= {()=> onChipClick(application._id)}>View</button>
+        <button className='chip' onClick= {()=> onChipClick(application._id)}><IoEyeOutline/></button>
         <div className='transparent'><ViewApplicant viewOfferID={viewOfferID} /></div> 
-        
-        <button onClick={()=>likeApp(application._id)} className='chip'>Like</button>
-        <button onClick={()=>unlikeApp(application._id)} className='chip'>Unlike</button>
-
+        <button onClick={()=>likeApp(application._id)} className='chip'><IoHeartOutline/></button>
+        <button onClick={()=>unlikeApp(application._id)} className='chip'><IoHeartDislikeOutline/></button>
+        <p className='location'> <FaLocationArrow />{application.location}</p>
+        {application.remote ?  <div className='location'>remote</div> : <div></div> }
+        {application.onSite ? <div className='location'>on site</div> : <p></p> }
+        {application.flexible ? <div className='location'>flexible</div> : <p></p> }
         </div>
-        <p className='location'><img src={imageUrl} alt="My Image"></img>{application.location}</p>
-        {application.remote ?  <div className='chip'>remote</div> : <div></div> }
-        {application.onSite ? <div className='chip'>on site</div> : <p></p> }
-        {application.flexible ? <div className='chip'>flexible</div> : <p></p> }
+        
 
         <div className="flex">
         {Object.keys(application.softSkills).map((key) => (

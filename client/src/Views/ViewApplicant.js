@@ -20,7 +20,6 @@ const [myView, setmyView]=useState(null)
 // fetch data of this specific application
      // const id = user._id;
      const handleApp = async ()=>{
-      debugger
       try {
           let singleJob = await axios.get(`${URL}/applicant/getJobApplication/${id}`)
           console.log(singleJob);
