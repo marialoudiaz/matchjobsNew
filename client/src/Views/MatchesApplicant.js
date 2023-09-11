@@ -131,7 +131,7 @@ return (
         </>
         ):(
         <>
-        <div className='likeOffer'>
+        <div>
         <h2>Here are the recruiters who liked you so far !</h2>
         <div className="classicPage">
         <div className="topTitle">
@@ -139,7 +139,7 @@ return (
 {/*{console.log('offerID', offersId)} {console.log('myOffer', myOffer)} */}
       {/* //the offer displayed */}
       {likeOffer.map((c)=>( //matchOffer
-        <>
+        <div className='likeOffer'>
         <h3>{c.companyName}</h3>
          <h4>{c.jobTitle}</h4>
          <p>{c.jobFields}</p>
@@ -166,7 +166,7 @@ return (
          <button className='btn' onClick={() => doMatch(c._id)}> Match with recruiter </button> 
          </div>
          <div><p>{alert}</p></div>
-         </>
+         </div>
       ))}
       {/* // end of div jobApplication */}
       </div>

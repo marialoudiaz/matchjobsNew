@@ -233,7 +233,7 @@ console.log('offersId',offersId)
                   />
                   <button
                     type="button"
-                    onClick={() => handleSkills("languagesSpoken")}
+                    onClick={()=>handleSkills("languagesSpoken")}
                     className="btn"
                   >
                     Add Languages

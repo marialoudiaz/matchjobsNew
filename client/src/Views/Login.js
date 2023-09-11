@@ -4,8 +4,8 @@ import axios from 'axios';
 import {URL} from "../config"
 import App from '../App.css'
 import * as jose from 'jose'
-import image from "/Users/mariadiaz/Documents/BCS/matchjobs/matchjobs/client/src/img/matchjobs_splash.jpg"
-
+import image from "../img/matchjobs_splash.jpg"
+import logo from "../img/logo_full.png"
 
 function Login(props) {
   let navigate = useNavigate();
@@ -83,29 +83,31 @@ const handleSubmit = async(e) => {
       <div className='centered-block'>
       
       <div>
-      <p>matchjobs logo</p>
+      <img src={logo} style={{maxWidth:'20em',height:'4.5em'}}/>
         <h1>Welcome back!</h1>
           <h3>Please enter your personal informations</h3>
             <h4 className='links' onClick={() => navigate("/register")}>I want to register</h4>
       </div>
 
-      <div className='input-container'>
-        <label>email</label>
-        <input className='inputs' name='email' type='email' onChange={userInfosChange}></input>
-        <label>password</label>
-        <input className='inputs' name='password' type='password' onChange={userInfosChange}></input>
-        
-        <div className='radiobtn-container'>
-                <label>I am a</label>
-                <input type='radio' name='user' value = 'recruiter' onClick = {usertypeChange} />
-                <label htmlFor='recruiter'>Recruiter</label>
-                <input type='radio' name='user' value = 'applicant' onClick = {usertypeChange} />
-                <label htmlFor='applicant'>Applicant</label>
+    <div className="bloc">
+        <div className='input-container'>
+          <label>email</label>
+          <input className='inputs' name='email' type='email' onChange={userInfosChange}></input>
+          <label>password</label>
+          <input className='inputs' name='password' type='password' onChange={userInfosChange}></input>
+          
+          <div className='radiobtn-container'>
+                  <label>I am a</label>
+                  <input type='radio' name='user' value = 'recruiter' onClick = {usertypeChange} />
+                  <label htmlFor='recruiter'>Recruiter</label>
+                  <input type='radio' name='user' value = 'applicant' onClick = {usertypeChange} />
+                  <label htmlFor='applicant'>Applicant</label>
+          </div>
+          <button className='btn'>login</button>
+          <p>{msg}</p>
         </div>
-        <button className='btn'>login</button>
-        <p>{msg}</p>
-      </div>
-  </div>
+        </div>
+    </div>
 </form>
 
     </>

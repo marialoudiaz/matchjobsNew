@@ -4,7 +4,8 @@ import axios from 'axios';
 import {URL} from "../config"
 import App from '../App.css'
 import * as jose from 'jose'
-import image from "/Users/mariadiaz/Documents/BCS/matchjobs/matchjobs/client/src/img/matchjobs_splash.jpg"
+import image from "../img/matchjobs_splash.jpg"
+import logo from "../img/logo_full.png"
 
 
 function Register(props) {
@@ -83,30 +84,32 @@ const userInfosChange = e=>{
   <div className='centered-block'>
 
     <div>
-      <p>matchjobs logo</p>
+      <img src={logo} style={{maxWidth:'20em',height:'4.5em'}}/>
     <h1> Create a new account</h1>
     <h4 className='links' onClick={() => navigate("/login")}>already a member? Login </h4>
     </div>
 
-    <div className='input-container'>
-    <label>email</label>
-    <input className='inputs' name='email' type='email' onChange={userInfosChange}></input>
-    <label>password</label>
-    <input className='inputs' name='password' type='password' onChange={userInfosChange}></input>
-    <label>password confirmation</label>
-    <input className='inputs' name='password2' type='password' onChange={userInfosChange}></input>
-    </div>
+    <div className='bloc'>
+      <div className='input-container'>
+      <label>email</label>
+      <input className='inputs' name='email' type='email' onChange={userInfosChange}></input>
+      <label>password</label>
+      <input className='inputs' name='password' type='password' onChange={userInfosChange}></input>
+      <label>password confirmation</label>
+      <input className='inputs' name='password2' type='password' onChange={userInfosChange}></input>
+      </div>
 
-    
-    <div className='radiobtn-container'>
-          <label>Choose your user type</label>
-            <input className='radio' type='radio' name='user' value = 'recruiter' onClick = {usertypeChange} />
-            <label htmlFor='recruiter'>Recruiter</label>
-            <input className='radio' type='radio' name='user' value = 'applicant' onClick = {usertypeChange} />
-            <label htmlFor='applicant'>Applicant</label>
-    </div>
-    <button className='btn'>start my journey</button>
-    <p className={msg !== null ? 'msg' : 'none'} >{msg}</p>
+      
+      <div className='radiobtn-container'>
+            <label>Choose your user type</label>
+              <input className='radio' type='radio' name='user' value = 'recruiter' onClick = {usertypeChange} />
+              <label htmlFor='recruiter'>Recruiter</label>
+              <input className='radio' type='radio' name='user' value = 'applicant' onClick = {usertypeChange} />
+              <label htmlFor='applicant'>Applicant</label>
+      </div>
+      <button className='btn'>start my journey</button>
+      <p className={msg !== null ? 'msg' : 'none'} >{msg}</p>
+      </div>
     </div>
   </form>
     </>
