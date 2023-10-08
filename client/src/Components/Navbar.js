@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import {URL} from '../config'
+
 // import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 // import PageviewIcon from '@mui/icons-material/Pageview';
 // import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
@@ -11,10 +12,15 @@ const linkStyles = {
     textDecoration: "none",
     color: "black",
     margin: "1rem ",
-    padding: "3rem",
+    padding: "2rem",
     position: "relative",
-    fontFamily: 'Montserrat',
-    marginBottom: 'drak-grey',
+    fontFamily: 'Sora',
+    fontSize:'1em',
+    marginBottom: 'dark-grey',
+    shadowOpacity:'0',
+  },
+  noDisplay: {
+    display:"none"
   },
 };
 // Je passe comme props la fonction qui permet de savoir si je suis logged in (avec le token)
@@ -26,7 +32,7 @@ let navigate = useNavigate();
 
 
 return (
-  <>
+  isLoggedIn?(
  <div className="navbar" >
  <div className="navbar-left">
 
@@ -35,7 +41,7 @@ return (
       to={`/${userType}/${userID}`} 
       style= {linkStyles.defaultLink}> 
      
-      Profile 
+      profile 
       </NavLink>
       }
 
@@ -55,7 +61,7 @@ return (
      style= {linkStyles.defaultLink}
      >
      
-      Matches
+      matches
      </NavLink>
     }
 </div>
@@ -66,15 +72,14 @@ return (
     <span 
     onClick={logout}
     style= {linkStyles.defaultLink}
-    > Logout
+    > logout
     </span>
     }
 </div>
 </div>
-</>
-    
-
+  ): null
   
 )}
+  
 export default Navbar
 

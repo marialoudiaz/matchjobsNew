@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@0,600;1,500&family=Raleway:wght@300&family=Roboto:wght@500&family=Rubik:wght@500&family=Source+Sans+Pro:wght@500&family=Krona+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@0,600;1,500&family=Raleway:wght@300&family=Roboto:wght@500&family=Rubik:wght@500&family=Source+Sans+Pro:wght@500&family=Krona+One&family=Sora:wght@400&display=swap');
 
 *{
     box-sizing : border-box;
@@ -13,7 +13,7 @@
 .navbar{
   display: flex;
   padding: 1em;
-}
+  border: 0.5px solid #d9d6d6;}
 
 .container{
 background-color: #f5f7f99b;
@@ -37,7 +37,7 @@ img{
 }
 
  h1{
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Sora';
   font-weight: 600;
   color:white;
   font-weight: 500;
@@ -45,8 +45,9 @@ img{
  }
 
  h2{
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Sora';
   font-size: 2em;
+  padding: 1em 0em 0em 1.5em;
  }
 
  .links{
@@ -58,6 +59,11 @@ img{
   color: #99b4f0;
 }
 
+.username{
+  background: linear-gradient(to right, #ef5350, #f48fb1, #7e57c2, #2196f3, #26c6da, #43a047, #eeff41, #f9a825, #ff5722);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 /*/////////////////////////////////FORM/////////////////////////////////*/
 form{
 background: rgb(247, 247, 245);
@@ -75,7 +81,7 @@ font-size: 4em;
 form h3{
   font-size: 1em;
   font-weight: 400
-}
+} 
 
 .page-wrapper{
   margin-top:-60em;
@@ -101,18 +107,17 @@ font-weight: 400;
 }
 
 .location{
-    display: flex;
+    display: inline-block;
     flex-wrap: wrap;
     margin: 0.3em;
-    padding: 0.5em;
+    padding: .6em;
     gap: .5em;
     font-family: Montserrat;
     font-size: 15px;
     background-color: #f1f1f1;
     color: #999797;
-    border-radius: 0.5em;
+    border-radius: 2em;
 }
-
 
 /*/////////////////////////////////CARDS/////////////////////////////////*/
 
@@ -130,6 +135,7 @@ justify-content: center;
 .topTitle{
   font-family: Raleway;
   margin: 1em;
+  display: flex;
 
 }
 
@@ -139,7 +145,8 @@ justify-content: center;
   margin: 3em 1.5em;
   border: .5px solid #d9d6d6;
   border-radius: 20px;
-  width: 25%;
+  width: 35vw;
+  text-align: justify;
 }
 
 .jobApplication p{
@@ -229,20 +236,19 @@ font-size: 20px;
 display: none;
 }
 
-.likeOffer{
+/* .likeOffer{
 background-color: red;
 }
 
 .matchOffer{
 background-color: green;
-}
+} */
 
 /*/////////////////////////////////INPUTS/////////////////////////////////*/
 
 
 .inputArray{
-  display: flex;
-  flex-wrap: wrap;
+  display: inline-block;
   color: #b4b4b4;
   border-radius: 15px;
   background-color: #f6f4f4;
@@ -250,8 +256,6 @@ background-color: green;
   padding: .3em .8em;
   font-size: 12px;
   font-family: Montserrat;
-
-
 }
 
 .input-container{
@@ -327,13 +331,14 @@ label{
   letter-spacing: .25px;
   max-width: 100%;
   margin: 1.5em .3em 1em;
-  padding: 2px 24px;
+  padding: .5em 1.5em;
   position: relative;
   text-align: center;
-  width: 30%;
-  height: 30px;
   font-weight: 500;
-  z-index: 0;
+  display: inline-block;
+  width: auto;
+  height: auto
+  
 }
 
 .btn:hover {
@@ -385,7 +390,7 @@ padding: 15em;
   font-size: 3em;
   text-align: center;
   margin:0;
-  padding:.5em;
+  padding:5em;
 }
 
 .WP-btn{
@@ -409,4 +414,27 @@ padding: 15em;
 
 .none{
   display: none;
+}
+
+.video-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  filter: blur(25%)
+}
+
+.video-bg video {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.matchItem {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px;
+  /* Ajoutez d'autres styles de mise en forme au besoin */
 }

@@ -2,7 +2,8 @@ import React, { useState, useEffect} from 'react';
 import { useNavigate, useParams, Link, Navigate } from "react-router-dom";
 import axios from 'axios';
 import {URL} from "../config"
-import { FaMailBulk } from 'react-icons/fa';
+import { FaEnvelope } from 'react-icons/fa';
+import { FaLocationArrow } from "react-icons/fa";
 import '/Users/mariadiaz/Documents/BCS/matchjobs/matchjobs/client/src/App.css';
 // import { addMatchWith } from '../../../server/controllers/applicantsControllers';
 
@@ -132,50 +133,46 @@ return (
         ):(
         <>
         <div>
-        <h2>Here are the recruiters who liked you so far !</h2>
+          <h2>Here are the recruiters that liked you so far !</h2>   
+        </div>
         <div className="classicPage">
         <div className="topTitle">
-        <div className="jobApplication">
 {/*{console.log('offerID', offersId)} {console.log('myOffer', myOffer)} */}
       {/* //the offer displayed */}
-      {likeOffer.map((c)=>( //matchOffer
-        <div className='likeOffer'>
-        <h3>{c.companyName}</h3>
-         <h4>{c.jobTitle}</h4>
-         <p>{c.jobFields}</p>
+      {likeOffer.map((c, index)=>( //matchOffer
+        <div  key={index} className='jobApplication'>
+        <h3 key={index}>{c.companyName}</h3>
+         <h4 key={index}>{c.jobTitle}</h4>
+         <p key={index}>{c.jobFields}</p>
          {c.remote ? <div className="chip">remote</div> : <div></div>}
          {c.onSite ? <p>onSite</p> : <p></p>}
          {c.flexible ? <p>Flexible</p> : <p></p>}
-         <p className="location">{c.location}</p>
-         <h4 className="jobDescription">Job Description</h4>
-         <p>{c.jobDescription}</p>
-         <h4>Skills</h4>
-         <h4>Soft</h4>
-         <div className='transparent'>{c._id}</div>
-         <div className="flex">
+         <p key={index} className="location"> <FaLocationArrow style={{marginRight:'.5em'}}/>{c.location}</p>
+         <h4 key={index} className="jobDescription">Job Description</h4>
+         <p key={index}>{c.jobDescription}</p>
+         <h4 key={index}>Skills</h4>
+         <h4 key={index}>Soft</h4>
+         <div key={index} className='transparent'>{c._id}</div>
+         <div key={index} className="flex">
          {Object.keys(c.softSkills).map((key) => ( <p className="inputArray">{c.softSkills[key]}</p> ))}
          </div>
-         <h4>Hard</h4>
-         <div className="flex">
+         <h4 key={index}>Hard</h4>
+         <div key={index} className="flex">
          {Object.keys(c.hardSkills).map((key) => (<p className="inputArray">{c.hardSkills[key]}</p> ))}
          </div>
-         <h4>Languages</h4>
-         <div className="flex">
+         <h4 key={index}>Languages</h4>
          {Object.keys(c.languagesSpoken).map((key) => (<p className="inputArray">{c.languagesSpoken[key]}</p>))}
-         <button className='btn' onClick={() => deleteLikes(c._id)}> delete like </button>
-         <button className='btn' onClick={() => doMatch(c._id)}> Match with recruiter </button> 
-         </div>
+         <button key={index} className='btn' onClick={() => deleteLikes(c._id)}> delete like </button>
+         <button key={index} className='btn' onClick={() => doMatch(c._id)}> Match with recruiter </button> 
          <div><p>{alert}</p></div>
          </div>
       ))}
       {/* // end of div jobApplication */}
-      </div>
       {/* // end of div topTitle */}
       </div>
       {/* // end of div classicPage */}
       </div>
       {/* // end of div - likeOffer */}
-      </div>
          </>
   // end of like - ending div
   )}
@@ -198,38 +195,35 @@ return (
           <div className='matchOffer'>
           <div className="classicPage">
           <div className="topTitle">
-          <div className="jobApplication">
-            {console.log(matchOffer)}
-            {matchOffer.map((d)=>(
-        <>
-          {/* // {console.log('offerID', offersId)}
-          // {console.log('myOffer', myOffer)} */}
-          <h3>{d.companyName}</h3>
-          <h4>{d.jobTitle}</h4>
-          <p>{d.jobFields}</p>
-          {d.remote ? <div className="chip">remote</div> : <div></div>}
-          {d.onSite ? <p>onSite</p> : <p></p>}
-          {d.flexible ? <p>Flexible</p> : <p></p>}
-          <p className="location">{d.location}</p>
-          <h4 className="jobDescription">Job Description</h4>
-          
-          <p>{d.jobDescription}</p>
-          <h4>Skills</h4>
-          <h4>Soft</h4>
-          <div className="flex">{Object.keys(d.softSkills).map((key) => (<p className="inputArray">{d.softSkills[key]}</p>))} </div>
-          <h4>Hard</h4>
-          <div className="flex">{Object.keys(d.hardSkills).map((key) => (<p className="inputArray">{d.hardSkills[key]}</p>))}</div>
-          <h4>Languages</h4>
-          <div className="flex">{Object.keys(d.languagesSpoken).map((key) => (<p className="inputArray">{d.languagesSpoken[key]}</p>))}</div> 
-          <div className='transparent'>{offerIdEmail = d._id}</div>
-          <button className='btn' onClick={() => deleteMatches(d._id)}> Delete Match </button>
-          <div><FaMailBulk onClick={() => getEmail(d._id)}/>Get in touch</div>
-          </>
-          ))}
-        </div>
-        <div><p>{alert}</p></div>
-        </div>
-        </div>
+            {/* {console.log(matchOffer)} */}
+            {matchOffer.map((d, index)=>(
+              <div className="jobApplication">
+              <div key={index}>
+                <h3 key={index}>{d.companyName}</h3>
+                <h4 key={index}>{d.jobTitle}</h4>
+                <p key={index}>{d.jobFields}</p>
+                {d.remote ? <div className="chip">remote</div> : <div></div>}
+                {d.onSite ? <p>onSite</p> : <p></p>}
+                {d.flexible ? <p>Flexible</p> : <p></p>}
+                <p key={index} className="location"><FaLocationArrow style={{marginRight:'.5em'}}/>{d.location}</p>
+                <h4 key={index} className="jobDescription">Job Description</h4>
+                <p key={index}>{d.jobDescription}</p>
+                <h4 key={index}>Skills</h4>
+                <h4 key={index}>Soft</h4>
+                <div key={index} className="flex">{Object.keys(d.softSkills).map((key) => (<p className="inputArray">{d.softSkills[key]}</p>))} </div>
+                <h4 key={index}>Hard</h4>
+                <div key={index} className="flex">{Object.keys(d.hardSkills).map((key) => (<p className="inputArray">{d.hardSkills[key]}</p>))}</div>
+                <h4 key={index}>Languages</h4>
+                <div key={index} className="flex">{Object.keys(d.languagesSpoken).map((key) => (<p className="inputArray">{d.languagesSpoken[key]}</p>))}</div> 
+                <div key={index} className='transparent'>{offerIdEmail = d._id}</div>
+                <button key={index} className='btn' onClick={() => deleteMatches(d._id)}> Delete Match </button>
+                <div className='btn' key={index}><FaEnvelope style={{marginRight:'.5em'}} onClick={() => getEmail(d._id)}/>Get in touch</div>
+                </div>
+                </div>
+                ))}
+              <div><p>{alert}</p></div>
+              </div>
+              </div>
         </div>
         
         </>

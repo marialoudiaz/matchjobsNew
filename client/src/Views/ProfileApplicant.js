@@ -2,6 +2,7 @@ import React, { useState, useEffect} from 'react';
 import { useNavigate, useParams, Link, Navigate } from "react-router-dom";
 import axios from 'axios';
 import {URL} from "../config"
+import { FaLocationArrow } from "react-icons/fa";
 
 
 function ProfileApplicant(props) {
@@ -130,7 +131,7 @@ console.log('offersId',offersId)
   },[])
 
   return (
-    <div className="page-wrapper">
+    <div>
       <div className="InitalPage">
         {/* <h1>Hello {email}</h1> */}
         {console.log('second myApp',myApp)}
@@ -258,10 +259,11 @@ console.log('offersId',offersId)
 
           <div className="classicPage">
             {/* // applications created */}
-            <div className="topTitle">
-               <h2>Hello, </h2> <h2>Welcome back</h2>
+            <div>
+            <h2 style={{fontSize:'3em',marginLeft:'-.5em'}}>Hello {props.user.split('@')[0]},</h2>
+            <h2 style={{fontSize:'3em',marginLeft:'-.5em', marginTop:'-1em'}}>welcome back</h2>
             </div>
-              <h3>My profile</h3>
+              <h2>My profile</h2>
             <div className="jobApplication">
                 <>
                   {/* <Link to = {`/${type}/view/${c._id}`}> */}
@@ -270,7 +272,7 @@ console.log('offersId',offersId)
                   {myApp.remote ? <div className="chip">remote</div> : <div></div>}
                   {myApp.onSite ? <p>onSite</p> : <p></p>}
                   {myApp.flexible ? <p>Flexible</p> : <p></p>}
-                  <p className="location">{myApp.location}</p>
+                  <p className="location"><FaLocationArrow style={{marginRight:'.5em'}}/>{myApp.location}</p>
                   <h4 className="jobDescription">Job Description</h4>
                   <p>{myApp.jobDescription}</p>
                   <h4>Skills</h4>

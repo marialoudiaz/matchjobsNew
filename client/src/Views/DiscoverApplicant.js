@@ -3,6 +3,9 @@ import { useNavigate, useParams, Link, Navigate } from "react-router-dom";
 import axios from 'axios';
 import {URL} from "../config"
 import ViewApplicant from './ViewApplicant'
+import { FaHouseUser } from "react-icons/fa";
+import { FaRegBuilding } from "react-icons/fa";
+import { FaWalking } from "react-icons/fa";
 import { FaLocationArrow } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
 import { IoHeartDislikeOutline } from "react-icons/io5";
@@ -83,14 +86,14 @@ function DiscoverApplicant(user, userID) {
         <p>{application.jobTitle}</p>
         <div className='bigChip'>
         {/* {viewOfferID = application._id} */}
-        <button className='chip' onClick= {()=> onChipClick(application._id)}><IoEyeOutline/></button>
+        <button className='chip' onClick= {()=> onChipClick(application._id)}><IoEyeOutline style={{marginRight:'.5em'}}/>Voir</button>
         <div className='transparent'><ViewApplicant viewOfferID={viewOfferID} /></div> 
-        <button onClick={()=>likeApp(application._id)} className='chip'><IoHeartOutline/></button>
-        <button onClick={()=>unlikeApp(application._id)} className='chip'><IoHeartDislikeOutline/></button>
-        <p className='location'> <FaLocationArrow />{application.location}</p>
-        {application.remote ?  <div className='location'>remote</div> : <div></div> }
-        {application.onSite ? <div className='location'>on site</div> : <p></p> }
-        {application.flexible ? <div className='location'>flexible</div> : <p></p> }
+        <button onClick={()=>likeApp(application._id)} className='chip'><IoHeartOutline style={{marginRight:'.2em'}}/>Postuler</button>
+        <button onClick={()=>unlikeApp(application._id)} className='chip'><IoHeartDislikeOutline style={{marginRight:'.2em'}}/>Annuler</button>
+        <p className='location'> <FaLocationArrow style={{marginRight:'.5em'}}/>{application.location}</p>
+        {application.remote ?  <div className='location'><FaHouseUser style={{marginRight:'.5em'}}/>remote</div> : <div></div> }
+        {application.onSite ? <div className='location'><FaRegBuilding style={{marginRight:'.5em'}}/>onsite</div> : <p></p> }
+        {application.flexible ? <div className='location'> <FaWalking style={{marginRight:'.5em'}}/>flexible</div> : <p></p> }
         </div>
         
 
