@@ -13,5 +13,10 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "mongodb": "^6.2.0",
+    "mongoose": "^8.0.0"
+  }
 }

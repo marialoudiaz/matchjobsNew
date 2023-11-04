@@ -3,7 +3,7 @@ import { useNavigate, useParams, Link, Navigate } from "react-router-dom";
 import axios from 'axios';
 import {URL} from "../config"
 import { FaMailBulk } from 'react-icons/fa';
-import '/Users/mariadiaz/Documents/BCS/matchjobs/matchjobs/client/src/App.css';
+import '../App.css';
 
 function MatchesRecruiter(props) {
 

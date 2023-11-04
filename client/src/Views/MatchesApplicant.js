@@ -4,7 +4,7 @@ import axios from 'axios';
 import {URL} from "../config"
 import { FaEnvelope } from 'react-icons/fa';
 import { FaLocationArrow } from "react-icons/fa";
-import '/Users/mariadiaz/Documents/BCS/matchjobs/matchjobs/client/src/App.css';
+import '../App.css';
 // import { addMatchWith } from '../../../server/controllers/applicantsControllers';
 
 function MatchesApplicant(props) {
